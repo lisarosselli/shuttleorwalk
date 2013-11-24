@@ -15,8 +15,29 @@ body {
 
 #map-canvas {
 	height: 100%;
+	background: gray;
+	z-index: 100;
 }
 
-h2 {
-	color: red;
+.alert
+{
+	position: absolute;
+	z-index: 110;
+	left: 50%;
+	top: 50%;
+	 -webkit-transform: translate(-50%, -50%);
+      -ms-transform: 	translate(-50%, -50%);
+          transform:	translate(-50%, -50%);
+	width: 75%;
+  	height: 100px;
+}
+
+.hide
+{
+	visibility: hidden;
+}
+
+.show
+{
+	visibility: visible;
 }

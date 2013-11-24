@@ -9,6 +9,13 @@
 
 var BUILDINGS = [
     {
+        root: "",
+        name: "Harvard Coop",
+        address: "1400 Massachusetts Ave",
+        lat: 42.373589,
+        lng: -71.119293,
+    },
+    {
         root: "04558",
         name: "1 Bow Street",
         address: "1238 Massachusetts Ave",
