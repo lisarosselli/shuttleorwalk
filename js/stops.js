@@ -10,12 +10,15 @@ function Stops()
 	this.stopList = [];
 	this.response = null;
 	this.loaded = false;
+	this.stopsVisible = false;
+	this.markers = [];
+	this.infoWindows = [];
 }
 	
 
 // Stop fucking around and just use the JSON here until you get it figured out!
 
-Stops.prototype.loadStops = function()
+Stops.prototype.loadStops = function( callbackFxn )
 {
 	console.log("Stops.loadStops() calling "+ this.apiurl);
 
@@ -23,6 +26,50 @@ Stops.prototype.loadStops = function()
 	this.response = $.get(this.apiurl, function(responseJSON) {
 		t.stopList = responseJSON;
 		t.loaded = true;
+		callbackFxn();
 	});
+}
 
+Stops.prototype.displayMarkers = function()
+{
+	console.log("displayMarkers");
+	if (!this.stopsVisible)
+	{
+		var img = { url: "img/square_marker.png",
+					size: new google.maps.Size(23, 24),
+					origin: new google.maps.Point(0, 0),
+					anchor: new google.maps.Point(13, 24),
+			};
+
+		var shape = { coord: [1, 1, 1, 23, 25, 23, 25 , 1],
+      				type: 'poly'
+  			};
+
+  		for (var i = 0; i < this.stopList.length; i++)
+  		{
+  			var aStop = this.stopList[i];
+  			console.log(aStop);
+  			var thisLatLng = new google.maps.LatLng(aStop.lat, aStop.lng);
+  			var marker = new google.maps.Marker({
+		        position: thisLatLng,
+		        map: map,
+		        icon: img,
+		        shape: shape,
+		        title: aStop.stop
+		    });
+
+		    this.markers.push(marker);
+
+		    var infoWindow = null;
+		    infoWindow = createInfoWindow("", aStop.stop);
+		 	infoWindow.open(map, this.markers[i]);
+		 	infoWindow.close();
+
+		 	this.infoWindows.push(infoWindow);
+				    
+			google.maps.event.addListener(this.markers[i], 'click', function() {
+				this.infoWindows[i].open(map,this.markers[i]);
+			});
+		}
+	} 
 }
