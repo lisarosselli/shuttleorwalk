@@ -22,19 +22,14 @@ Stops.prototype.loadStops = function()
 
 	var t = this;
 
-	this.response = $.get(this.apiurl, function(responseJSON, t) {
+	this.response = $.get(this.apiurl, function(responseJSON) {
   	 	console.log("jquery got json?");
+		console.log("\t"+responseJSON);
 
-  	 	console.log("\t"+responseJSON);
-  	 	console.log("\tthis?="+this.apiurl);
-  	 	console.log("\tt?="+t);
+  	 	// In here I'd like to take response.responseJSON objects, 
+  	 	// and push them into this.stopList, but "this" no work here.
 
 	});
-
-	while(this.response.readyState != 4)
-	{
-		console.log('hi');
-	}
 
 	console.log("done loadStops");
 	console.log("this.response="+this.response);
