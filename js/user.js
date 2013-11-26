@@ -17,9 +17,6 @@ function User()
 		lng: null,
 		marker: null
 	};
-
-	this.currentLocationMarker = null;
-	this.destinationMarker = null;
 }
 
 User.prototype.isOnCampus = function()
@@ -60,7 +57,7 @@ User.prototype.setDestination = function(latitude, longitude)
     	title: "Destination"
 	});
 
-	this.destinationMarker = dMarker;
+	this.destination.marker = dMarker;
 	this.queryDestination();
 }
 
@@ -75,15 +72,15 @@ User.prototype.queryDestination = function()
 		var thisBuilding = BUILDINGS[i];
 		var buildingLatLng = new google.maps.LatLng(thisBuilding.lat, thisBuilding.lng);
 		var d = distance(userDestLatLng, buildingLatLng);
-		if (d < 100)
+		if (d < 60)
 		{
 			console.log("HEY! You're at "+thisBuilding.name+" : "+thisBuilding.address);
 
-			if (this.destinationMarker != null)
+			if (this.destination.marker != null)
 			{
 				var infoWindow = new google.maps.InfoWindow();
 				infoWindow.setContent("<div><img class='harvardH' src='img/harvard_H.png'/>&nbsp;"+thisBuilding.name+"</div>");
-				infoWindow.open(map, this.destinationMarker);
+				infoWindow.open(map, this.destination.marker);
 			}
 
 			return thisBuilding;
@@ -93,4 +90,30 @@ User.prototype.queryDestination = function()
 	console.log("Not able to locate your building.");
 	reverseGeocode(userDestLatLng);
 	return null;
+}
+
+/**
+ *	Quick call to ensure destination data exists
+ */
+User.prototype.destinationIsNull = function()
+{
+	if (this.destination.marker == null || this.destination.lat == null || this.destination.lng == null)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+/**
+ *	Quick call to ensure currentLocation data exists
+ */
+User.prototype.originIsNull = function()
+{
+	if (this.currentLocation.marker == null || this.currentLocation.lat == null || this.currentLocation.lng == null)
+	{
+		return true;
+	}
+
+	return false;
 }

@@ -17,7 +17,7 @@ function Stops()
 	
 
 // Stop fucking around and just use the JSON here until you get it figured out!
-
+/*
 Stops.prototype.loadStops = function( callbackFxn )
 {
 	console.log("Stops.loadStops() calling "+ this.apiurl);
@@ -28,6 +28,40 @@ Stops.prototype.loadStops = function( callbackFxn )
 		t.loaded = true;
 		callbackFxn();
 	});
+}
+*/
+
+Stops.prototype.loadStops = function( callbackFxn )
+{
+	console.log("Stops.prototype.loadStops calling "+ this.apiurl);
+
+	var xhr = new XMLHttpRequest;
+	xhr.onreadystatechange = ensureReadiness;
+
+	var t = this;
+
+	function ensureReadiness()
+	{
+		if (xhr.readyState < 4)
+		{
+			return;
+		}
+
+		if (xhr.status != 200)
+		{
+			return;
+		}
+
+		if (xhr.readyState === 4)
+		{
+			var parsedObject = JSON.parse(xhr.response);
+			t.stopList = parsedObject;
+			callbackFxn();
+		}
+	}
+
+	xhr.open('GET', this.apiurl, true);
+	xhr.send('');
 }
 
 Stops.prototype.displayMarkers = function()

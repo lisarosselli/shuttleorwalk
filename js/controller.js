@@ -25,7 +25,10 @@ function initialize()
     	user.setDestination(e.latLng.lat(), e.latLng.lng());
   	});
 
-  	$("#intro").addClass("ontop_visible")
+  	//$("#intro").addClass("ontop_visible");
+  	//$("#intro").delay(1500).fadeOut(300);
+  	//$("#logo").delay(500).animate({top: '38%'}, 350, 'swing');
+  	//$("#smilie").hide().delay(500).fadeIn(250);
 }
 
 /**
@@ -33,7 +36,7 @@ function initialize()
  */
 function findLocation() 
 {
-	$("#intro").addClass("ontop");
+	//$("#intro").addClass("ontop");
 
  	if (navigator.geolocation)
  	{
@@ -44,7 +47,7 @@ function findLocation()
  	}
 
 
- 	$("#intro").fadeOut();
+ 	//$("#intro").fadeOut();
  	//loadStops();
 }
 
@@ -59,7 +62,6 @@ function foundLocation( position )
 
  	user.currentLocation.lat = position.coords.latitude;
  	user.currentLocation.lng = position.coords.longitude;
- 	alert('Found location');
 
  	if (user.isOnCampus())
  	{
@@ -168,32 +170,6 @@ function createInfoWindow(windowTitle, windowText)
   	});
 
   	return infowindow;
-}
-/**
- *	Shows progress bar up top.
- */
- /*
-function showProgressBar()
-{
-	if (document.getElementById("progressBar"))
-	{
-
-	} else
-	{
-		var progressBar = "<div id='progressBar' class='progress progress-striped active show'>" +
-  		"<div class='progress-bar'  role='progressbar' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100' style='width: 45%'>"+
-  		"</div>"+
-		"</div>";
-		document.write(progressBar);
-	}
-}*/
-
-/**
- *	Removes progress bar view.
- */
-function removeProgressBar()
-{
-	
 }
 
 /**

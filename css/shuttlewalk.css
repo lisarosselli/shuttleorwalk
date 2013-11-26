@@ -19,6 +19,7 @@ body {
 	z-index: 100;
 }
 
+/* Intro screen specs */
 #intro {
 	position: absolute;
 	top: 0;
@@ -30,12 +31,27 @@ body {
 
 #intro img
 {
-	left: 50%;
-	top: 50%;
+	left: 48%;
+	top: 45%;
 	position: absolute;
 	width: 64px;
 	height: 64px;
 }
+
+#smilie
+{
+	left: 48%;
+	top: 45%;
+	position: absolute;
+	width: 64px;
+	height: 64px;
+	font-size: 40px;
+	padding-left: 25px;
+	color: white;
+
+}
+/* end Intro screen */
+
 
 .harvardH
 {
@@ -46,7 +62,7 @@ body {
 .ontop_visible
 {
 	z-index: 1000;
-	visibility: visible;;
+	visibility: visible;
 }
 
 .alert
@@ -60,14 +76,4 @@ body {
           transform:	translate(-50%, -50%);
 	width: 75%;
   	height: 100px;
-}
-
-.hide
-{
-	visibility: hidden;
-}
-
-.show
-{
-	visibility: visible;
 }
