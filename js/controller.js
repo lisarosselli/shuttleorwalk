@@ -61,26 +61,7 @@ function foundLocation( position )
  		alertUser(messageToUser);
  	}
 
- 	map.setCenter(initialSpot);
-
- 	// drop a marker
- 	marker = new google.maps.Marker({
-    	position: initialSpot,
-    	map: map,
-    	title: "You are here."
-	});
-
- 	// show an info window
- 	infoWindow = createInfoWindow("Here!", "You are here yo.");
- 	infoWindow.open(map,marker);
-	markers.push(marker);
-	infoWindows.push(infoWindow);
-
-	google.maps.event.addListener(marker, 'click', function() {
-		infoWindow.open(map,marker);
-	});
-
-	
+ 	setUserOnMap(initialSpot);
 }
 
 /**
@@ -97,6 +78,37 @@ function handleNoGeolocation( errorFlag )
 	}
 
 	alertUser(messageToUser);
+
+	var initialSpot = new google.maps.LatLng(BUILDINGS[0].lat, BUILDINGS[0].lng);
+	setUserOnMap(initialSpot);
+}
+
+/**
+ *	If geolocation fails, browser does not support geolocation, 
+ *	or user has been geolocated and is not found to be on campus:
+ *	put the user near Harvard Square, in this case, the Coop.
+ *	Or if their location is legit, place them on the map.
+ */
+function setUserOnMap( initialSpot )
+{
+	map.setCenter(initialSpot);
+
+ 	// drop a marker
+ 	marker = new google.maps.Marker({
+    	position: initialSpot,
+    	map: map,
+    	title: "You are here."
+	});
+
+ 	// show an info window
+ 	infoWindow = createInfoWindow("Hello!", "You are here.");
+ 	infoWindow.open(map,marker);
+	markers.push(marker);
+	infoWindows.push(infoWindow);
+
+	google.maps.event.addListener(marker, 'click', function() {
+		infoWindow.open(map,marker);
+	});
 }
 
 /**
@@ -113,7 +125,13 @@ function alertUser( message )
 function loadStops()
 {
 	stops = new Stops();
-	stops.loadStops();
+	stops.loadStops(testCallback);
+}
+
+function testCallback()
+{
+	console.log("testCallback");
+	stops.displayMarkers();
 }
 
 /**

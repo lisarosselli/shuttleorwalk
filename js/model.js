@@ -9,6 +9,7 @@
 var map = null;
 var mapOptions = null;
 
+var apiVersion = 1.3;
 var user = null;
 var stops = null;
 

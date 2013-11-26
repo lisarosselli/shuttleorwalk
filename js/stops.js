@@ -6,7 +6,7 @@
 
 function Stops()
 {
-	this.apiurl = "http://shuttleboy.cs50.net/api/1.2/stops?output=json";
+	this.apiurl = "http://shuttleboy.cs50.net/api/"+ apiVersion +"/stops?output=json";
 	this.stopList = [];
 	this.response = null;
 	this.loaded = false;
@@ -48,7 +48,6 @@ Stops.prototype.displayMarkers = function()
   		for (var i = 0; i < this.stopList.length; i++)
   		{
   			var aStop = this.stopList[i];
-  			console.log(aStop);
   			var thisLatLng = new google.maps.LatLng(aStop.lat, aStop.lng);
   			var marker = new google.maps.Marker({
 		        position: thisLatLng,
@@ -59,17 +58,14 @@ Stops.prototype.displayMarkers = function()
 		    });
 
 		    this.markers.push(marker);
+		}
 
-		    var infoWindow = null;
-		    infoWindow = createInfoWindow("", aStop.stop);
-		 	infoWindow.open(map, this.markers[i]);
-		 	infoWindow.close();
-
+		for (var i = 0; i < this.markers.length; i++)
+		{
+			var thisMarker = this.markers[i];
+			var infoWindow = createInfoWindow("", thisMarker.title);
+		 	infoWindow.open(map, thisMarker);
 		 	this.infoWindows.push(infoWindow);
-				    
-			google.maps.event.addListener(this.markers[i], 'click', function() {
-				this.infoWindows[i].open(map,this.markers[i]);
-			});
 		}
 	} 
 }
