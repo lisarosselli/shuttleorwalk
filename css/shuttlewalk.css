@@ -19,6 +19,36 @@ body {
 	z-index: 100;
 }
 
+#intro {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background-color: #3300DD;
+}
+
+#intro img
+{
+	left: 50%;
+	top: 50%;
+	position: absolute;
+	width: 64px;
+	height: 64px;
+}
+
+.harvardH
+{
+	width: 17%;
+	height: 17%;
+	padding-right: 10px;
+}
+.ontop_visible
+{
+	z-index: 1000;
+	visibility: visible;;
+}
+
 .alert
 {
 	position: absolute;
