@@ -19,6 +19,13 @@ function initialize()
 	map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 
 	findLocation();
+
+	google.maps.event.addListener(map, 'click', function(e) {
+    	console.log("map clicked! at "+e.latLng.lat());
+    	user.setDestination(e.latLng.lat(), e.latLng.lng());
+  	});
+
+  	$("#intro").addClass("ontop_visible")
 }
 
 /**
@@ -26,6 +33,8 @@ function initialize()
  */
 function findLocation() 
 {
+	$("#intro").addClass("ontop");
+
  	if (navigator.geolocation)
  	{
  		navigator.geolocation.getCurrentPosition(foundLocation, handleNoGeolocation);
@@ -34,7 +43,9 @@ function findLocation()
  		handleNoGeolocation(true);
  	}
 
- 	loadStops();
+
+ 	$("#intro").fadeOut();
+ 	//loadStops();
 }
 
 /**
@@ -91,12 +102,16 @@ function handleNoGeolocation( errorFlag )
  */
 function setUserOnMap( initialSpot )
 {
+	var marker;
+	var infoWindow;
+
 	map.setCenter(initialSpot);
 
  	// drop a marker
  	marker = new google.maps.Marker({
     	position: initialSpot,
     	map: map,
+    	animation: google.maps.Animation.DROP,
     	title: "You are here."
 	});
 
@@ -197,3 +212,28 @@ function distance(objectA, objectB)
     var d = R * c;
     return d * 1000;
 };
+
+/**
+ *	Reverse Geocode
+ */
+function reverseGeocode( gmLatLng )
+{
+	var marker;
+	var infowindow = new google.maps.InfoWindow();
+	var geocoder = new google.maps.Geocoder();
+
+    geocoder.geocode({'latLng': gmLatLng}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        if (results[0]) {
+          marker = new google.maps.Marker({
+              position: gmLatLng,
+              map: map
+          });
+          infowindow.setContent(results[1].formatted_address);
+          infowindow.open(map, marker);
+        }
+      } else {
+        alert("Geocoder failed due to: " + status);
+      }
+    });
+}

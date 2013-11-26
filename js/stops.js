@@ -54,18 +54,44 @@ Stops.prototype.displayMarkers = function()
 		        map: map,
 		        icon: img,
 		        shape: shape,
+		        animation: google.maps.Animation.DROP,
 		        title: aStop.stop
 		    });
 
 		    this.markers.push(marker);
+
+		    var t = this;
+
+		    google.maps.event.addListener(marker, 'click', function(e){
+		    	console.log("marker clicked "+e.latLng);
+		    	//t.toggleInfoWindow(e.latLng);
+		    });
 		}
 
+		/*
 		for (var i = 0; i < this.markers.length; i++)
 		{
 			var thisMarker = this.markers[i];
 			var infoWindow = createInfoWindow("", thisMarker.title);
 		 	infoWindow.open(map, thisMarker);
 		 	this.infoWindows.push(infoWindow);
+
+		 	google.maps.event.addListener(thisMarker, 'click', function(e) {
+    			console.log("e = "+e.marker);
+  			});
 		}
+		*/
 	} 
+}
+
+Stops.prototype.toggleInfoWindow = function( gmLatLng )
+{
+	console.log(gmLatLng.lat())
+
+	var markerClicked;
+
+	for (var i = 0; i < this.markers.length; i++)
+	{
+		console.log(this.markers[i].latLng);
+	}
 }

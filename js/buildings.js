@@ -5,6 +5,7 @@
  * Problem Set 8
  *
  * Buildings on campus.
+ *
  */
 
 var BUILDINGS = [
