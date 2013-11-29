@@ -5,10 +5,12 @@
 // Initialize Google Map!
 function initialize() 
 {
+	console.log("initialize");
 	user = new User();
 
 	// get a suitable building/location to be the default
 	var defaultBuilding = BUILDINGS[0];
+	console.log(defaultBuilding);
 	mapOptions = { 
 		center: new google.maps.LatLng(defaultBuilding.lat, defaultBuilding.lng), 
 		disableDefaultUI: true,
@@ -36,6 +38,7 @@ function initialize()
  */
 function findLocation() 
 {
+	console.log("findLocation");
 	//$("#intro").addClass("ontop");
 
  	if (navigator.geolocation)
@@ -151,65 +154,3 @@ function testCallback()
 	stops.displayMarkers();
 }
 
-/**
- *	Creates an google.maps info window with some message
- */
-function createInfoWindow(windowTitle, windowText)
-{
-	var contentString = '<div id="content">'+
-      '<div id="siteNotice">'+
-      '</div>'+
-      '<h4 id="firstHeading" class="firstHeading">'+ windowTitle + '</h4>'+
-      '<div id="bodyContent">'+
-      '<p>' + windowText + '</p>'+
-      '</div>'+
-      '</div>';
-
-    var infowindow = new google.maps.InfoWindow({
-  		content: contentString
-  	});
-
-  	return infowindow;
-}
-
-/**
- *	Finds the distance between two objects. Both objects are google.maps.LatLng objects.
- *	Returns distance in meters.
- */
-function distance(objectA, objectB)
-{
-    var R = 6371;
-	var dLat = (objectA.lat() - objectB.lat()) * Math.PI / 180;
-	var dLon = (objectA.lng() - objectB.lng()) * Math.PI / 180;
-    var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.cos(objectB.lat() * Math.PI / 180) * Math.cos(objectA.lat() * Math.PI / 180) *
-        Math.sin(dLon / 2) * Math.sin(dLon / 2);
-    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    var d = R * c;
-    return d * 1000;
-};
-
-/**
- *	Reverse Geocode
- */
-function reverseGeocode( gmLatLng )
-{
-	var marker;
-	var infowindow = new google.maps.InfoWindow();
-	var geocoder = new google.maps.Geocoder();
-
-    geocoder.geocode({'latLng': gmLatLng}, function(results, status) {
-      if (status == google.maps.GeocoderStatus.OK) {
-        if (results[0]) {
-          marker = new google.maps.Marker({
-              position: gmLatLng,
-              map: map
-          });
-          infowindow.setContent(results[1].formatted_address);
-          infowindow.open(map, marker);
-        }
-      } else {
-        alert("Geocoder failed due to: " + status);
-      }
-    });
-}
