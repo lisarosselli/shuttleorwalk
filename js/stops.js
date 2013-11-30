@@ -8,29 +8,15 @@ function Stops()
 {
 	this.apiurl = "http://shuttleboy.cs50.net/api/"+ apiVersion +"/stops?output=json";
 	this.stopList = [];
-	this.response = null;
 	this.loaded = false;
 	this.stopsVisible = false;
 	this.markers = [];
 	this.infoWindows = [];
 }
-	
 
-// Stop fucking around and just use the JSON here until you get it figured out!
-/*
-Stops.prototype.loadStops = function( callbackFxn )
-{
-	console.log("Stops.loadStops() calling "+ this.apiurl);
-
-	var t = this;
-	this.response = $.get(this.apiurl, function(responseJSON) {
-		t.stopList = responseJSON;
-		t.loaded = true;
-		callbackFxn();
-	});
-}
-*/
-
+/**
+ *	Load all the shuttle stops
+ */
 Stops.prototype.loadStops = function( callbackFxn )
 {
 	console.log("Stops.prototype.loadStops calling "+ this.apiurl);
@@ -56,6 +42,7 @@ Stops.prototype.loadStops = function( callbackFxn )
 		{
 			var parsedObject = JSON.parse(xhr.response);
 			t.stopList = parsedObject;
+			t.loaded = true;
 			callbackFxn();
 		}
 	}
@@ -64,6 +51,9 @@ Stops.prototype.loadStops = function( callbackFxn )
 	xhr.send('');
 }
 
+/**
+ *	Display all the shuttle stop markers on map
+ */
 Stops.prototype.displayMarkers = function()
 {
 	console.log("displayMarkers");

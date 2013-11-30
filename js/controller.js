@@ -27,6 +27,9 @@ function initialize()
     	user.setDestination(e.latLng.lat(), e.latLng.lng());
   	});
 
+  	document.getElementById("calcRouteBtn").onclick = calculateRoute;
+
+
   	//$("#intro").addClass("ontop_visible");
   	//$("#intro").delay(1500).fadeOut(300);
   	//$("#logo").delay(500).animate({top: '38%'}, 350, 'swing');
@@ -49,6 +52,7 @@ function findLocation()
  		handleNoGeolocation(true);
  	}
 
+ 	document.getElementById("UIContainer").className += "ontop_visible";
 
  	//$("#intro").fadeOut();
  	//loadStops();
@@ -59,12 +63,14 @@ function findLocation()
  */
 function foundLocation( position )
 {
+	console.log("foundLocation");
+
 	var initialSpot = null;
 	var marker = null;
 	var infoWindow = null;
 
- 	user.currentLocation.lat = position.coords.latitude;
- 	user.currentLocation.lng = position.coords.longitude;
+ 	//user.currentLocation.lat = position.coords.latitude;
+ 	//user.currentLocation.lng = position.coords.longitude;
 
  	if (user.isOnCampus())
  	{
@@ -85,6 +91,8 @@ function foundLocation( position )
  */
 function handleNoGeolocation( errorFlag )
 {
+	console.log("handleNoGeolocation");
+
 	if (!errorFlag)
 	{
 		messageToUser = "Your browser doesn't support geolocation.";
@@ -112,6 +120,9 @@ function setUserOnMap( initialSpot )
 
 	map.setCenter(initialSpot);
 
+	user.currentLocation.lat = initialSpot.lat();
+	user.currentLocation.lng = initialSpot.lng();
+
  	// drop a marker
  	marker = new google.maps.Marker({
     	position: initialSpot,
@@ -123,8 +134,9 @@ function setUserOnMap( initialSpot )
  	// show an info window
  	infoWindow = createInfoWindow("Hello!", "You are here.");
  	infoWindow.open(map,marker);
-	markers.push(marker);
-	infoWindows.push(infoWindow);
+ 	user.currentLocation.marker = marker;
+	//markers.push(marker);
+	//infoWindows.push(infoWindow);
 
 	google.maps.event.addListener(marker, 'click', function() {
 		infoWindow.open(map,marker);
@@ -154,3 +166,20 @@ function testCallback()
 	stops.displayMarkers();
 }
 
+function calculateRoute()
+{
+	console.log("calculateRoute");
+
+	if (user.originIsNull() || user.destinationIsNull())
+	{
+		// TODO: alert user that info is missing
+		console.log("calculateRoute some user info is missing");
+		return;
+	}
+
+	//trip = new Trip();
+	//trip.getTrip(user);
+
+	shuttletrip = new ShuttleTrip();
+	shuttletrip.getShuttleTrip(user);
+}

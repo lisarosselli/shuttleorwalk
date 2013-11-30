@@ -12,10 +12,13 @@ var mapOptions = null;
 var apiVersion = 1.3;
 var user = null;
 var stops = null;
+var trip = null;
+var shuttletrip = null;
 
 var MAX_MILE_RADIUS = 5;
 var METERS_IN_MILE = 1609.34;
+var ORIGIN_BUILDING_PROXIMITY = 50;
 var messageToUser = "";
 
-var infoWindows = [];
-var markers = [];
+//var infoWindows = [];
+//var markers = [];

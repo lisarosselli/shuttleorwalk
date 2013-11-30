@@ -52,7 +52,6 @@ body {
 }
 /* end Intro screen */
 
-
 .harvardH
 {
 	width: 17%;
@@ -76,4 +75,18 @@ body {
           transform:	translate(-50%, -50%);
 	width: 75%;
   	height: 100px;
+}
+
+#dialog
+{
+
+}
+
+#UIContainer
+{
+	position: absolute;
+	background: #fff;
+	width: 280px;
+	height: 300px;
+	opacity: 0.8;
 }

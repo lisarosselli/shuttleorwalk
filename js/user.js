@@ -125,7 +125,8 @@ User.prototype.placeDestination = function( gmLatLng, buildingStringInfo, isHarv
 	if (isHarvardBuilding)
 	{
 		// use nice format
-		infoWindow.setContent("<div><img class='harvardH' src='img/harvard_H.png'/>&nbsp;"+buildingStringInfo+"</div>");
+		infoWindow.setContent("<div><img class='harvardH' src='img/harvard_H.png'/>&nbsp;"+
+			buildingStringInfo+"</div>");
 	} else
 	{
 		// use meh format
