@@ -8,7 +8,10 @@ function ShuttleTrip()
 
 	this.origSortedStops = [];
 	this.destSortedStops = [];
+	this.origProximity = 0;
+	this.destProximity = 0;
 	this.JSONCall = null;
+	this.routeResponse = null;
 }
 
 ShuttleTrip.prototype.getShuttleTrip = function( userObject )
@@ -17,7 +20,7 @@ ShuttleTrip.prototype.getShuttleTrip = function( userObject )
 
 	stops = new Stops();
 	//stops.loadStops(this.initialLoadCallback);
-	stops.loadStops(stopsAreLoaded);
+	stops.loadStops(stopsAreLoadedCallback);
 }
 
 ShuttleTrip.prototype.defineAndSortStops = function()
@@ -30,29 +33,81 @@ ShuttleTrip.prototype.defineAndSortStops = function()
 	this.sortStopsClosestToDest(this.loadedAndSorted);
 }
 
-ShuttleTrip.prototype.loadedAndSorted = function()
-{
-	console.log("ShuttleTrip.prototype.loadedAndSorted");
-	shuttletrip.queryApiForRoute(shuttletrip.origSortedStops[0], shuttletrip.destSortedStops[0]);
-}
-
-ShuttleTrip.prototype.queryApiForRoute = function(originStop, destStop)
+ShuttleTrip.prototype.beginQueryApiForRoute = function()
 {
 	console.log("ShuttleTrip.prototype.queryApiForRoute");
-	console.log(originStop.stop);
-	console.log(destStop.stop);
+	this.queryApiWithStops(this.origSortedStops[0], this.destSortedStops[0]);
+}
 
-	//http://shuttleboy.cs50.net/api/1.3/trips?a=Harvard%20Square&b=Mather%20House&sdt=2013-11-25&output=json
+ShuttleTrip.prototype.queryApiWithStops = function( orig, dest)
+{
+	console.log("ShuttleTrip.prototype.queryApiWithStops");
+
 	var today = new Date();
 	var day = today.getDate();
 	var month = today.getMonth() + 1;
 	var year = today.getFullYear();
 
 	shuttletrip.JSONCall = "http://shuttleboy.cs50.net/api/" + apiVersion + "/trips?a=" +
-		originStop.stop + "&b=" + destStop.stop + "&sdt=" + year + "-" + month + "-" + day +
+		orig.stop + "&b=" + dest.stop + "&sdt=" + year + "-" + month + "-" + day +
 		"&output=json";
 
 	console.log(shuttletrip.JSONCall);
+
+
+	var xhr = new XMLHttpRequest;
+	xhr.onreadystatechange = ensureReadiness;
+
+	var t = this;
+
+	function ensureReadiness()
+	{
+		if (xhr.readyState < 4)
+		{
+			return;
+		}
+
+		if (xhr.status != 200)
+		{
+			return;
+		}
+
+		if (xhr.readyState === 4)
+		{
+			var parsedObject = JSON.parse(xhr.response);
+			t.routeResponse = parsedObject;
+			console.log("parsedObject!="+t.routeResponse);
+			if (t.routeResponse == null || t.routeResponse.length == 0)
+			{
+				noRouteForStopsCallback();
+			}
+		}
+	}
+
+	xhr.open('GET', this.JSONCall, true);
+	xhr.send('');
+
+}
+
+ShuttleTrip.prototype.incrementStops = function()
+{
+	if (this.origProximity == this.destProximity)
+	{
+		this.destProximity++;
+	} else if (this.destProximity > this.origProximity)
+	{
+		this.origProximity++;
+	}
+
+	if (this.origProximity >= 2 || this.destProximity >= 2 ||
+		this.origSortedStops[this.origProximity].stop == this.destSortedStops[destProximity].stop)
+	{
+		// TODO: alert the user there is no appropriate running route at this time
+		console.log("ShuttleTrip.prototype.incrementStops :: No appropriate route running right now.")
+		return;
+	}
+
+	this.queryApiWithStops(this.origSortedStops[this.origProximity], this.destSortedStops[this.destProximity]);
 }
 
 ShuttleTrip.prototype.defineStopsClosestToOrig = function()
@@ -156,7 +211,7 @@ ShuttleTrip.prototype.sortStopsClosestToDest = function(callbackFxn)
 
 	}
 
-	callbackFxn();
+	stopsAreSortedCallback();
 }
 
 /**

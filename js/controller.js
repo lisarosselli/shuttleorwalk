@@ -184,8 +184,20 @@ function calculateRoute()
 	shuttletrip.getShuttleTrip(user);
 }
 
-function stopsAreLoaded()
+function stopsAreLoadedCallback()
 {
-	console.log("stopsAreLoaded");
+	console.log("stopsAreLoadedCallback");
 	shuttletrip.defineAndSortStops();
+}
+
+function stopsAreSortedCallback()
+{
+	console.log("stopsAreSortedCallback");
+	shuttletrip.beginQueryApiForRoute();
+}
+
+function noRouteForStopsCallback()
+{
+	console.log("noRouteForStopsCallback");
+	shuttletrip.incrementStops();
 }
