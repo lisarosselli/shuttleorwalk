@@ -8,6 +8,7 @@ function ShuttleTrip()
 
 	this.origSortedStops = [];
 	this.destSortedStops = [];
+	this.JSONCall = null;
 }
 
 ShuttleTrip.prototype.getShuttleTrip = function( userObject )
@@ -15,18 +16,43 @@ ShuttleTrip.prototype.getShuttleTrip = function( userObject )
 	console.log("ShuttleTrip.prototype.getShuttleTrip");
 
 	stops = new Stops();
-	stops.loadStops(this.stopsLoadCallback);
+	//stops.loadStops(this.initialLoadCallback);
+	stops.loadStops(stopsAreLoaded);
 }
 
-ShuttleTrip.prototype.stopsLoadCallback = function()
+ShuttleTrip.prototype.defineAndSortStops = function()
 {
-	console.log("ShuttleTrip.prototype.stopsLoadCallback");
+	console.log("ShuttleTrip.prototype.defineAndSortStops");
 	
-	// out of scope here so referring as 'shuttletrip' and not 'this':
-	shuttletrip.defineStopsClosestToOrig();
-	shuttletrip.defineStopsClosestToDest();
-	shuttletrip.sortStopsClosestToOrig();
-	shuttletrip.sortStopsClosestToDest();
+	this.defineStopsClosestToOrig();
+	this.defineStopsClosestToDest();
+	this.sortStopsClosestToOrig();
+	this.sortStopsClosestToDest(this.loadedAndSorted);
+}
+
+ShuttleTrip.prototype.loadedAndSorted = function()
+{
+	console.log("ShuttleTrip.prototype.loadedAndSorted");
+	shuttletrip.queryApiForRoute(shuttletrip.origSortedStops[0], shuttletrip.destSortedStops[0]);
+}
+
+ShuttleTrip.prototype.queryApiForRoute = function(originStop, destStop)
+{
+	console.log("ShuttleTrip.prototype.queryApiForRoute");
+	console.log(originStop.stop);
+	console.log(destStop.stop);
+
+	//http://shuttleboy.cs50.net/api/1.3/trips?a=Harvard%20Square&b=Mather%20House&sdt=2013-11-25&output=json
+	var today = new Date();
+	var day = today.getDate();
+	var month = today.getMonth() + 1;
+	var year = today.getFullYear();
+
+	shuttletrip.JSONCall = "http://shuttleboy.cs50.net/api/" + apiVersion + "/trips?a=" +
+		originStop.stop + "&b=" + destStop.stop + "&sdt=" + year + "-" + month + "-" + day +
+		"&output=json";
+
+	console.log(shuttletrip.JSONCall);
 }
 
 ShuttleTrip.prototype.defineStopsClosestToOrig = function()
@@ -98,7 +124,7 @@ ShuttleTrip.prototype.sortStopsClosestToOrig = function()
 	}
 }
 
-ShuttleTrip.prototype.sortStopsClosestToDest = function()
+ShuttleTrip.prototype.sortStopsClosestToDest = function(callbackFxn)
 {
 	console.log("ShuttleTrip.prototype.sortStopsClosestToDest");
 
@@ -129,11 +155,13 @@ ShuttleTrip.prototype.sortStopsClosestToDest = function()
         }
 
 	}
+
+	callbackFxn();
 }
 
 /**
  *	Selection sort js syntax help and this algorithm curtesy of
- *	Mr. David Shariff: http://davidshariff.com/blog/javascript-selection-sort/
+ *	David Shariff: http://davidshariff.com/blog/javascript-selection-sort/
  */
 function compare(a, b, sortDir) 
 {

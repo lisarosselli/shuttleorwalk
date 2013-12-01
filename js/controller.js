@@ -183,3 +183,9 @@ function calculateRoute()
 	shuttletrip = new ShuttleTrip();
 	shuttletrip.getShuttleTrip(user);
 }
+
+function stopsAreLoaded()
+{
+	console.log("stopsAreLoaded");
+	shuttletrip.defineAndSortStops();
+}
