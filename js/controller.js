@@ -219,6 +219,25 @@ function receivedShuttleDistanceMatrix()
 {
 	console.log("receivedShuttleDistanceMatrix");
 	shuttletrip.displayWalkingRoutes();
+	shuttletrip.parseRouteTimes();
+}
+
+function storeFriendlyQueryTime(year, month, day, hour, minutes)
+{
+	var y = year;
+	var m = month;
+	var d = day;
+	var h = h;
+	var m = minutes;
+	var am;
+
+	am = (h > 12) ? false : true;
+	var amString = (am) ? "am" : "pm";
+	h = (h > 12) ? (h-12): h;
+
+	var monthStr = MONTHS[month];
+
+	lastTimeQueried = hour + ":" + minutes + amString + " " + monthStr + " " + day + ", " + year;
 }
 
 

@@ -24,6 +24,12 @@ function ShuttleTrip()
 	this.directionsService = null;
 	this.routeLineA = null;
 	this.routeLineB = null;
+
+	this.shuttleTravelTime = null;
+	this.waitTime = null;
+	this.acuteTravelTime = null;
+	this.totalTravelTime = null;
+	this.walkingDistance = null;
 }
 
 ShuttleTrip.prototype.getShuttleTrip = function( userObject )
@@ -46,7 +52,7 @@ ShuttleTrip.prototype.getShuttleTrip = function( userObject )
 
 ShuttleTrip.prototype.defineAndSortStops = function()
 {
-	console.log("ShuttleTrip.prototype.defineAndSortStops");
+	//console.log("ShuttleTrip.prototype.defineAndSortStops");
 	
 	this.defineStopsClosestToOrig();
 	this.defineStopsClosestToDest();
@@ -61,7 +67,7 @@ ShuttleTrip.prototype.defineStopsClosestToOrig = function()
 		return ;
 	}
 
-	console.log("ShuttleTrip.prototype.defineStopsClosestToOrig");
+	//console.log("ShuttleTrip.prototype.defineStopsClosestToOrig");
 
 	var origLatLng = new google.maps.LatLng(user.currentLocation.lat, user.currentLocation.lng);
 	for (var i = 0; i < stops.stopList.length; i++)
@@ -79,7 +85,7 @@ ShuttleTrip.prototype.defineStopsClosestToDest = function()
 		return;
 	}
 
-	console.log("ShuttleTrip.prototype.defineStopsClosestToDest");
+	//console.log("ShuttleTrip.prototype.defineStopsClosestToDest");
 
 	var destLatLng = new google.maps.LatLng(user.destination.lat, user.destination.lng);
 	for (var i = 0; i < stops.stopList.length; i++)
@@ -92,7 +98,7 @@ ShuttleTrip.prototype.defineStopsClosestToDest = function()
 
 ShuttleTrip.prototype.sortStopsClosestToOrig = function()
 {
-	console.log("ShuttleTrip.prototype.sortStopsClosestToOrig");
+	//console.log("ShuttleTrip.prototype.sortStopsClosestToOrig");
 
 	this.origSortedStops = stops.stopList.slice(0);
 
@@ -125,7 +131,7 @@ ShuttleTrip.prototype.sortStopsClosestToOrig = function()
 
 ShuttleTrip.prototype.sortStopsClosestToDest = function(callbackFxn)
 {
-	console.log("ShuttleTrip.prototype.sortStopsClosestToDest");
+	//console.log("ShuttleTrip.prototype.sortStopsClosestToDest");
 
 	this.destSortedStops = stops.stopList.slice(0);
 
@@ -204,7 +210,8 @@ ShuttleTrip.prototype.queryApiWithStops = function( orig, dest)
 	//2013-11-25T16:50:00
 	var timeString = year + "-" + month + "-" + day + "T" + hour + ":" + minutes + ":00";
 
-	console.log("timeString="+timeString);
+	// Ask controller to store a friendly version of timestamp:
+	storeFriendlyQueryTime(year, month-1, day, hour, minutes);
 
 	shuttletrip.JSONCall = "http://shuttleboy.cs50.net/api/" + apiVersion + "/trips?a=" +
 		orig.stop + "&b=" + dest.stop + "&sdt=" + timeString + "&output=json";
@@ -342,6 +349,44 @@ ShuttleTrip.prototype.displayShuttleRoute = function()
 	});
 }
 
+ShuttleTrip.prototype.parseRouteTimes = function()
+{
+	if (this.routeResponse == null)
+	{
+		return;
+	}
+
+	var a = this.routeResponse[0].departs; // from orig stop
+	var b = this.routeResponse[0].arrives; // arrives at dest stop
+	// this.routeResponse[0].key ==> route name
+
+	this.shuttleTravelTime = getMinuteDifference(a, b);
+	console.log("this.shuttleTravelTime?="+this.shuttleTravelTime);
+
+	this.acuteTravelTime += secondsRoundToMinute(this.distanceMatrix.rows[0].elements[0].duration.value);
+	this.acuteTravelTime += secondsRoundToMinute(this.distanceMatrix.rows[1].elements[1].duration.value);
+	this.acuteTravelTime += this.shuttleTravelTime;
+
+	var now = new Date();
+	this.waitTime = getMinuteDifference(now, a);
+	
+	console.log("this.waitTime="+this.waitTime);
+	console.log("this.acuteTravelTime="+this.acuteTravelTime);
+
+	this.totalTravelTime = this.acuteTravelTime + this.waitTime;
+
+	console.log("this.totalTravelTime="+this.totalTravelTime);
+
+	var w = Number(roundToOneDecimal(this.distanceMatrix.rows[0].elements[0].distance.value)) + Number(roundToOneDecimal(this.distanceMatrix.rows[1].elements[1].distance.value));
+
+	//this.walkingDistance += roundToOneDecimal(this.distanceMatrix.rows[0].elements[0].distance.value);
+	//this.walkingDistance += roundToOneDecimal(this.distanceMatrix.rows[1].elements[1].distance.value);
+	this.walkingDistance = w;
+
+	console.log("this.walkingDistance="+this.walkingDistance);
+
+}
+
 ShuttleTrip.prototype.getGoogleDistanceMatrix = function()
 {
 	console.log("ShuttleTrip.prototype.getGoogleDistanceMatrix");
@@ -363,7 +408,7 @@ ShuttleTrip.prototype.getGoogleDistanceMatrix = function()
 	service.getDistanceMatrix(dmRequest, function(response, status) {
 		if (status == 'google.maps.DistanceMatrixService.OK' || status == 'OK')
 		{
-			console.log(response);
+			//console.log(response);
 			t.distanceMatrix = response;
 			receivedShuttleDistanceMatrix();
 		} 
@@ -380,7 +425,6 @@ ShuttleTrip.prototype.displayWalkingRoutes = function()
 
 ShuttleTrip.prototype.displayWalkingLegA = function()
 {
-	console.log("ShuttleTrip.prototype.displayWalkingLegA");
 	var start;
 	var end;
 	var request;
@@ -430,7 +474,6 @@ ShuttleTrip.prototype.displayWalkingLegA = function()
 
 ShuttleTrip.prototype.displayWalkingLegB = function()
 {
-	console.log("ShuttleTrip.prototype.displayWalkingLegB");
 	var start;
 	var end;
 	var request;
