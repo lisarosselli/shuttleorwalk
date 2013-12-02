@@ -126,14 +126,10 @@ Trip.prototype.getGoogleDistanceMatrix = function()
 	var service = new google.maps.DistanceMatrixService();
 	console.log("SERVICE="+service);
 	service.getDistanceMatrix(dmRequest, function(response, status) {
-		console.log("Hello World!");
 		if (status == 'google.maps.DistanceMatrixService.OK' || status == 'OK')
 		{
-			console.log("HELLO WORLD!");
 			console.log(response);
 			t.distanceMatrix = response;
-			//trip.distanceMatrix.rows[0].elements[0].distance.text
-			//trip.distanceMatrix.rows[0].elements[0].duration.text
 		} 
 	});
 }
@@ -164,8 +160,6 @@ Trip.prototype.showGoogleSteps = function(directionResult)
 Trip.prototype.attachGoogleInstructions = function(marker, text)
 {
 	console.log("Trip.prototype.attachGoogleInstructions");
-
-	//console.log("this.stepDisplay="+this.stepDisplay);
 
 	var t = this;
 

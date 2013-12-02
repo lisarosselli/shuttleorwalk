@@ -19,6 +19,9 @@ var MAX_MILE_RADIUS = 5;
 var METERS_IN_MILE = 1609.34;
 var ORIGIN_BUILDING_PROXIMITY = 50;
 var messageToUser = "";
+var lastTimeQueried = "";
+
+var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 //var infoWindows = [];
 //var markers = [];
