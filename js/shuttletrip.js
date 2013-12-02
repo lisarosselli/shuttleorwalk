@@ -67,13 +67,14 @@ ShuttleTrip.prototype.queryApiWithStops = function( orig, dest)
 	var hour = today.getHours();
 	var minutes = today.getMinutes();
 
+	day = (day < 10) ? "0"+day : day;
+	hour = (hour < 10) ? "0"+hour : hour;
 	minutes = (minutes < 10) ? minutes+="0" : minutes;
 
-	// TODO: make date normal again
 	// Test only values below
-	day = 25;
-	month = 11;
-	year = 2013;
+	//day = 25;
+	//month = 11;
+	//year = 2013;
 
 	//2013-11-25T16:50:00
 	var timeString = year + "-" + month + "-" + day + "T" + hour + ":" + minutes + ":00";
