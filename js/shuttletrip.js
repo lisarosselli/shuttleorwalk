@@ -214,8 +214,34 @@ ShuttleTrip.prototype.displayShuttleRoute = function()
 	google.maps.event.addListener(this.origMarker, 'click', function() {
 		shuttletrip.origInfoWindow.open(map, shuttletrip.origMarker);
 	});
+}
 
+ShuttleTrip.prototype.getGoogleDistanceMatrix = function()
+{
+	console.log("ShuttleTrip.prototype.getGoogleDistanceMatrix");
 
+	var t = this;
+
+	var userOrigin = new google.maps.LatLng(user.currentLocation.lat, user.currentLocation.lng);
+	var userDest = new google.maps.LatLng(user.destination.lat, user.destination.lng);
+	var origStop = new google.maps.LatLng(this.origSortedStops[this.origProximity].lat, this.origSortedStops[this.origProximity].lng);
+	var destStop = new google.maps.LatLng(this.destSortedStops[this.destProximity].lat, this.destSortedStops[this.destProximity].lng);
+
+	var dmRequest = {origins: [userOrigin, destStop],
+		destinations: [origStop, userDest],
+		travelMode: google.maps.TravelMode.WALKING,
+		unitSystem: google.maps.UnitSystem.IMPERIAL
+		};
+
+	var service = new google.maps.DistanceMatrixService();
+	service.getDistanceMatrix(dmRequest, function(response, status) {
+		if (status == 'google.maps.DistanceMatrixService.OK' || status == 'OK')
+		{
+			console.log(response);
+			t.distanceMatrix = response;
+			receivedShuttleDistanceMatrix();
+		} 
+	});
 }
 
 ShuttleTrip.prototype.defineStopsClosestToOrig = function()

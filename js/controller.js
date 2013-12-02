@@ -212,5 +212,11 @@ function receivedRouteJSON()
 {
 	console.log("receivedRouteJSON");
 	shuttletrip.displayShuttleRoute();
+	shuttletrip.getGoogleDistanceMatrix();
+}
+
+function receivedShuttleDistanceMatrix()
+{
+	console.log("receivedShuttleDistanceMatrix")
 }
 
