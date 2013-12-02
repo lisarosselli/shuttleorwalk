@@ -177,11 +177,17 @@ function calculateRoute()
 		return;
 	}
 
-	//trip = new Trip();
-	//trip.getTrip(user);
+	trip = new Trip();
+	trip.getTrip(user);
 
 	shuttletrip = new ShuttleTrip();
 	shuttletrip.getShuttleTrip(user);
+}
+
+function googleDirectionsComplete()
+{
+	console.log("googleDirectionsComplete");
+	trip.getGoogleDistanceMatrix();
 }
 
 function stopsAreLoadedCallback()
@@ -201,3 +207,10 @@ function noRouteForStopsCallback()
 	console.log("noRouteForStopsCallback");
 	shuttletrip.incrementStops();
 }
+
+function receivedRouteJSON()
+{
+	console.log("receivedRouteJSON");
+	shuttletrip.displayShuttleRoute();
+}
+
