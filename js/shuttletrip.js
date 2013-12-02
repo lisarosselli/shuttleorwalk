@@ -20,6 +20,10 @@ function ShuttleTrip()
 	this.destInfoWindow = null;
 
 	this.distanceMatrix = null;
+
+	this.directionsService = null;
+	this.routeLineA = null;
+	this.routeLineB = null;
 }
 
 ShuttleTrip.prototype.getShuttleTrip = function( userObject )
@@ -48,6 +52,127 @@ ShuttleTrip.prototype.defineAndSortStops = function()
 	this.defineStopsClosestToDest();
 	this.sortStopsClosestToOrig();
 	this.sortStopsClosestToDest(this.loadedAndSorted);
+}
+
+ShuttleTrip.prototype.defineStopsClosestToOrig = function()
+{
+	if (!stops.loaded)
+	{
+		return ;
+	}
+
+	console.log("ShuttleTrip.prototype.defineStopsClosestToOrig");
+
+	var origLatLng = new google.maps.LatLng(user.currentLocation.lat, user.currentLocation.lng);
+	for (var i = 0; i < stops.stopList.length; i++)
+	{
+		var thisStop = stops.stopList[i];
+		var stopLatLng = new google.maps.LatLng(thisStop.lat, thisStop.lng);
+		thisStop.distanceToOrigin = Math.ceil(distance(origLatLng, stopLatLng));
+	}
+}
+
+ShuttleTrip.prototype.defineStopsClosestToDest = function()
+{
+	if (!stops.loaded)
+	{
+		return;
+	}
+
+	console.log("ShuttleTrip.prototype.defineStopsClosestToDest");
+
+	var destLatLng = new google.maps.LatLng(user.destination.lat, user.destination.lng);
+	for (var i = 0; i < stops.stopList.length; i++)
+	{
+		var thisStop = stops.stopList[i];
+		var stopLatLng = new google.maps.LatLng(thisStop.lat, thisStop.lng);
+		thisStop.distanceToDest = Math.ceil(distance(destLatLng, stopLatLng));
+	}
+}
+
+ShuttleTrip.prototype.sortStopsClosestToOrig = function()
+{
+	console.log("ShuttleTrip.prototype.sortStopsClosestToOrig");
+
+	this.origSortedStops = stops.stopList.slice(0);
+
+	var direction = 'ASC';
+    var smallestValueIndex;
+    var inputList = this.origSortedStops;
+	var arrSize = this.origSortedStops.length;
+
+	for (var i = 0; i < arrSize; i++)
+	{
+		// current smallest value in the array
+		smallestValueIndex = i;
+
+		for (var k = i+1; k < arrSize; k++)
+		{
+			if (compare(inputList[k].distanceToOrigin, inputList[smallestValueIndex].distanceToOrigin, direction) === true) {
+				smallestValueIndex = k;
+			}
+		}
+
+		// a new smallest value was assigned, perform a swap !
+        if (smallestValueIndex !== i) {
+            var tmp = inputList[i];
+            inputList[i] = inputList[smallestValueIndex];
+            inputList[smallestValueIndex] = tmp;
+        }
+
+	}
+}
+
+ShuttleTrip.prototype.sortStopsClosestToDest = function(callbackFxn)
+{
+	console.log("ShuttleTrip.prototype.sortStopsClosestToDest");
+
+	this.destSortedStops = stops.stopList.slice(0);
+
+	var direction = 'ASC';
+    var smallestValueIndex;
+    var inputList = this.destSortedStops;
+	var arrSize = this.destSortedStops.length;
+
+	for (var i = 0; i < arrSize; i++)
+	{
+		// current smallest value in the array
+		smallestValueIndex = i;
+
+		for (var k = i+1; k < arrSize; k++)
+		{
+			if (compare(inputList[k].distanceToDest, inputList[smallestValueIndex].distanceToDest, direction) === true) {
+				smallestValueIndex = k;
+			}
+		}
+
+		// a new smallest value was assigned, perform a swap !
+        if (smallestValueIndex !== i) {
+            var tmp = inputList[i];
+            inputList[i] = inputList[smallestValueIndex];
+            inputList[smallestValueIndex] = tmp;
+        }
+
+	}
+
+	stopsAreSortedCallback();
+}
+
+/**
+ *	Selection sort js syntax help and this algorithm curtesy of
+ *	David Shariff: http://davidshariff.com/blog/javascript-selection-sort/
+ */
+function compare(a, b, sortDir) 
+{
+	if (sortDir === 'ASC') 
+	{
+    	return a < b ? true : b;         
+    } else if (sortDir === 'DESC') 
+    {             
+        return a > b ? true : b;
+    }
+
+    return false; // error
 }
 
 ShuttleTrip.prototype.beginQueryApiForRoute = function()
@@ -245,125 +370,112 @@ ShuttleTrip.prototype.getGoogleDistanceMatrix = function()
 	});
 }
 
-ShuttleTrip.prototype.defineStopsClosestToOrig = function()
+ShuttleTrip.prototype.displayWalkingRoutes = function()
 {
-	if (!stops.loaded)
-	{
-		return ;
-	}
+	console.log("ShuttleTrip.prototype.displayWalkingRoutes");
 
-	console.log("ShuttleTrip.prototype.defineStopsClosestToOrig");
-
-	var origLatLng = new google.maps.LatLng(user.currentLocation.lat, user.currentLocation.lng);
-	for (var i = 0; i < stops.stopList.length; i++)
-	{
-		var thisStop = stops.stopList[i];
-		var stopLatLng = new google.maps.LatLng(thisStop.lat, thisStop.lng);
-		thisStop.distanceToOrigin = Math.ceil(distance(origLatLng, stopLatLng));
-	}
+	this.displayWalkingLegA();	
+	this.displayWalkingLegB();
 }
 
-ShuttleTrip.prototype.defineStopsClosestToDest = function()
+ShuttleTrip.prototype.displayWalkingLegA = function()
 {
-	if (!stops.loaded)
-	{
-		return;
-	}
+	console.log("ShuttleTrip.prototype.displayWalkingLegA");
+	var start;
+	var end;
+	var request;
+	var t = this;
 
-	console.log("ShuttleTrip.prototype.defineStopsClosestToDest");
+	start = new google.maps.LatLng(user.currentLocation.lat, user.currentLocation.lng);
+  	end = new google.maps.LatLng(this.origSortedStops[this.origProximity].lat, this.origSortedStops[this.origProximity].lng);
 
-	var destLatLng = new google.maps.LatLng(user.destination.lat, user.destination.lng);
-	for (var i = 0; i < stops.stopList.length; i++)
-	{
-		var thisStop = stops.stopList[i];
-		var stopLatLng = new google.maps.LatLng(thisStop.lat, thisStop.lng);
-		thisStop.distanceToDest = Math.ceil(distance(destLatLng, stopLatLng));
-	}
+  	request = {
+    	origin: start,
+    	destination: end,
+    	travelMode: google.maps.TravelMode.WALKING
+  	};
+
+  	this.directionsService = new google.maps.DirectionsService();
+
+  	this.directionsService.route(request, function(response, status) {
+	    if (status == google.maps.DirectionsStatus.OK || status == 'OK') {
+
+	    	// make polyline?
+	    	var route = response.routes[0];
+	    	var polyLineArray = [];
+	    	for (var i = 0; i < route.overview_path.length; i++)
+	    	{
+	    		var polyLatLng = new google.maps.LatLng(route.overview_path[i].lat(), route.overview_path[i].lng());
+	    		polyLineArray[i] = polyLatLng;
+	    	}
+
+	    	if (t.routeLineA != null)
+	    	{
+	    		console.log("attempting to set null");
+	    		t.routeLineA.setMap(null);
+	    	}
+
+	    	t.routeLineA = new google.maps.Polyline({
+	    		path: polyLineArray,
+	    		geodesic: false,
+	    		strokeColor: '#00DD33',
+	    		strokeOpacity: 0.8,
+	    		strokeWeight: 4
+	    	});
+
+	    	t.routeLineA.setMap(map);
+	    }
+  	});
 }
 
-ShuttleTrip.prototype.sortStopsClosestToOrig = function()
+ShuttleTrip.prototype.displayWalkingLegB = function()
 {
-	console.log("ShuttleTrip.prototype.sortStopsClosestToOrig");
+	console.log("ShuttleTrip.prototype.displayWalkingLegB");
+	var start;
+	var end;
+	var request;
+	var t = this;
 
-	this.origSortedStops = stops.stopList.slice(0);
+	start = new google.maps.LatLng(this.destSortedStops[this.destProximity].lat, this.destSortedStops[this.destProximity].lng);
+  	end = new google.maps.LatLng(user.destination.lat, user.destination.lng);
 
-	var direction = 'ASC';
-    var smallestValueIndex;
-    var inputList = this.origSortedStops;
-	var arrSize = this.origSortedStops.length;
+  	request = {
+    	origin: start,
+    	destination: end,
+    	travelMode: google.maps.TravelMode.WALKING
+  	};
 
-	for (var i = 0; i < arrSize; i++)
-	{
-		// current smallest value in the array
-		smallestValueIndex = i;
+  	this.directionsService = new google.maps.DirectionsService();
 
-		for (var k = i+1; k < arrSize; k++)
-		{
-			if (compare(inputList[k].distanceToOrigin, inputList[smallestValueIndex].distanceToOrigin, direction) === true) {
-				smallestValueIndex = k;
-			}
-		}
+  	this.directionsService.route(request, function(response, status) {
+	    if (status == google.maps.DirectionsStatus.OK || status == 'OK') {
 
-		// a new smallest value was assigned, perform a swap !
-        if (smallestValueIndex !== i) {
-            var tmp = inputList[i];
-            inputList[i] = inputList[smallestValueIndex];
-            inputList[smallestValueIndex] = tmp;
-        }
+	    	// make polyline?
+	    	var route = response.routes[0];
+	    	var polyLineArray = [];
+	    	for (var i = 0; i < route.overview_path.length; i++)
+	    	{
+	    		var polyLatLng = new google.maps.LatLng(route.overview_path[i].lat(), route.overview_path[i].lng());
+	    		polyLineArray[i] = polyLatLng;
+	    	}
 
-	}
-}
+	    	if (t.routeLineB != null)
+	    	{
+	    		console.log("attempting to set null");
+	    		t.routeLineB.setMap(null);
+	    	}
 
-ShuttleTrip.prototype.sortStopsClosestToDest = function(callbackFxn)
-{
-	console.log("ShuttleTrip.prototype.sortStopsClosestToDest");
+	    	t.routeLineB = new google.maps.Polyline({
+	    		path: polyLineArray,
+	    		geodesic: false,
+	    		strokeColor: '#00DD33',
+	    		strokeOpacity: 0.8,
+	    		strokeWeight: 4
+	    	});
 
-	this.destSortedStops = stops.stopList.slice(0);
-
-	var direction = 'ASC';
-    var smallestValueIndex;
-    var inputList = this.destSortedStops;
-	var arrSize = this.destSortedStops.length;
-
-	for (var i = 0; i < arrSize; i++)
-	{
-		// current smallest value in the array
-		smallestValueIndex = i;
-
-		for (var k = i+1; k < arrSize; k++)
-		{
-			if (compare(inputList[k].distanceToDest, inputList[smallestValueIndex].distanceToDest, direction) === true) {
-				smallestValueIndex = k;
-			}
-		}
-
-		// a new smallest value was assigned, perform a swap !
-        if (smallestValueIndex !== i) {
-            var tmp = inputList[i];
-            inputList[i] = inputList[smallestValueIndex];
-            inputList[smallestValueIndex] = tmp;
-        }
-
-	}
-
-	stopsAreSortedCallback();
-}
-
-/**
- *	Selection sort js syntax help and this algorithm curtesy of
- *	David Shariff: http://davidshariff.com/blog/javascript-selection-sort/
- */
-function compare(a, b, sortDir) 
-{
-	if (sortDir === 'ASC') 
-	{
-    	return a < b ? true : b;         
-    } else if (sortDir === 'DESC') 
-    {             
-        return a > b ? true : b;
-    }
-
-    return false; // error
+	    	t.routeLineB.setMap(map);
+	    }
+  	});
 }
 
 

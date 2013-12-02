@@ -217,6 +217,9 @@ function receivedRouteJSON()
 
 function receivedShuttleDistanceMatrix()
 {
-	console.log("receivedShuttleDistanceMatrix")
+	console.log("receivedShuttleDistanceMatrix");
+	shuttletrip.displayWalkingRoutes();
 }
+
+
 
