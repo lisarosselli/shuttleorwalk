@@ -200,7 +200,7 @@ ShuttleTrip.prototype.queryApiWithStops = function( orig, dest)
 
 	day = (day < 10) ? "0"+day : day;
 	hour = (hour < 10) ? "0"+hour : hour;
-	minutes = (minutes < 10) ? minutes+="0" : minutes;
+	minutes = (minutes < 10) ? "0"+minutes : minutes;
 
 	// Test only values below
 	//day = 25;
@@ -521,7 +521,43 @@ ShuttleTrip.prototype.displayWalkingLegB = function()
   	});
 }
 
+ShuttleTrip.prototype.hideMarkers = function()
+{
+	if (this.origMarker && this.destMarker)
+	{	
+		this.origMarker.setMap(null);
+		this.destMarker.setMap(null);
+	}
+}
 
+ShuttleTrip.prototype.deleteMarkers = function()
+{
+	if (this.origMarker && this.destMarker)
+	{
+		this.hideMarkers();
+		this.origMarker = null;
+		this.destMarker = null;
+	}
+}
+
+ShuttleTrip.prototype.hideRouteLines = function()
+{
+	if (this.routeLineA && this.routeLineB)
+	{
+		this.routeLineA.setMap(null);
+		this.routeLineB.setMap(null);
+	}
+}
+
+ShuttleTrip.prototype.deleteRouteLines = function()
+{
+	if (this.routeLineA && this.routeLineB)
+	{
+		this.hideRouteLines();
+		this.routeLineA = null;
+		this.routeLineB = null;
+	}
+}
 
 
 

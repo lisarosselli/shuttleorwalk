@@ -56,7 +56,7 @@ function getReverseGeocodeInfo( gmLatLng )
       		console.log("getReverseGeocodeInfo: "+results[0].formatted_address);
       		if (user)
       		{
-      			user.placeDestination(gmLatLng, results[0].formatted_address, false);
+      			user.updateDestinationInfoWindow(gmLatLng, results[0].formatted_address, false);
       		}
       	}
       } else {

@@ -24,10 +24,22 @@ function initialize()
 
 	google.maps.event.addListener(map, 'click', function(e) {
     	console.log("map clicked! at "+e.latLng.lat());
-    	user.setDestination(e.latLng.lat(), e.latLng.lng());
+
+    	if (user.currentLocation.lat == null && user.currentLocation.lng == null)
+    	{
+    		user.setCurrentLocation(e.latLng.lat(), e.latLng.lng());
+    	} else 
+    	{
+    		chooseNewDestination();
+    		user.setDestination(e.latLng.lat(), e.latLng.lng());
+    	}
   	});
 
   	document.getElementById("calcRouteBtn").onclick = calculateRoute;
+  	document.getElementById("newDestBtn").onclick = chooseNewDestination;
+  	document.getElementById("placeMyselfBtn").onclick = userPlaceSelfOrigin;
+  	document.getElementById("hideWalkingBtn").onclick = hideWalkingDisplay;
+  	document.getElementById("hideShuttleBtn").onclick = hideShuttleDisplay;
 
 
   	//$("#intro").addClass("ontop_visible");
@@ -83,7 +95,8 @@ function foundLocation( position )
  		alertUser(messageToUser);
  	}
 
- 	setUserOnMap(initialSpot);
+ 	user.setCurrentLocation(initialSpot.lat(), initialSpot.lng());
+ 	//setUserOnMap(initialSpot);
 }
 
 /**
@@ -104,7 +117,8 @@ function handleNoGeolocation( errorFlag )
 	alertUser(messageToUser);
 
 	var initialSpot = new google.maps.LatLng(BUILDINGS[0].lat, BUILDINGS[0].lng);
-	setUserOnMap(initialSpot);
+	user.setCurrentLocation(initialSpot.lat(), initialSpot.lng());
+	//setUserOnMap(initialSpot);
 }
 
 /**
@@ -113,8 +127,11 @@ function handleNoGeolocation( errorFlag )
  *	put the user near Harvard Square, in this case, the Coop.
  *	Or if their location is legit, place them on the map.
  */
+ /*
 function setUserOnMap( initialSpot )
 {
+	user.setCurrentLocation(initialSpot.lat(), initialSpot.lng());
+	/*
 	var marker;
 	var infoWindow;
 
@@ -141,7 +158,9 @@ function setUserOnMap( initialSpot )
 	google.maps.event.addListener(marker, 'click', function() {
 		infoWindow.open(map,marker);
 	});
+
 }
+*/
 
 /**
  *	Alert the user
@@ -177,11 +196,66 @@ function calculateRoute()
 		return;
 	}
 
+	hideWalkingDisplay();
+	hideShuttleDisplay();
+
+	delete trip;
+	delete shuttletrip;
+
 	trip = new Trip();
 	trip.getTrip(user);
 
 	shuttletrip = new ShuttleTrip();
 	shuttletrip.getShuttleTrip(user);
+}
+
+function userPlaceSelfOrigin()
+{
+	console.log("userPlaceSelfOrigin");
+
+	hideWalkingDisplay();
+	hideShuttleDisplay();
+
+	user.removeOriginMarker();
+}
+
+function clearMap()
+{
+	hideWalkingDisplay();
+	hideShuttleDisplay();
+	user.removeOriginMarker();
+	user.removeDestinationMarker();
+	delete trip;
+	delete shuttletrip;
+}
+
+function chooseNewDestination()
+{
+	hideWalkingDisplay();
+	hideShuttleDisplay();
+
+	delete trip;
+	delete shuttletrip;
+
+	user.removeDestinationMarker();
+}
+
+function hideWalkingDisplay()
+{
+	console.log("hideWalkingDisplay");
+	if (trip) {
+		trip.hideRouteLine();
+	}
+}
+
+function hideShuttleDisplay()
+{
+	console.log("hideShuttleDisplay");
+	if (shuttletrip)
+	{
+		shuttletrip.hideMarkers();
+		shuttletrip.hideRouteLines();
+	}
 }
 
 function googleDirectionsComplete()

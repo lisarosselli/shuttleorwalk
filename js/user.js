@@ -10,12 +10,14 @@ function User()
 			lat: null,
 			lng: null,
 			marker: null,
+			infoWindow: null,
 		};
 
 	this.destination = {
 		lat: null,
 		lng: null,
-		marker: null
+		marker: null,
+		infoWindow: null
 	};
 }
 
@@ -41,28 +43,95 @@ User.prototype.isOnCampus = function()
 	}
 }
 
+User.prototype.setCurrentLocation = function(latitude, longitude)
+{
+	console.log("User.prototype.setCurrentLocation for lat=" + latitude + " lng=" + longitude);
+
+	var img;
+	var shape;
+	var oMarker;
+	var oInfoWindow;
+
+	this.removeOriginMarker();
+
+	this.currentLocation.lat = latitude;
+	this.currentLocation.lng = longitude;
+
+	//http://mt.google.com/vt/icon?psize=27&font=fonts/Roboto-Bold.ttf&color=ff135C13&name=icons/spotlight/spotlight-waypoint-a.png&ax=43&ay=50&text=%E2%80%A2
+
+	img = { url: "http://mt.google.com/vt/icon?psize=27&font=fonts/Roboto-Bold.ttf&color=ff133C00&name=icons/spotlight/spotlight-waypoint-a.png&ax=43&ay=50&text=%E2%80%A2",
+					size: new google.maps.Size(22, 40),
+					origin: new google.maps.Point(0, 0),
+					anchor: new google.maps.Point(11, 40),
+			};
+
+	shape = { coord: [0, 0, 0, 22, 40, 22, 40 , 0],
+  				type: 'poly'
+		};
+
+	oMarker = new google.maps.Marker({
+		position: new google.maps.LatLng(this.currentLocation.lat, this.currentLocation.lng),
+		icon: img,
+		shape: shape,
+		map: map,
+		animation: google.maps.Animation.DROP,
+		title: "You are here!"
+	});
+
+	this.currentLocation.marker = oMarker;
+
+	oInfoWindow = new google.maps.InfoWindow({
+		content: this.currentLocation.marker.title
+	});	
+
+	this.currentLocation.infoWindow = oInfoWindow;
+
+	oMarker.setMap(map);
+	oInfoWindow.open(map, this.currentLocation.marker);
+
+	google.maps.event.addListener(user.currentLocation.marker, 'click', function() {
+		user.currentLocation.infoWindow.open(map, user.currentLocation.marker);
+	});	
+}
+
 User.prototype.setDestination = function(latitude, longitude)
 {
 	console.log("User.prototype.setDestination for lat=" + latitude + " lng=" + longitude);
+
+	var dMarker;
+	var dInfoWindow;
 
 	// hold the incoming info, encapsulated to this object
 	this.destination.lat = latitude;
 	this.destination.lng = longitude;
 
+	console.log("THIS?"+this);
+	console.log(this.destination.lat);
+	console.log(this.destination.lng);
+
 	// drop the destination marker
-	var dMarker = new google.maps.Marker({
+	dMarker = new google.maps.Marker({
     	position: new google.maps.LatLng(this.destination.lat, this.destination.lng),
     	map: map,
     	animation: google.maps.Animation.DROP,
     	title: "Destination"
 	});
 
-	if (this.destination.marker != null)
-	{
-		this.removeDestinationMarker();
-	}
-
 	this.destination.marker = dMarker;
+
+	dInfoWindow = new google.maps.InfoWindow({
+		content: this.destination.marker.title
+	});
+
+	this.destination.infoWindow = dInfoWindow;
+
+	dMarker.setMap(map);
+	dInfoWindow.open(map, this.destination.marker);
+
+	google.maps.event.addListener(user.destination.marker, 'click', function() {
+		user.destination.infoWindow.open(map, user.destination.marker);
+	});	
+
 	this.queryDestination();
 }
 
@@ -86,6 +155,7 @@ User.prototype.queryDestination = function()
 			console.log("\tUser.prototype.queryDestination found: "+thisBuilding.name+" : "+thisBuilding.address);
 			infoWindowString = thisBuilding.name;
 			isHarvardBuilding = true;
+			user.destination.marker.title = thisBuilding.name;
 
 			// TODO: if more than 1 match, store in array and present to user?
 			// i.e. which building are you at?
@@ -98,10 +168,25 @@ User.prototype.queryDestination = function()
 		getReverseGeocodeInfo(userDestLatLng);
 	} else
 	{
-		this.placeDestination(userDestLatLng, infoWindowString, isHarvardBuilding);
+		this.updateDestinationInfoWindow(userDestLatLng, infoWindowString, isHarvardBuilding);
 	}
 }
 
+User.prototype.updateDestinationInfoWindow = function(gmLatLng, buildingStringInfo, isHarvardBuilding)
+{
+	console.log("User.prototype.updateDestinationInfoWindow");
+
+	if (isHarvardBuilding)
+	{
+		this.destination.infoWindow.setContent("<div><img class='harvardH' src='img/harvard_H.png'/>&nbsp;"+
+			buildingStringInfo+"</div>");
+	} else
+	{
+		this.destination.infoWindow.setContent("<div>"+buildingStringInfo+"</div>");
+	}
+}
+
+/*
 User.prototype.placeDestination = function( gmLatLng, buildingStringInfo, isHarvardBuilding)
 {
 	console.log("User.prototype.placeDestination");
@@ -134,41 +219,6 @@ User.prototype.placeDestination = function( gmLatLng, buildingStringInfo, isHarv
 	}
 
 	infoWindow.open(map, this.destination.marker);
-}
-
-/*
-User.prototype.queryDestination = function()
-{
-	console.log("User.prototype.queryDestination");
-
-	var userDestLatLng = new google.maps.LatLng(this.destination.lat, this.destination.lng);
-
-	for (var i = 0; i < BUILDINGS.length; i++)
-	{
-		var thisBuilding = BUILDINGS[i];
-		var buildingLatLng = new google.maps.LatLng(thisBuilding.lat, thisBuilding.lng);
-		var d = distance(userDestLatLng, buildingLatLng);
-		if (d < ORIGIN_BUILDING_PROXIMITY)
-		{
-			console.log("User.prototype.queryDestination found: "+thisBuilding.name+" : "+thisBuilding.address);
-
-			if (this.destination.marker != null)
-			{
-				var infoWindow = new google.maps.InfoWindow();
-				infoWindow.setContent("<div><img class='harvardH' src='img/harvard_H.png'/>&nbsp;"+thisBuilding.name+"</div>");
-				infoWindow.open(map, this.destination.marker);
-			}
-
-			return thisBuilding;
-		}
-	}
-
-	// TODO: this needs to be fixed. If the destination is say within 5 miles of campus, regardless of
-	// if it's a recognized building, should become the this.destination.marker
-
-	console.log("User.prototype.queryDestination :: building not found in Harvard JSON.");
-	reverseGeocode(userDestLatLng);
-	return null;
 }*/
 
 /**
@@ -205,4 +255,45 @@ User.prototype.originIsNull = function()
 	}
 
 	return false;
+}
+
+User.prototype.hideDestinationMarker = function()
+{
+	if (this.destination.marker)
+	{
+		this.destination.marker.setMap(null);
+	}
+}
+
+User.prototype.hideOriginMarker = function()
+{
+	if (this.currentLocation.marker)
+	{
+		this.currentLocation.marker.setMap(null);
+	}
+}
+
+User.prototype.removeDestinationMarker = function()
+{
+	console.log("HEYY! removeDestinationMarker");
+	if (this.destination.marker)
+	{
+		this.hideDestinationMarker();
+		this.destination.lat = null;
+		this.destination.lng = null;
+		this.destination.marker = null;
+		this.destination.infoWindow = null;
+	}
+}
+
+User.prototype.removeOriginMarker = function()
+{
+	if (this.currentLocation.marker)
+	{
+		this.hideOriginMarker();
+		this.currentLocation.lat = null;
+		this.currentLocation.lng = null;
+		this.currentLocation.marker = null;
+		this.currentLocation.infoWindow = null;
+	}
 }

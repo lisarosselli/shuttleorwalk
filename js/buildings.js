@@ -18,14 +18,14 @@ var BUILDINGS = [
     },
     {
         root: "04558",
-        name: "1 Bow Street",
+        name: "Dept. of Sanskrit and Indian Studies",
         address: "1238 Massachusetts Ave",
         lat: 42.372341075,
         lng: -71.116148412
     },
     {
         root: "02121",
-        name: "1 Brattle Square",
+        name: "Division of Continuing Education",
         address: "1 Brattle Sq",
         lat: 42.373523361,
         lng: -71.121240176
@@ -109,7 +109,7 @@ var BUILDINGS = [
     },
     {
         root: "03221",
-        name: "103 Walker Street, Cabot House",
+        name: "Cabot House",
         address: "103 Walker St",
         lat: 42.381780696,
         lng: -71.123183776
@@ -1243,7 +1243,7 @@ var BUILDINGS = [
     },
     {
         root: "04021",
-        name: "51 Brattle Street",
+        name: "Harvard Extension School",
         address: "51 Brattle St",
         lat: 42.374646478,
         lng: -71.121396516
