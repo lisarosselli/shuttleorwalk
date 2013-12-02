@@ -14,6 +14,7 @@ function Trip()
 	this.directionsService = null;
 	//this.polylineArray = [];
 	this.routeLine = null;
+	this.distanceMatrix = null;
 }
 
 Trip.prototype.getTrip = function( userObject )
@@ -75,7 +76,6 @@ Trip.prototype.getGoogleDirections = function()
 
   	this.directionsService.route(request, function(response, status) {
 	    if (status == google.maps.DirectionsStatus.OK) {
-	    	console.log(response);
 
 	    	// make polyline?
 	    	var route = response.routes[0];
@@ -93,11 +93,9 @@ Trip.prototype.getGoogleDirections = function()
 	    		t.routeLine.setMap(null);
 	    	}
 
-
-
 	    	t.routeLine = new google.maps.Polyline({
 	    		path: polyLineArray,
-	    		geodesic: true,
+	    		geodesic: false,
 	    		strokeColor: '#0033FF',
 	    		strokeOpacity: 0.8,
 	    		strokeWeight: 4
@@ -106,9 +104,38 @@ Trip.prototype.getGoogleDirections = function()
 	    	t.routeLine.setMap(map);
 
 	    	//t.showGoogleSteps(response);
+	    	googleDirectionsComplete();
 	    }
   	});
+}
 
+Trip.prototype.getGoogleDistanceMatrix = function()
+{
+	console.log("Trip.prototype.getGoogleDistanceMatrix");
+	
+	var t = this;
+
+	var userOrigin = new google.maps.LatLng(user.currentLocation.lat, user.currentLocation.lng);
+	var userDest = new google.maps.LatLng(user.destination.lat, user.destination.lng);
+	var dmRequest = {origins: [userOrigin],
+		destinations: [userDest],
+		travelMode: google.maps.TravelMode.WALKING,
+		unitSystem: google.maps.UnitSystem.IMPERIAL
+		};
+
+	var service = new google.maps.DistanceMatrixService();
+	console.log("SERVICE="+service);
+	service.getDistanceMatrix(dmRequest, function(response, status) {
+		console.log("Hello World!");
+		if (status == 'google.maps.DistanceMatrixService.OK' || status == 'OK')
+		{
+			console.log("HELLO WORLD!");
+			console.log(response);
+			t.distanceMatrix = response;
+			//trip.distanceMatrix.rows[0].elements[0].distance.text
+			//trip.distanceMatrix.rows[0].elements[0].duration.text
+		} 
+	});
 }
 
 Trip.prototype.showGoogleSteps = function(directionResult)
@@ -151,6 +178,21 @@ Trip.prototype.attachGoogleInstructions = function(marker, text)
 	});
 }
 
+Trip.prototype.getGoogleDistance = function()
+{
+	if (this.distanceMatrix != null)
+	{
+		return this.distanceMatrix.rows[0].elements[0].distance.text;
+	}
+}
+
+Trip.prototype.getGoogleDuration = function()
+{
+	if (this.distanceMatrix != null)
+	{
+		return this.distanceMatrix.rows[0].elements[0].duration.text;
+	}
+}
 /*
 [
 	{"departs":"2013-11-25T05:50:00","arrives":"2013-11-25T05:55:00","key":"Quad-Stadium Express C 1011"},
