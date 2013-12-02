@@ -12,6 +12,14 @@ function ShuttleTrip()
 	this.destProximity = 0;
 	this.JSONCall = null;
 	this.routeResponse = null;
+
+	this.origMarker = null;
+	this.destMarker = null;
+
+	this.origInfoWindow = null;
+	this.destInfoWindow = null;
+
+	this.distanceMatrix = null;
 }
 
 ShuttleTrip.prototype.getShuttleTrip = function( userObject )
@@ -19,8 +27,17 @@ ShuttleTrip.prototype.getShuttleTrip = function( userObject )
 	console.log("ShuttleTrip.prototype.getShuttleTrip");
 
 	stops = new Stops();
-	//stops.loadStops(this.initialLoadCallback);
 	stops.loadStops(stopsAreLoadedCallback);
+
+	if (this.origMarker)
+	{
+		this.origMarker.setMap(null);
+	}
+
+	if (this.destMarker)
+	{
+		this.destMarker.setMap(null);
+	}
 }
 
 ShuttleTrip.prototype.defineAndSortStops = function()
@@ -47,10 +64,24 @@ ShuttleTrip.prototype.queryApiWithStops = function( orig, dest)
 	var day = today.getDate();
 	var month = today.getMonth() + 1;
 	var year = today.getFullYear();
+	var hour = today.getHours();
+	var minutes = today.getMinutes();
+
+	minutes = (minutes < 10) ? minutes+="0" : minutes;
+
+	// TODO: make date normal again
+	// Test only values below
+	day = 25;
+	month = 11;
+	year = 2013;
+
+	//2013-11-25T16:50:00
+	var timeString = year + "-" + month + "-" + day + "T" + hour + ":" + minutes + ":00";
+
+	console.log("timeString="+timeString);
 
 	shuttletrip.JSONCall = "http://shuttleboy.cs50.net/api/" + apiVersion + "/trips?a=" +
-		orig.stop + "&b=" + dest.stop + "&sdt=" + year + "-" + month + "-" + day +
-		"&output=json";
+		orig.stop + "&b=" + dest.stop + "&sdt=" + timeString + "&output=json";
 
 	console.log(shuttletrip.JSONCall);
 
@@ -80,6 +111,10 @@ ShuttleTrip.prototype.queryApiWithStops = function( orig, dest)
 			if (t.routeResponse == null || t.routeResponse.length == 0)
 			{
 				noRouteForStopsCallback();
+			} else
+			{
+				receivedRouteJSON();
+				// TODO: mark the stops on the map
 			}
 		}
 	}
@@ -89,6 +124,14 @@ ShuttleTrip.prototype.queryApiWithStops = function( orig, dest)
 
 }
 
+/**
+ *	incrementStops
+ *	This is an attempt to find an appropriate shuttle route for the user.
+ *	Just because we have an origin stop and a destination stop does not
+ *	mean there is a shuttle route that satisfies both requirements.
+ *	This attempts to match up the closest few stops to both origin and
+ *	destination to a route that is running.
+ */
 ShuttleTrip.prototype.incrementStops = function()
 {
 	if (this.origProximity == this.destProximity)
@@ -97,10 +140,14 @@ ShuttleTrip.prototype.incrementStops = function()
 	} else if (this.destProximity > this.origProximity)
 	{
 		this.origProximity++;
+		this.destProximity--;
+	} else
+	{
+		this.destProximity++;
 	}
 
 	if (this.origProximity >= 2 || this.destProximity >= 2 ||
-		this.origSortedStops[this.origProximity].stop == this.destSortedStops[destProximity].stop)
+		this.origSortedStops[this.origProximity].stop == this.destSortedStops[this.destProximity].stop)
 	{
 		// TODO: alert the user there is no appropriate running route at this time
 		console.log("ShuttleTrip.prototype.incrementStops :: No appropriate route running right now.")
@@ -108,6 +155,67 @@ ShuttleTrip.prototype.incrementStops = function()
 	}
 
 	this.queryApiWithStops(this.origSortedStops[this.origProximity], this.destSortedStops[this.destProximity]);
+}
+
+ShuttleTrip.prototype.displayShuttleRoute = function()
+{
+	console.log("ShuttleTrip.prototype.displayShuttleRoute");
+
+	var origStop = this.origSortedStops[this.origProximity];
+	var destStop = this.destSortedStops[this.destProximity];
+
+	var origLatLng = new google.maps.LatLng(origStop.lat, origStop.lng);
+	var destLatLng = new google.maps.LatLng(destStop.lat, destStop.lng);
+
+	var img = { url: "img/square_marker.png",
+					size: new google.maps.Size(23, 24),
+					origin: new google.maps.Point(0, 0),
+					anchor: new google.maps.Point(13, 24),
+			};
+
+	var shape = { coord: [1, 1, 1, 23, 25, 23, 25 , 1],
+			type: 'poly'
+	};
+
+	// propagate Google Maps markers and info windows
+	this.origMarker = new google.maps.Marker({
+		position: origLatLng,
+		map: map,
+		icon: img,
+		shape: shape,
+		animation: google.maps.Animation.DROP,
+		title: origStop.stop
+	})
+
+	this.destMarker = new google.maps.Marker({
+		position: destLatLng,
+		map: map,
+		icon: img,
+		shape: shape,
+		animation: google.maps.Animation.DROP,
+		title: destStop.stop
+	})
+
+	this.origInfoWindow = new google.maps.InfoWindow({
+		content: this.origSortedStops[this.origProximity].stop
+	});
+
+	this.destInfoWindow = new google.maps.InfoWindow({
+		content: this.destSortedStops[this.destProximity].stop
+	});
+
+	this.origInfoWindow.open(map, this.origMarker);
+	this.destInfoWindow.open(map, this.destMarker);
+
+	google.maps.event.addListener(this.destMarker, 'click', function() {
+		shuttletrip.destInfoWindow.open(map, shuttletrip.destMarker);
+	});
+
+	google.maps.event.addListener(this.origMarker, 'click', function() {
+		shuttletrip.origInfoWindow.open(map, shuttletrip.origMarker);
+	});
+
+
 }
 
 ShuttleTrip.prototype.defineStopsClosestToOrig = function()
