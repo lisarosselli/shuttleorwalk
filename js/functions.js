@@ -86,3 +86,44 @@ function createInfoWindow(windowTitle, windowText)
 
   	return infowindow;
 }
+
+function getLocalDateHours(dateJSON)
+{
+	var d = new Date(dateJSON);
+	var tzo = d.getTimezoneOffset() / 60;
+	return d.getHours() + tzo;
+}
+
+function getMinuteDifference( dateA, dateB )
+{
+	var a = new Date(dateA);
+	var b = new Date(dateB);
+	var shuttleMins = null;
+
+	a.min = a.getMinutes();
+	b.min = b.getMinutes();
+
+	if (a.min > b.min)
+	{
+		shuttleMins = (60 - a.min) + b.min;
+	} else if (b.min > a.min)
+	{
+		shuttleMins = b.min - a.min;
+	} else 
+	{
+		shuttleMins = 60;
+	}
+
+	return shuttleMins;
+}
+
+function secondsRoundToMinute( seconds )
+{
+	return Math.round(seconds / 60);
+}
+
+function roundToOneDecimal(n)
+{
+	var num = n / METERS_IN_MILE;
+	return num.toFixed(1);
+}
