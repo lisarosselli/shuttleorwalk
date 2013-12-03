@@ -11,6 +11,7 @@ body {
 	margin: 0;
 	padding: 0;
 	height: 100%;
+	font-family: 'Roboto';
 }
 
 #map-canvas {
@@ -20,6 +21,34 @@ body {
 }
 
 /* Intro screen specs */
+@-webkit-keyframes introFade {
+	100% {
+		opacity: 0;
+		visibility: hidden;
+	}
+}
+
+@-moz-keyframes introFade {
+	100% {
+		opacity: 0;
+		visibility: hidden;
+	}
+}
+
+@-o-keyframes introFade {
+	100% {
+		opacity: 0;
+		visibility: hidden;
+	}
+}
+
+@keyframes introFade {
+	100% {
+		opacity: 0;
+		visibility: hidden;
+	}
+}
+
 #intro {
 	position: absolute;
 	top: 0;
@@ -27,6 +56,30 @@ body {
 	height: 100%;
 	width: 100%;
 	background-color: #3300DD;
+
+	-webkit-animation: introFade 0.3s linear 2s;
+	-moz-animation: introFade 0.3s linear 2s;
+	-o-animation: introFade 0.3s linear 2s;
+	animation: introFade 0.3s linear 2s;
+
+	-webkit-animation-fill-mode: forwards;
+	-moz-animation-fill-mode: forwards;
+	-o-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes imgMoveUp
+{
+	100% {
+		-webkit-transform: translate(0px, -25px);
+	}
+}
+
+@keyframes imgMoveUp
+{
+	100% {
+		transform: translate(0px, -25px);
+	}
 }
 
 #intro img
@@ -34,21 +87,76 @@ body {
 	left: 48%;
 	top: 45%;
 	position: absolute;
-	width: 64px;
-	height: 64px;
+	width: 32px;
+	height: 32px;
+
+	-webkit-animation: imgMoveUp 0.2s ease-in-out 1s;
+	-moz-animation: imgMoveUp 0.2s ease-in-out 1s;
+	-o-animation: imgMoveUp 0.2s ease-in-out 1s;
+	animation: imgMoveUp 0.2s ease-in-out 1s;
+
+	-webkit-animation-fill-mode: forwards;
+	-moz-animation-fill-mode: forwards;
+	-o-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes smilieFade
+{
+	100% {
+		opacity: 1;
+	}
+}
+
+@-moz-keyframes smilieFade
+{
+	100% {
+		opacity: 1;
+	}
+}
+
+@-o-keyframes smilieFade
+{
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes smilieFade
+{
+	100% {
+		opacity: 1;
+	}
 }
 
 #smilie
 {
-	left: 48%;
-	top: 45%;
+	left: 44%;
+	top: 44%;
 	position: absolute;
-	width: 64px;
-	height: 64px;
-	font-size: 40px;
-	padding-left: 25px;
+	width: 132px;
+	height: 32px;
+	font-size: 20px;
 	color: white;
+	text-align: center;
+	opacity: 0;
+	line-height: 17px;
 
+	-webkit-animation: smilieFade 0.3s linear 1.3s;
+	-moz-animation: smilieFade 0.3s linear 1.3s;
+	-o-animation: smilieFade 0.3s linear 1.3s;
+	animation: smilieFade 0.3s linear 1.3s;
+
+	-webkit-animation-fill-mode: forwards;
+	-moz-animation-fill-mode: forwards;
+	-o-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+}
+
+#smilie .footnote {
+	color: white;
+	font-size: small;
+	line-height: 0.2em;
 }
 /* end Intro screen */
 

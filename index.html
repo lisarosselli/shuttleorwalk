@@ -6,6 +6,7 @@
     
     <!-- Bootstrap -->
     <!--<link href="css/bootstrap.min.css" rel="stylesheet">-->
+    <link href="css/animate-custom.css" rel="stylesheet">
     <link href="css/shuttlewalk.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -18,10 +19,11 @@
   </head>
   <body>
     <!--<div class="alert alert-warning alert-dismissable">Hello world?</div>-->
-    <!--<<div id="intro" class="ontop_visible">
-        <img id="logo" src="img/bus_64.png" />
-        <h2 id="smilie">:)<br/></h2>
-    </div>-->
+    
+    
+
+    <div id="map-canvas"/></div>
+
     <div id="UIContainer">
       <button id="calcRouteBtn">Calculate route</button><br/>
       <button id="hideWalkingBtn">Hide Walking Route</button><br/>
@@ -29,13 +31,11 @@
       <button id="newDestBtn">New Destination</button>
       <button id="placeMyselfBtn">Place myself</button>
     </div>
-    <div id="map-canvas"/></div>
     
-    
-
-    <!-- Bootstrap -->
-    <!--<script src="js/jquery-2.0.3.min.js"></script>-->
-    <!--<script src="js/bootstrap.min.js"></script>-->
+    <div id="intro" class="ontop_visible">
+        <img id="logo" src="img/bus_64.png" />
+        <h2 id="smilie">:)<br/><span class="footnote">Geolocating you...</span></h2>
+    </div>
 
     <!-- TODO: replace API key with the one for your domain -->
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA4lMv_JZltQMMVpyjGO3AFFHFMor8K0Ak&sensor=true"></script>
