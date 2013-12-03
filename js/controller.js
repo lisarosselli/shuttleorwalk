@@ -40,12 +40,6 @@ function initialize()
   	document.getElementById("placeMyselfBtn").onclick = userPlaceSelfOrigin;
   	document.getElementById("hideWalkingBtn").onclick = hideWalkingDisplay;
   	document.getElementById("hideShuttleBtn").onclick = hideShuttleDisplay;
-
-
-  	//$("#intro").addClass("ontop_visible");
-  	//$("#intro").delay(1500).fadeOut(300);
-  	//$("#logo").delay(500).animate({top: '38%'}, 350, 'swing');
-  	//$("#smilie").hide().delay(500).fadeIn(250);
 }
 
 /**
@@ -54,7 +48,6 @@ function initialize()
 function findLocation() 
 {
 	console.log("findLocation");
-	//$("#intro").addClass("ontop");
 
  	if (navigator.geolocation)
  	{
@@ -65,9 +58,6 @@ function findLocation()
  	}
 
  	document.getElementById("UIContainer").className += "ontop_visible";
-
- 	//$("#intro").fadeOut();
- 	//loadStops();
 }
 
 /**
@@ -81,9 +71,6 @@ function foundLocation( position )
 	var marker = null;
 	var infoWindow = null;
 
- 	//user.currentLocation.lat = position.coords.latitude;
- 	//user.currentLocation.lng = position.coords.longitude;
-
  	if (user.isOnCampus())
  	{
  		initialSpot = new google.maps.LatLng(user.currentLocation.lat, user.currentLocation.lng);
@@ -96,7 +83,6 @@ function foundLocation( position )
  	}
 
  	user.setCurrentLocation(initialSpot.lat(), initialSpot.lng());
- 	//setUserOnMap(initialSpot);
 }
 
 /**
@@ -118,49 +104,7 @@ function handleNoGeolocation( errorFlag )
 
 	var initialSpot = new google.maps.LatLng(BUILDINGS[0].lat, BUILDINGS[0].lng);
 	user.setCurrentLocation(initialSpot.lat(), initialSpot.lng());
-	//setUserOnMap(initialSpot);
 }
-
-/**
- *	If geolocation fails, browser does not support geolocation, 
- *	or user has been geolocated and is not found to be on campus:
- *	put the user near Harvard Square, in this case, the Coop.
- *	Or if their location is legit, place them on the map.
- */
- /*
-function setUserOnMap( initialSpot )
-{
-	user.setCurrentLocation(initialSpot.lat(), initialSpot.lng());
-	/*
-	var marker;
-	var infoWindow;
-
-	map.setCenter(initialSpot);
-
-	user.currentLocation.lat = initialSpot.lat();
-	user.currentLocation.lng = initialSpot.lng();
-
- 	// drop a marker
- 	marker = new google.maps.Marker({
-    	position: initialSpot,
-    	map: map,
-    	animation: google.maps.Animation.DROP,
-    	title: "You are here."
-	});
-
- 	// show an info window
- 	infoWindow = createInfoWindow("Hello!", "You are here.");
- 	infoWindow.open(map,marker);
- 	user.currentLocation.marker = marker;
-	//markers.push(marker);
-	//infoWindows.push(infoWindow);
-
-	google.maps.event.addListener(marker, 'click', function() {
-		infoWindow.open(map,marker);
-	});
-
-}
-*/
 
 /**
  *	Alert the user
