@@ -4,26 +4,59 @@
     <title>Shuttlewalk</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   
+    <style type="text/css">
+
+      body {
+        padding: 30px;
+      }
+
+      #animate {
+        position: absolute;
+        top: 100px;
+        left: 30px;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: red;
+        
+        animation: move 3s ease infinite;
+        -webkit-animation: move 3s ease infinite;
+        -o-animation: move 3s ease infinite;
+        -moz-animation: move 3s ease infinite;
+      }
+
+      @keyframes move {
+        50% {
+           transform: translate(100px, 100px);
+        }
+      }
+
+      @-webkit-keyframes move {
+        50% {
+           -webkit-transform: translate(100px, 100px);
+        }
+      }
+
+      @-o-keyframes move {
+        50% {
+           -o-transform: translate(100px, 100px);
+        }
+      }
+
+      @-moz-keyframes move {
+        50% {
+           -moz-transform: translate(100px, 100px);
+        }
+      }
+    </style>
+  
   </head>
   <body>
-    <h3>Hello world!</h3>
+    <h1>Animate with Translate</h1>
+
+<div id="animate"></div>
 
     <script type="text/javascript">
-      
-      var d1 = "2013-12-02T10:15:00";
-      console.log(d1);
-      
-      var d3 = new Date(d1);
-      console.log(d3);
-
-      console.log(d3.getHours());
-      console.log(d3.getTimezoneOffset()/60);
-
-      var tzo = d3.getTimezoneOffset()/60;
-
-      console.log(d3.getHours() + tzo);
-      
-
 
     </script>
   

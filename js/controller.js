@@ -6,6 +6,7 @@
 function initialize() 
 {
 	console.log("initialize");
+
 	user = new User();
 
 	// get a suitable building/location to be the default
@@ -38,8 +39,9 @@ function initialize()
   	document.getElementById("calcRouteBtn").onclick = calculateRoute;
   	document.getElementById("newDestBtn").onclick = chooseNewDestination;
   	document.getElementById("placeMyselfBtn").onclick = userPlaceSelfOrigin;
-  	document.getElementById("hideWalkingBtn").onclick = hideWalkingDisplay;
-  	document.getElementById("hideShuttleBtn").onclick = hideShuttleDisplay;
+  	//document.getElementById("hideWalkingBtn").onclick = hideWalkingDisplay;
+  	//document.getElementById("hideShuttleBtn").onclick = hideShuttleDisplay;
+  	document.getElementById("closeX").onclick = closeUI;
 }
 
 /**
@@ -114,15 +116,22 @@ function alertUser( message )
 	//alert(messageToUser);
 }
 
+function closeUI()
+{
+	console.log("closeUI");
+	document.getElementById("UIContainer").className = "fadeOutDown";
+}
+
 /**
  * Load stops.
  */
+ /*
 function loadStops()
 {
 	stops = new Stops();
 	stops.loadStops(testCallback);
 }
-
+*/
 function testCallback()
 {
 	console.log("testCallback");
