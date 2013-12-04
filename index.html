@@ -3,10 +3,7 @@
   <head>
     <title>Shuttlewalk</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    
-    <!-- Bootstrap -->
-    <!--<link href="css/bootstrap.min.css" rel="stylesheet">-->
-    <link href="css/animate-custom.css" rel="stylesheet">
+    <!--<link href="css/animate-custom.css" rel="stylesheet">-->
     <link href="css/shuttlewalk.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -24,13 +21,24 @@
 
     <div id="map-canvas"/></div>
 
+    <div id="greenUIArrow"></div>
+
     <div id="UIContainer">
       <button id="closeX"></button>
-      <button id="calcRouteBtn">Calculate route</button><br/>
-      <!--<button id="hideWalkingBtn">Hide Walking Route</button><br/>
-      <button id="hideShuttleBtn">Hide Shuttle Info</button><br/>-->
-      <button id="newDestBtn">New Destination</button><br/>
-      <button id="placeMyselfBtn">Your geolocation is wrong. I'll place myself on the map, thanks.</button>
+      <div id="uiInner">
+
+        <div id="uiView1">
+          <button id="calcRouteBtn">Calculate route</button><br/>
+          <button id="newDestBtn">New Destination</button><br/>
+          <button id="placeMyselfBtn">Your geolocation is wrong. I'll place myself on the map, kthxbai.</button>
+        </div>
+
+        <div id="uiView2">
+          <p id="walking">Some text here.</p>
+          <p id="shuttle">Some shuttle bus text here.</p>
+        </div> 
+        
+      </div>
     </div>
     
     <div id="intro" class="ontop_visible">
