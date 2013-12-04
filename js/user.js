@@ -186,41 +186,6 @@ User.prototype.updateDestinationInfoWindow = function(gmLatLng, buildingStringIn
 	}
 }
 
-/*
-User.prototype.placeDestination = function( gmLatLng, buildingStringInfo, isHarvardBuilding)
-{
-	console.log("User.prototype.placeDestination");
-
-	var infoWindow = new google.maps.InfoWindow();
-
-	// Remove any existing destination marker
-	if (this.destination.marker != null)
-	{
-		this.removeDestinationMarker();
-	}
-
-	// Place new marker
-	marker = new google.maps.Marker({
-		position: gmLatLng,
-		map: map
-	})
-
-	this.destination.marker = marker;
-
-	if (isHarvardBuilding)
-	{
-		// use nice format
-		infoWindow.setContent("<div><img class='harvardH' src='img/harvard_H.png'/>&nbsp;"+
-			buildingStringInfo+"</div>");
-	} else
-	{
-		// use meh format
-		infoWindow.setContent("<div>"+buildingStringInfo+"</div>")
-	}
-
-	infoWindow.open(map, this.destination.marker);
-}*/
-
 /**
  *	Removes destination marker
  */
