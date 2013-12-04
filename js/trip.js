@@ -130,6 +130,7 @@ Trip.prototype.getGoogleDistanceMatrix = function()
 		{
 			console.log(response);
 			t.distanceMatrix = response;
+			tripInfoLoaded();
 		} 
 	});
 }

@@ -385,6 +385,7 @@ ShuttleTrip.prototype.parseRouteTimes = function()
 
 	console.log("this.walkingDistance="+this.walkingDistance);
 
+	shuttleInfoLoaded();
 }
 
 ShuttleTrip.prototype.getGoogleDistanceMatrix = function()

@@ -42,6 +42,8 @@ function initialize()
   	//document.getElementById("hideWalkingBtn").onclick = hideWalkingDisplay;
   	//document.getElementById("hideShuttleBtn").onclick = hideShuttleDisplay;
   	document.getElementById("closeX").onclick = closeUI;
+  	//document.getElementById("UIContainer").onclick = closeUI;
+  	document.getElementById("greenUIArrow").onclick = openUI;
 }
 
 /**
@@ -59,7 +61,8 @@ function findLocation()
  		handleNoGeolocation(true);
  	}
 
- 	document.getElementById("UIContainer").className += "ontop_visible";
+ 	document.getElementById("UIContainer").className += "hide";
+ 	document.getElementById("greenUIArrow").className += "show";
 }
 
 /**
@@ -119,7 +122,15 @@ function alertUser( message )
 function closeUI()
 {
 	console.log("closeUI");
-	document.getElementById("UIContainer").className = "fadeOutDown";
+	document.getElementById("UIContainer").className = "show uiContainerFadeOut";
+	document.getElementById("greenUIArrow").className = "show greenArrowFadeIn";
+}
+
+function openUI() {
+	console.log("openUI");
+	document.getElementById("greenUIArrow").className = "show greenArrowFadeOut";
+	document.getElementById("UIContainer").className = "show uiContainerFadeIn";
+	//document.getElementById("uiInner").className = "innerSlideLeft";
 }
 
 /**
@@ -160,6 +171,8 @@ function calculateRoute()
 
 	shuttletrip = new ShuttleTrip();
 	shuttletrip.getShuttleTrip(user);
+
+	document.getElementById("uiInner").className = "innerSlideLeft";
 }
 
 function userPlaceSelfOrigin()
@@ -170,6 +183,7 @@ function userPlaceSelfOrigin()
 	hideShuttleDisplay();
 
 	user.removeOriginMarker();
+	closeUI();
 }
 
 function clearMap()
@@ -247,6 +261,33 @@ function receivedShuttleDistanceMatrix()
 	console.log("receivedShuttleDistanceMatrix");
 	shuttletrip.displayWalkingRoutes();
 	shuttletrip.parseRouteTimes();
+}
+
+function tripInfoLoaded() {
+	// TODO: show the user some walking info
+	console.log("tripInfoLoaded");
+
+	var p = document.getElementById("walking");
+	p.innerHTML = "Walking would take you <b>" +
+					trip.distanceMatrix.rows[0].elements[0].duration.text + 
+					"</b> for a " + trip.distanceMatrix.rows[0].elements[0].distance.text + " distance.";
+
+	document.getElementById("closeX").className = "show";
+}
+
+function shuttleInfoLoaded() {
+	// TODO: show the user some shuttle info
+	console.log("shuttleInfoLoaded");
+
+	var p = document.getElementById("shuttle");
+	p.innerHTML = "The closest stop is " +
+				shuttletrip.origSortedStops[shuttletrip.origProximity].stop +
+				". The shuttle will arrive in " + shuttletrip.waitTime +
+				" minutes and will take " +
+				shuttletrip.shuttleTravelTime + " minutes to transport you to " +
+				shuttletrip.destSortedStops[shuttletrip.destProximity].stop+ ". Overall travel time is <b>" + 
+				shuttletrip.totalTravelTime + " minutes.</b>";
+
 }
 
 function storeFriendlyQueryTime(year, month, day, hour, minutes)
