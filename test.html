@@ -3,11 +3,87 @@
   <head>
     <title>Shuttlewalk</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+    <link href="css/animate-custom.css" rel="stylesheet">
   
     <style type="text/css">
 
       body {
         padding: 30px;
+      }
+
+      #blah {
+        position: absolute;
+        top: 45%;
+        right: -10px;
+        border-radius: 50%;
+        width: 100px;
+        height: 100px;
+        background: gray;
+      }
+
+      .blahFadeOut {
+        animation: bFadeOut 0.3s ease-in;
+        -webkit-animation: bFadeOut 0.3s ease-in;
+
+        -webkit-animation-fill-mode: forwards;
+        -moz-animation-fill-mode: forwards;
+        -o-animation-fill-mode: forwards;
+        animation-fill-mode: forwards;
+      }
+
+      @keyframes bFadeOut {
+        0% {
+          opacity: 1;
+          transform: translateX(0);
+        }
+        100% {
+          opacity: 0;
+          transform: translateX(-70px);
+        }
+      }
+
+      @-webkit-keyframes bFadeOut {
+        0% {
+          opacity: 1;
+          -webkit-transform: translateX(0);
+        }
+        100% {
+          opacity: 0;
+          -webkit-transform: translateX(-70px);
+        }
+      }
+
+      .blahFadeIn {
+        animation: bFadeIn 0.5s ease-in;
+        -webkit-animation: bFadeIn 0.5s ease-in;
+
+        -webkit-animation-fill-mode: forwards;
+        -moz-animation-fill-mode: forwards;
+        -o-animation-fill-mode: forwards;
+        animation-fill-mode: forwards;
+      }
+
+      @keyframes bFadeIn {
+        0% {
+          opacity: 0;
+          transform: translateX(-70px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @-webkit-keyframes bFadeIn {
+        0% {
+          opacity: 0;
+          -webkit-transform: translateX(-70px);
+        }
+        100% {
+          opacity: 1;
+          -webkit-transform: translateX(0);
+        }
       }
 
       #animate {
@@ -50,11 +126,30 @@
       }
     </style>
   
+    <script>
+      function doAnim() {
+        console.log("hi");
+        document.getElementById("blah").className = "blahFadeOut";
+        window.setTimeout(function(){
+          document.getElementById("blah").className = "blahFadeIn";
+        }, 3000);
+      }
+
+      window.onload = function () {
+        console.log("hello world?");
+        document.getElementById("blah").onclick = doAnim;
+
+    
+      }
+      
+    </script>
+
   </head>
   <body>
     <h1>Animate with Translate</h1>
 
 <div id="animate"></div>
+<div id="blah"></div>
 
     <script type="text/javascript">
 
