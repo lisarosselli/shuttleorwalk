@@ -91,20 +91,6 @@ Stops.prototype.displayMarkers = function()
 		    	//t.toggleInfoWindow(e.latLng);
 		    });
 		}
-
-		/*
-		for (var i = 0; i < this.markers.length; i++)
-		{
-			var thisMarker = this.markers[i];
-			var infoWindow = createInfoWindow("", thisMarker.title);
-		 	infoWindow.open(map, thisMarker);
-		 	this.infoWindows.push(infoWindow);
-
-		 	google.maps.event.addListener(thisMarker, 'click', function(e) {
-    			console.log("e = "+e.marker);
-  			});
-		}
-		*/
 	} 
 }
 
