@@ -383,12 +383,20 @@ button:active {
 }
 
 #closeX {
-	background: #ccc;
+	background: none;
 	background-image: url(../img/red_x.png);
 	background-size: 34px;
 	background-position: top right;
 	background-repeat: no-repeat;
 	float: right;
+	height: 34px;
+	margin-top: 5px;
+	width: 34px;
+}
+
+#infoBtn {
+	background: #ccc;
+	float: left;
 	height: 34px;
 	margin-top: 5px;
 	width: 34px;
@@ -407,17 +415,16 @@ button:active {
 }
 
 #uiInner {
-	background: green;
+	/*background: green;*/
 	height: calc(100% - 44px);
 	top: 44px;
 	position: relative;
-	width: 560px;
+	width: 840px;
 }
 
 .innerSlideLeft {
 	-webkit-animation: iSlideLeft 0.2s linear;
 	animation: iSlideLeft 0.2s linear;
-
 	-webkit-animation-fill-mode: forwards;
     -moz-animation-fill-mode: forwards;
     -o-animation-fill-mode: forwards;
@@ -442,18 +449,168 @@ button:active {
 	}
 }
 
-#uiView1 {
-	background: #ccc;
+.slideAnimA {
+	-webkit-animation: slideA 0.2s linear;
+	animation: slideA 0.2s linear;
+
+	-webkit-animation-fill-mode: forwards;
+    -moz-animation-fill-mode: forwards;
+    -o-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes slideA {
+	0% {
+		-webkit-transform: translateX(0);
+	}
+	100% {
+		-webkit-transform: translateX(-280px);
+	}
+}
+
+@keyframes slideA {
+	0% {
+		transform: translateX(0);
+	}
+	100% {
+		transform: translateX(-280px);
+	}
+}
+
+.slideAnimB {
+	-webkit-animation: slideB 0.2s linear;
+	animation: slideB 0.2s linear;
+
+	-webkit-animation-fill-mode: forwards;
+    -moz-animation-fill-mode: forwards;
+    -o-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes slideB {
+	0% {
+		-webkit-transform: translateX(-280px);
+	}
+	100% {
+		-webkit-transform: translateX(-560px);
+	}
+}
+
+@keyframes slideB {
+	0% {
+		transform: translateX(-280px);
+	}
+	100% {
+		transform: translateX(-560px);
+	}
+}
+
+.slideAnimC {
+	-webkit-animation: slideC 0.2s linear;
+	animation: slideC 0.2s linear;
+
+	-webkit-animation-fill-mode: forwards;
+    -moz-animation-fill-mode: forwards;
+    -o-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes slideC {
+	0% {
+		-webkit-transform: translateX(-560px);
+	}
+	100% {
+		-webkit-transform: translateX(-280px);
+	}
+}
+
+@keyframes slideC {
+	0% {
+		transform: translateX(-560px);
+	}
+	100% {
+		transform: translateX(-280px);
+	}
+}
+
+.slideAnimD {
+	-webkit-animation: slideD 0.2s linear;
+	animation: slideD 0.2s linear;
+
+	-webkit-animation-fill-mode: forwards;
+    -moz-animation-fill-mode: forwards;
+    -o-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes slideD {
+	0% {
+		-webkit-transform: translateX(-280px);
+	}
+	100% {
+		-webkit-transform: translateX(0);
+	}
+}
+
+@keyframes slideD {
+	0% {
+		transform: translateX(-280px);
+	}
+	100% {
+		transform: translateX(0);
+	}
+}
+
+.slideAnimE {
+	-webkit-animation: slideE 0.2s linear;
+	animation: slideE 0.2s linear;
+
+	-webkit-animation-fill-mode: forwards;
+    -moz-animation-fill-mode: forwards;
+    -o-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes slideE {
+	0% {
+		-webkit-transform: translateX(-560px);
+	}
+	100% {
+		-webkit-transform: translateX(0);
+	}
+}
+
+@keyframes slideE {
+	0% {
+		transform: translateX(-560px);
+	}
+	100% {
+		transform: translateX(0);
+	}
+}
+
+/**
+ *	uiViews
+ */
+.uiView {
 	float: left;
-	position: absolute;
-	top: 0px;
+	height: 256px;
+	position: relative;
+	top: -44px;
 	width: 280px;
 }
 
+#uiView0 {
+	background: blue;
+}
+
+#uiView1 {
+	background: red;
+
+}
+
 #uiView2 {
-	background: #ddd;
-	float: right;
-	top: 0px;
-	width: 280px;
+	background: green;
+
 }
 
