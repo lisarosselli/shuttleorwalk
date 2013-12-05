@@ -27,9 +27,10 @@ p {
 }
 
 #hMarker {
-	background-image: url(../img/img_sprite.png);
+	background-image: url(../img/img_sprite@2x.png);
 	background-position: -3px -41px;
 	background-repeat: no-repeat;
+	background-size: 244px 75px;
 	padding-left: 20px;
 }
 
@@ -116,7 +117,8 @@ p {
 
 #logo
 {
-	background-image: url(../img/img_sprite.png) -133px -2px no-repeat;
+	background-image: url(../img/img_sprite@2x.png) -133px -2px no-repeat;
+	background-size: 244px 75px;
 	left: calc(50% - 16px);
 	top: calc(50% - 16px);
 	position: absolute;
@@ -198,9 +200,10 @@ p {
  */
 #greenUIArrow {
 	background-color: #fff;
-	background-image: url("../img/img_sprite.png");
+	background-image: url("../img/img_sprite@2x.png");
 	background-position: -35px 12px;
 	background-repeat: no-repeat;
+	background-size: 244px 75px;
 	border-radius: 50%;
 	height: 60px;
 	position: absolute;
@@ -398,9 +401,10 @@ button:active {
 
 #closeX {
 	background: none;
-	background-image: url(../img/img_sprite.png);
+	background-image: url(../img/img_sprite@2x.png);
 	background-position: -3px 0px;
 	background-repeat: no-repeat;
+	background-size: 244px 75px;
 	float: right;
 	height: 34px;
 	margin-top: 5px;
@@ -409,8 +413,10 @@ button:active {
 
 #infoBtn {
 	background: none;
-	background-image: url(../img/img_sprite.png);
-	background-position: -94px 0px;
+	background-image: url(../img/img_sprite@2x.png);
+	background-position: -97px 0px;
+	background-repeat: no-repeat;
+	background-size: 244px 75px;
 	float: left;
 	height: 34px;
 	margin-top: 5px;
@@ -418,9 +424,10 @@ button:active {
 }
 
 #shuttlelegend {
-	background-image: url(../img/img_sprite.png);
-	background-position: -212px -6px;
+	background-image: url(../img/img_sprite@2x.png);
+	background-position: -222px -6px;
 	background-repeat: no-repeat;
+	background-size: 244px 75px;
 	height: 26px;
 	margin-left: 18px;
 	padding-left: 26px;
