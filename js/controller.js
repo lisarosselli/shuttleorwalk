@@ -44,6 +44,13 @@ function initialize()
   	document.getElementById("closeX").onclick = closeUI;
   	//document.getElementById("UIContainer").onclick = closeUI;
   	document.getElementById("greenUIArrow").onclick = openUI;
+  	document.getElementById("infoBtn").onclick = infoClick;
+
+  	document.getElementById("iOk").onclick = iOkClick;
+  	document.getElementById("forwardBtn").onclick = forwardClick;
+  	document.getElementById("dialog").onclick = hideDialog;
+
+
 }
 
 /**
@@ -55,9 +62,11 @@ function findLocation()
 
  	if (navigator.geolocation)
  	{
+ 		console.log("browser does have geo!");
  		navigator.geolocation.getCurrentPosition(foundLocation, handleNoGeolocation);
  	} else
  	{
+ 		console.log("browser no have geo");
  		handleNoGeolocation(true);
  	}
 
@@ -95,14 +104,14 @@ function foundLocation( position )
  */
 function handleNoGeolocation( errorFlag )
 {
-	console.log("handleNoGeolocation");
+	console.log("handleNoGeolocation and "+ errorFlag);
 
 	if (!errorFlag)
 	{
-		messageToUser = "Your browser doesn't support geolocation.";
+		messageToUser = errorCode.noGeolocation;
 	} else
 	{
-		messageToUser = "Geolocation service failed.";
+		messageToUser = errorCode.noBrowserGeo;
 	}
 
 	alertUser(messageToUser);
@@ -117,6 +126,43 @@ function handleNoGeolocation( errorFlag )
 function alertUser( message )
 {
 	//alert(messageToUser);
+	var dialog = document.getElementById("dialog");
+	dialog.innerHTML = message;
+	dialog.className = "show";
+}
+
+function infoClick()
+{
+	console.log("infoClick");
+
+	var classAnimation;
+
+	switch (uiInnerXIndex)
+	{
+		case 0:
+			classAnimation = null;
+			break;
+		case 1:
+			classAnimation = "backward1";
+			break;
+		case 2:
+			classAnimation = "backward2";
+			break;
+	}
+
+	uiInnerXIndex = 0;
+	document.getElementById("uiInner").className = classAnimation;
+}
+
+function iOkClick() {
+	console.log("iOkClick");
+	document.getElementById("uiInner").className = "forward1";
+}
+
+function forwardClick()
+{
+	console.log("forwardClick");
+	document.getElementById("uiInner").className = "slideAnimA";
 }
 
 function closeUI()
@@ -130,7 +176,10 @@ function openUI() {
 	console.log("openUI");
 	document.getElementById("greenUIArrow").className = "show greenArrowFadeOut";
 	document.getElementById("UIContainer").className = "show uiContainerFadeIn";
-	//document.getElementById("uiInner").className = "innerSlideLeft";
+}
+
+function hideDialog() {
+	document.getElementById("dialog").className = "hide";
 }
 
 /**
