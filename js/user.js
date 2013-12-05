@@ -178,8 +178,9 @@ User.prototype.updateDestinationInfoWindow = function(gmLatLng, buildingStringIn
 
 	if (isHarvardBuilding)
 	{
-		this.destination.infoWindow.setContent("<div><img class='harvardH' src='img/harvard_H.png'/>&nbsp;"+
-			buildingStringInfo+"</div>");
+		/*this.destination.infoWindow.setContent("<div><img class='harvardH' src='img/harvard_H.png'/>&nbsp;"+
+			buildingStringInfo+"</div>");*/
+		this.destination.infoWindow.setContent("<div id='hMarker'><p>"+buildingStringInfo+"</p></div>");
 	} else
 	{
 		this.destination.infoWindow.setContent("<div>"+buildingStringInfo+"</div>");

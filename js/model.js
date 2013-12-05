@@ -17,6 +17,16 @@ var shuttletrip = null;
 var messageToUser = null;
 var lastTimeQueried = null;
 
+var errorCode = {
+	noGeolocation: "Not able to geolocate you.",
+	noBrowserGeo: "Your browser does not support geolocation.",
+	notOnCampus: "Can't find you on campus.",
+	defaultPlacement: "Placing you near Harvard Square",
+	somethingWrong: "Woah. Something went way wrong.",
+	missingInfo: "Some information is missing. Do you have a destination?",
+	noShuttles: "There are no appropriate routes running."
+}
+
 /**
  *	Maximum radius before you are deemed off-campus.
  *	@const
@@ -33,7 +43,7 @@ var METERS_IN_MILE = 1609.34;
  *	How close user must be to be deemed "at" a building.
  *	@const
  */
-var ORIGIN_BUILDING_PROXIMITY = 50;
+var ORIGIN_BUILDING_PROXIMITY = 60;
 
 /**
  *	These are month short names.

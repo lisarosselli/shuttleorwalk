@@ -39,7 +39,7 @@ function initialize()
   	});
 
   	document.getElementById("calcRouteBtn").onclick = calculateRoute;
-  	document.getElementById("newDestBtn").onclick = chooseNewDestination;
+  	//document.getElementById("newDestBtn").onclick = chooseNewDestination;
   	document.getElementById("placeMyselfBtn").onclick = userPlaceSelfOrigin;
   	//document.getElementById("hideWalkingBtn").onclick = hideWalkingDisplay;
   	//document.getElementById("hideShuttleBtn").onclick = hideShuttleDisplay;
@@ -95,7 +95,7 @@ function geoerror(err) {
 
   	alertUser(err.message + extraMessage);
 
-  	if (err.code == 3) {
+  	if (err.code > 0) {
   		handleNoGeolocation();
   	}
 };
@@ -159,7 +159,6 @@ function handleNoGeolocation()
  */
 function alertUser( message )
 {
-	//alert(messageToUser);
 	var dialog = document.getElementById("dialog");
 	dialog.innerHTML = message;
 	dialog.className = "show";
@@ -168,35 +167,18 @@ function alertUser( message )
 function infoClick()
 {
 	console.log("infoClick");
-
-	var classAnimation;
-
-	switch (uiInnerXIndex)
-	{
-		case 0:
-			classAnimation = null;
-			break;
-		case 1:
-			classAnimation = "backward1";
-			break;
-		case 2:
-			classAnimation = "backward2";
-			break;
-	}
-
-	uiInnerXIndex = 0;
-	document.getElementById("uiInner").className = classAnimation;
+	showInfo();
 }
 
 function iOkClick() {
 	console.log("iOkClick");
-	document.getElementById("uiInner").className = "forward1";
+	moveInnerLeft();
 }
 
 function forwardClick()
 {
 	console.log("forwardClick");
-	document.getElementById("uiInner").className = "slideAnimA";
+	moveInnerLeft();
 }
 
 function closeUI()
@@ -214,6 +196,21 @@ function openUI() {
 
 function hideDialog() {
 	document.getElementById("dialog").className = "hide";
+}
+
+function moveInnerLeft() {
+	var uiInner = document.getElementById("uiInner");
+	TweenLite.to(uiInner, 0.2, {left:"-=280px"});
+}
+
+function moveInnerRight() {
+	var uiInner = document.getElementById("uiInner");
+	TweenLite.to(uiInner, 0.2, {left:"+=280px"});
+}
+
+function showInfo() {
+	var uiInner = document.getElementById("uiInner");
+	TweenLite.to(uiInner, 0.2, {left:"0px"});
 }
 
 /**
@@ -238,8 +235,9 @@ function calculateRoute()
 
 	if (user.originIsNull() || user.destinationIsNull())
 	{
-		// TODO: alert user that info is missing
 		console.log("calculateRoute some user info is missing");
+		alertUser(errorCode.missingInfo);
+		// TODO; make UI go away, leaving this message
 		return;
 	}
 
@@ -255,7 +253,7 @@ function calculateRoute()
 	shuttletrip = new ShuttleTrip();
 	shuttletrip.getShuttleTrip(user);
 
-	document.getElementById("uiInner").className = "innerSlideLeft";
+	moveInnerLeft();
 }
 
 function userPlaceSelfOrigin()

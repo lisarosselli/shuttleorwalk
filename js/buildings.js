@@ -4236,5 +4236,12 @@ var BUILDINGS = [
         address: "3 Blackfan Cir",
         lat: 42.339406779,
         lng: -71.104157549
+    },
+    {
+        root: "00000",
+        name: "Harvard University Dept. of Physics",
+        address: "17 Oxford St.",
+        lat: 42.377917,
+        lng: -71.117123
     }
 ];
