@@ -223,6 +223,7 @@ function clearSearch() {
 	document.getElementById("search").value = "";
 }
 
+
 /*
 function testCallback()
 {
@@ -400,17 +401,35 @@ function searchBuildings() {
 		}
 	}
 
-	var datalist = document.getElementById("buildings");
-	datalist.innerHTML = "";
+	var searchDest = document.getElementById("searchDest");
+	searchDest.innerHTML = "";
 
 	for (var i = 0; i < 3; i++) {
 		if (buildingMatches[i] != null) {
-			var option = "<option id='" + i + "' value='" + buildingMatches[i].name + "'>";
-			datalist.innerHTML += option;
+			var bid = i.toString();
+			var btn = "<button id='"+bid+"'>"+ buildingMatches[i].name +"</button><br/>";
+			searchDest.innerHTML += btn;
 		}
 	}
 
-	console.log(datalist.innerHTML);
+	// Oh closures and scope... my arch nemesis. I circumvent thee for now...
+	if (buildingMatches[0]) {
+		document.getElementById("0").onclick = setMapTo;
+	}
+
+	if (buildingMatches[1]) {
+		document.getElementById("1").onclick = setMapTo;
+	}
+
+	if (buildingMatches[2]) {
+		document.getElementById("2").onclick = setMapTo;
+	}
+}
+
+function setMapTo() {
+	console.log("setMapTo "+this.id);
+	user.setDestination(buildingMatches[this.id].lat, buildingMatches[this.id].lng);
+	document.getElementById("searchDest").innerHTML = "";
 }
 
 /**

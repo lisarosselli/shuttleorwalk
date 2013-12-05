@@ -102,16 +102,14 @@ User.prototype.setDestination = function(latitude, longitude)
 {
 	console.log("User.prototype.setDestination for lat=" + latitude + " lng=" + longitude);
 
+	this.removeDestinationMarker();
+
 	var dMarker;
 	var dInfoWindow;
 
 	// hold the incoming info, encapsulated to this object
 	this.destination.lat = latitude;
 	this.destination.lng = longitude;
-
-	console.log("THIS?"+this);
-	console.log(this.destination.lat);
-	console.log(this.destination.lng);
 
 	// drop the destination marker
 	dMarker = new google.maps.Marker({

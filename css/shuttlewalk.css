@@ -484,3 +484,12 @@ button:active {
 	width: 260px;
 }
 
+#search {
+	margin-top: 12px;
+	margin-left: 10px;
+	outline: none;
+	border: 1px dotted #ddd;
+	height: 20px;
+	width: 160px;
+}
+

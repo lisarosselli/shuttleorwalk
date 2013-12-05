@@ -10,7 +10,9 @@
     <div id="dialog">Testing dialog.</div>
     <div id="greenUIArrow"></div>
     <div id="UIContainer">
-      <button id="infoBtn"></button><button id="closeX"></button>
+      <button id="infoBtn"></button>
+      <input id="search" type="text" placeholder="Browse buildings" list="buildings" autocomplete="no"/>
+      <button id="closeX"></button>
       <div id="uiInner">
         <div id="uiView0" class="uiView">
           <p>Blue lines indicate walking routes. Green lines indicate walking routes to/from shuttle stops.</p>
@@ -22,8 +24,7 @@
           <button id="calcRouteBtn">Calculate route</button><br/>
           <button id="placeMyselfBtn">Your geolocation is wrong. I'll place myself on the map, kthxbai.</button>
           <div id="searchDest">
-              <input id="search" type="text" placeholder="Search buildings" list="buildings" autocomplete="no"/>
-              <datalist id="buildings"></datalist>
+         
           </div>
           <button id="forwardBtn">--></button>
         </div>
