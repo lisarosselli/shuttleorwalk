@@ -301,6 +301,7 @@ p {
 #UIContainer
 {
 	background: #fff;
+	border-radius: 2px;
 	height: 300px;
 	left: calc(50% - 140px);
 	opacity: 0.5;
@@ -465,7 +466,7 @@ button:active {
 }
 
 #dialog {
-	background-color: #ee3;
+	background-color: #f7d63a;
 	border-radius: 2px;
 	height: 50px;
 	left: calc(50% - 140px);

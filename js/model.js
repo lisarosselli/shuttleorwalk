@@ -23,7 +23,7 @@ var errorCode = {
 	notOnCampus: "Can't find you on campus.",
 	defaultPlacement: "Placing you near Harvard Square",
 	somethingWrong: "Woah. Something went way wrong.",
-	missingInfo: "Some information is missing. Where are you starting from? Do you have a destination?",
+	missingInfo: "Info missing. Where are you starting from? Do you have a destination?",
 	noShuttles: "There are no appropriate routes running."
 }
 

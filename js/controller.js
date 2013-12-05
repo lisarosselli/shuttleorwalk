@@ -162,6 +162,10 @@ function alertUser( message )
 	var dialog = document.getElementById("dialog");
 	dialog.innerHTML = message;
 	dialog.className = "show";
+
+	window.setTimeout(function() {
+		dialog.className = "hide";
+	}, 3000);
 }
 
 function infoClick()
@@ -236,8 +240,8 @@ function calculateRoute()
 	if (user.originIsNull() || user.destinationIsNull())
 	{
 		console.log("calculateRoute some user info is missing");
+		closeUI();
 		alertUser(errorCode.missingInfo);
-		// TODO; make UI go away, leaving this message
 		return;
 	}
 
