@@ -7,6 +7,8 @@ function initialize()
 {
 	console.log("initialize");
 
+	alertUser("Attempting to geolocate.");
+
 	user = new User();
 
 	// get a suitable building/location to be the default
@@ -56,6 +58,48 @@ function initialize()
 /**
  *	Get user's current location, if possible
  */
+
+var options = {
+	enableHighAccuracy: true,
+  	timeout: 10000,
+  	maximumAge: 0
+};
+
+function geosuccess(pos) {
+  	var crd = pos.coords;
+ 	console.log('Your current position is:');
+  	console.log('Latitude : ' + crd.latitude);
+  	console.log('Longitude: ' + crd.longitude);
+  	console.log('More or less ' + crd.accuracy + ' meters.');
+};
+
+function geoerror(err) {
+  	console.warn('ERROR(' + err.code + '): ' + err.message);
+
+  	var extraMessage = "";
+
+  	switch (err.code) {
+  		case 0:
+  			break;
+  		case 1:
+  			// user denied location
+  			break;
+  		case 2:
+  			// position unavailable
+  			break;
+  		case 3:
+  			// timeout expired
+  			extraMessage = ", defaulting you to Harvard Square.";
+  			break;
+  	}
+
+  	alertUser(err.message + extraMessage);
+
+  	if (err.code == 3) {
+  		handleNoGeolocation();
+  	}
+};
+
 function findLocation() 
 {
 	console.log("findLocation");
@@ -63,7 +107,8 @@ function findLocation()
  	if (navigator.geolocation)
  	{
  		console.log("browser does have geo!");
- 		navigator.geolocation.getCurrentPosition(foundLocation, handleNoGeolocation);
+ 		//navigator.geolocation.getCurrentPosition(foundLocation, handleNoGeolocation);
+ 		navigator.geolocation.getCurrentPosition(foundLocation, geoerror, options);
  	} else
  	{
  		console.log("browser no have geo");
@@ -92,8 +137,7 @@ function foundLocation( position )
  	} else
  	{
  		initialSpot = new google.maps.LatLng(BUILDINGS[0].lat, BUILDINGS[0].lng);
- 		messageToUser = "You are not on campus. Just going to put a marker near Harvard Coop.";
- 		alertUser(messageToUser);
+ 		alertUser(errorCode.notOnCampus + " " + errorCode.defaultPlacement);
  	}
 
  	user.setCurrentLocation(initialSpot.lat(), initialSpot.lng());
@@ -102,19 +146,9 @@ function foundLocation( position )
 /**
  *	Upon geolocation fail
  */
-function handleNoGeolocation( errorFlag )
+function handleNoGeolocation()
 {
-	console.log("handleNoGeolocation and "+ errorFlag);
-
-	if (!errorFlag)
-	{
-		messageToUser = errorCode.noGeolocation;
-	} else
-	{
-		messageToUser = errorCode.noBrowserGeo;
-	}
-
-	alertUser(messageToUser);
+	console.log("handleNoGeolocation");
 
 	var initialSpot = new google.maps.LatLng(BUILDINGS[0].lat, BUILDINGS[0].lng);
 	user.setCurrentLocation(initialSpot.lat(), initialSpot.lng());
