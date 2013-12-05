@@ -387,17 +387,17 @@ function storeFriendlyQueryTime(year, month, day, hour, minutes) {
 	var y = year;
 	var m = month;
 	var d = day;
-	var h = h;
+	var h = hour;
 	var m = minutes;
 	var am;
 
 	am = (h > 12) ? false : true;
 	var amString = (am) ? "am" : "pm";
-	h = (h > 12) ? (h-12): h;
+	h = (hour > 12) ? (hour - 12): hour;
 
 	var monthStr = MONTHS[month];
 
-	lastTimeQueried = hour + ":" + minutes + amString + " " + monthStr + " " + day + ", " + year;
+	lastTimeQueried = h + ":" + minutes + amString + " " + monthStr + " " + day + ", " + year;
 }
 
 
