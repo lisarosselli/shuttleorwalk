@@ -114,10 +114,11 @@ p {
 	}
 }
 
-#intro img
+#logo
 {
-	left: 48%;
-	top: 45%;
+	background-image: url(../img/img_sprite.png) -133px -2px no-repeat;
+	left: calc(50% - 16px);
+	top: calc(50% - 16px);
 	position: absolute;
 	width: 32px;
 	height: 32px;

@@ -4,7 +4,6 @@
     <title>Shuttlewalk</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
-    <link href="css/animate-custom.css" rel="stylesheet">
   
     <style type="text/css">
 
@@ -12,148 +11,25 @@
         padding: 30px;
       }
 
-      #blah {
-        position: absolute;
-        top: 45%;
-        right: -10px;
-        border-radius: 50%;
-        width: 100px;
-        height: 100px;
-        background: gray;
-      }
 
-      .blahFadeOut {
-        animation: bFadeOut 0.3s ease-in;
-        -webkit-animation: bFadeOut 0.3s ease-in;
-
-        -webkit-animation-fill-mode: forwards;
-        -moz-animation-fill-mode: forwards;
-        -o-animation-fill-mode: forwards;
-        animation-fill-mode: forwards;
-      }
-
-      @keyframes bFadeOut {
-        0% {
-          opacity: 1;
-          transform: translateX(0);
-        }
-        100% {
-          opacity: 0;
-          transform: translateX(-70px);
-        }
-      }
-
-      @-webkit-keyframes bFadeOut {
-        0% {
-          opacity: 1;
-          -webkit-transform: translateX(0);
-        }
-        100% {
-          opacity: 0;
-          -webkit-transform: translateX(-70px);
-        }
-      }
-
-      .blahFadeIn {
-        animation: bFadeIn 0.5s ease-in;
-        -webkit-animation: bFadeIn 0.5s ease-in;
-
-        -webkit-animation-fill-mode: forwards;
-        -moz-animation-fill-mode: forwards;
-        -o-animation-fill-mode: forwards;
-        animation-fill-mode: forwards;
-      }
-
-      @keyframes bFadeIn {
-        0% {
-          opacity: 0;
-          transform: translateX(-70px);
-        }
-        100% {
-          opacity: 1;
-          transform: translateX(0);
-        }
-      }
-
-      @-webkit-keyframes bFadeIn {
-        0% {
-          opacity: 0;
-          -webkit-transform: translateX(-70px);
-        }
-        100% {
-          opacity: 1;
-          -webkit-transform: translateX(0);
-        }
-      }
-
-      #animate {
-        position: absolute;
-        top: 100px;
-        left: 30px;
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        background: red;
+      #closeX {
+        background: blue;
+        background-image: url(img/new_sprite@2x.png);
+        background-position: 0px -200px;
+        background-repeat: no-repeat;
+       
+        float: right;
         
-        animation: move 3s ease infinite;
-        -webkit-animation: move 3s ease infinite;
-        -o-animation: move 3s ease infinite;
-        -moz-animation: move 3s ease infinite;
+        
       }
 
-      @keyframes move {
-        50% {
-           transform: translate(100px, 100px);
-        }
-      }
-
-      @-webkit-keyframes move {
-        50% {
-           -webkit-transform: translate(100px, 100px);
-        }
-      }
-
-      @-o-keyframes move {
-        50% {
-           -o-transform: translate(100px, 100px);
-        }
-      }
-
-      @-moz-keyframes move {
-        50% {
-           -moz-transform: translate(100px, 100px);
-        }
-      }
     </style>
   
-    <script>
-      function doAnim() {
-        console.log("hi");
-        document.getElementById("blah").className = "blahFadeOut";
-        window.setTimeout(function(){
-          document.getElementById("blah").className = "blahFadeIn";
-        }, 3000);
-      }
-
-      window.onload = function () {
-        console.log("hello world?");
-        document.getElementById("blah").onclick = doAnim;
-
-    
-      }
-      
-    </script>
 
   </head>
   <body>
-    <h1>Animate with Translate</h1>
+    <div id="closeX"></div>
 
-<div id="animate"></div>
-<div id="blah"></div>
-
-    <script type="text/javascript">
-
-    </script>
   
   </body>
 </html>

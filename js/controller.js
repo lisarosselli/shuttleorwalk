@@ -7,13 +7,11 @@ function initialize()
 {
 	console.log("initialize");
 
-	alertUser("Attempting to geolocate.");
-
 	user = new User();
 
 	// get a suitable building/location to be the default
 	var defaultBuilding = BUILDINGS[0];
-	console.log(defaultBuilding);
+
 	mapOptions = { 
 		center: new google.maps.LatLng(defaultBuilding.lat, defaultBuilding.lng), 
 		disableDefaultUI: true,
@@ -93,7 +91,8 @@ function geoerror(err) {
   			break;
   	}
 
-  	alertUser(err.message + extraMessage);
+  	// TODO reinstate
+  	//alertUser(err.message + extraMessage);
 
   	if (err.code > 0) {
   		handleNoGeolocation();
