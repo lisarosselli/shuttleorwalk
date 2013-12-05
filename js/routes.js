@@ -13,12 +13,41 @@ function Routes()
 	this.RiverHouseBStops = [13, 7, 12, 10, 6, 8, 1];
 	this.RiverHouseCStops = [11, 8, 16, 6, 1, 7, 12, 10, 13];
 
-	// route LatLng arrays
-	this.AllstonCampusExpressRoute;
-	this.QuadYardExpressRoute;
-	this.RiverHouseARoute;
-	this.RiverHouseBRoute;
-	this.RiverHouseCRoute;
+	this.routes = [
+		{
+			routeName: "Allston Campus Express",
+			stopsArray: [12, 9, 10, 6, 14, 5, 15, 4, 2]
+		},
+		{
+			routeName: "Quad Yard Express",
+			stopsArray: [13, 7, 1, 6],
+		},
+		{
+			routeName: "River Houses A",
+			stopsArray: [8, 1, 12, 10, 6]
+		},
+		{
+			routeName: "River Houses B",
+			stopsArray: [13, 7, 12, 10, 6, 8, 1]
+		},
+		{
+			routeName: "River Houses C",
+			stopsArray: [11, 8, 16, 6, 1, 7, 12, 10, 13]
+		}
+	];
+
+	this.directionsService;
+	this.routeLine;
+}
+
+Routes.prototype.displayRoute = function( routeIndex ) {
+	var routeObj = this.routes[routeIndex];
+
+
+}
+
+Routes.prototype.hideRoute = function() {
+	
 }
 
 /*	https://developers.google.com/maps/documentation/javascript/examples/polyline-simple

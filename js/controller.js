@@ -50,7 +50,7 @@ function initialize()
   	document.getElementById("forwardBtn").onclick = forwardClick;
   	document.getElementById("dialog").onclick = hideDialog;
 
-
+  	document.getElementById("search").onkeyup = searchBuildings;
 }
 
 /**
@@ -204,16 +204,23 @@ function hideDialog() {
 function moveInnerLeft() {
 	var uiInner = document.getElementById("uiInner");
 	TweenLite.to(uiInner, 0.2, {left:"-=280px"});
+	clearSearch();
 }
 
 function moveInnerRight() {
 	var uiInner = document.getElementById("uiInner");
 	TweenLite.to(uiInner, 0.2, {left:"+=280px"});
+	clearSearch();
 }
 
 function showInfo() {
 	var uiInner = document.getElementById("uiInner");
 	TweenLite.to(uiInner, 0.2, {left:"0px"});
+	clearSearch();
+}
+
+function clearSearch() {
+	document.getElementById("search").value = "";
 }
 
 /*
@@ -378,6 +385,32 @@ function adjustMapBounds() {
 	bounds.extend(userDestLatLng);
 
 	map.fitBounds(bounds);
+}
+
+function searchBuildings() {
+	var value = document.getElementById("search").value;
+	var regExp = new RegExp(value, "i", "y");
+
+	buildingMatches = [];
+
+	for (var i = 0; i < BUILDINGS.length; i++) {
+		var buildingName = BUILDINGS[i].name;
+		if (buildingName.match(regExp)) {
+			buildingMatches.push(BUILDINGS[i]);
+		}
+	}
+
+	var datalist = document.getElementById("buildings");
+	datalist.innerHTML = "";
+
+	for (var i = 0; i < 3; i++) {
+		if (buildingMatches[i] != null) {
+			var option = "<option id='" + i + "' value='" + buildingMatches[i].name + "'>";
+			datalist.innerHTML += option;
+		}
+	}
+
+	console.log(datalist.innerHTML);
 }
 
 /**

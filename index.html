@@ -20,8 +20,11 @@
         </div>
         <div id="uiView1" class="uiView">
           <button id="calcRouteBtn">Calculate route</button><br/>
-          <!--<button id="newDestBtn">New Destination</button><br/>-->
           <button id="placeMyselfBtn">Your geolocation is wrong. I'll place myself on the map, kthxbai.</button>
+          <div id="searchDest">
+              <input id="search" type="text" placeholder="Search buildings" list="buildings" autocomplete="no"/>
+              <datalist id="buildings"></datalist>
+          </div>
           <button id="forwardBtn">--></button>
         </div>
         <div id="uiView2" class="uiView">

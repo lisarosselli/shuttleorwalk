@@ -16,6 +16,7 @@ var trip = null;
 var shuttletrip = null;
 var messageToUser = null;
 var lastTimeQueried = null;
+var buildingMatches = [];
 
 var errorCode = {
 	noGeolocation: "Not able to geolocate you.",

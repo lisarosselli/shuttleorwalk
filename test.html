@@ -5,30 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
   
-    <style type="text/css">
-
-      body {
-        padding: 30px;
+    <script type="text/javascript">
+      window.onload = function() {
+          document.getElementById("search").onkeyup = check;
       }
 
+      function check() {
+        console.log("check");
 
-      #closeX {
-        background: blue;
-        background-image: url(img/new_sprite@2x.png);
-        background-position: 0px -200px;
-        background-repeat: no-repeat;
-       
-        float: right;
-        
-        
+        var value = document.getElementById("search").value;
+        var testagainst = "Maxwell Dworkin";
+
+        var regExp = new RegExp(value, "i", "y");
+
+        if (testagainst.toLowerCase().match(regExp)) {
+          console.log("YES!");
+        } else {
+          console.log("no");
+        }
+
       }
-
-    </style>
+    </script>
   
 
   </head>
   <body>
-    <div id="closeX"></div>
+    <input type="text" id="search" placeholder="Search here" />
 
   
   </body>
