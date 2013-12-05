@@ -3,28 +3,12 @@
   <head>
     <title>Shuttlewalk</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <!--<link href="css/animate-custom.css" rel="stylesheet">-->
     <link href="css/shuttlewalk.css" rel="stylesheet">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-    <![endif]-->
-
   </head>
-  <body>
-    <!--<div class="alert alert-warning alert-dismissable">Hello world?</div>-->
-    
-    
-
+  <body> 
     <div id="map-canvas"/></div>
-
     <div id="dialog">Testing dialog.</div>
-
     <div id="greenUIArrow"></div>
-
     <div id="UIContainer">
       <button id="infoBtn"></button><button id="closeX"></button>
       <div id="uiInner">
@@ -40,13 +24,11 @@
           <button id="placeMyselfBtn">Your geolocation is wrong. I'll place myself on the map, kthxbai.</button>
           <button id="forwardBtn">--></button>
         </div>
-
         <div id="uiView2" class="uiView">
           <p id="lastQuery">Timestamp</p>
           <p id="walking">Walking info.</p>
           <p id="shuttle">Shuttle info.</p>
         </div> 
-
       </div>
     </div>
     
@@ -57,9 +39,6 @@
 
     <!-- TODO: replace API key with the one for your domain -->
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA4lMv_JZltQMMVpyjGO3AFFHFMor8K0Ak&sensor=true"></script>
-    <!--
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.11.2/TweenLite.min.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.11.2/plugins/CSSPlugin.min.js"></script>-->
     <script src="js/TweenLite.min.js"></script>
     <script src="js/CSSPlugin.min.js"></script>
     <script src="js/functions.js" type="text/javascript"></script>

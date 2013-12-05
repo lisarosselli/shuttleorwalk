@@ -92,6 +92,10 @@ User.prototype.setCurrentLocation = function(latitude, longitude)
 	google.maps.event.addListener(user.currentLocation.marker, 'click', function() {
 		user.currentLocation.infoWindow.open(map, user.currentLocation.marker);
 	});	
+
+	if (this.destination.lat && this.destination.lng) {
+		adjustMapBounds();
+	}
 }
 
 User.prototype.setDestination = function(latitude, longitude)
@@ -131,6 +135,10 @@ User.prototype.setDestination = function(latitude, longitude)
 	google.maps.event.addListener(user.destination.marker, 'click', function() {
 		user.destination.infoWindow.open(map, user.destination.marker);
 	});	
+
+	if (this.currentLocation.lat && this.currentLocation.lng) {
+		adjustMapBounds();
+	}
 
 	this.queryDestination();
 }

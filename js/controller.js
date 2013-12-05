@@ -217,21 +217,12 @@ function showInfo() {
 	TweenLite.to(uiInner, 0.2, {left:"0px"});
 }
 
-/**
- * Load stops.
- */
- /*
-function loadStops()
-{
-	stops = new Stops();
-	stops.loadStops(testCallback);
-}
-*/
+/*
 function testCallback()
 {
 	console.log("testCallback");
 	stops.displayMarkers();
-}
+}*/
 
 function calculateRoute()
 {
@@ -294,7 +285,6 @@ function chooseNewDestination()
 
 function hideWalkingDisplay()
 {
-	console.log("hideWalkingDisplay");
 	if (trip) {
 		trip.hideRouteLine();
 	}
@@ -302,7 +292,6 @@ function hideWalkingDisplay()
 
 function hideShuttleDisplay()
 {
-	console.log("hideShuttleDisplay");
 	if (shuttletrip)
 	{
 		shuttletrip.hideMarkers();
@@ -348,10 +337,10 @@ function receivedShuttleDistanceMatrix()
 	shuttletrip.parseRouteTimes();
 }
 
+/**
+ *	Present user with Google Maps walking info.
+ */
 function tripInfoLoaded() {
-	// TODO: show the user some walking info
-	console.log("tripInfoLoaded");
-
 	var lastQuery = document.getElementById("lastQuery");
 	lastQuery.innerHTML = lastTimeQueried;
 
@@ -363,10 +352,10 @@ function tripInfoLoaded() {
 	document.getElementById("closeX").className = "show";
 }
 
+/**
+ *	Present user with Shuttleboy API info (in a friendly way).
+ */
 function shuttleInfoLoaded() {
-	// TODO: show the user some shuttle info
-	console.log("shuttleInfoLoaded");
-
 	var p = document.getElementById("shuttle");
 	p.innerHTML = "The closest stop is " +
 				shuttletrip.origSortedStops[shuttletrip.origProximity].stop +
@@ -376,11 +365,26 @@ function shuttleInfoLoaded() {
 				shuttletrip.shuttleTravelTime + " minutes to transport you to " +
 				shuttletrip.destSortedStops[shuttletrip.destProximity].stop+ ". Overall travel time is <b>" + 
 				shuttletrip.totalTravelTime + " minutes.</b>";
-
 }
 
-function storeFriendlyQueryTime(year, month, day, hour, minutes)
-{
+/**
+ *	Upon user tapping origin or destination, adjust the map's bounds
+ */
+function adjustMapBounds() {
+	var userLocLatLng = new google.maps.LatLng(user.currentLocation.lat, user.currentLocation.lng);
+	var userDestLatLng = new google.maps.LatLng(user.destination.lat, user.destination.lng);
+	var bounds = new google.maps.LatLngBounds();
+
+	bounds.extend(userLocLatLng);
+	bounds.extend(userDestLatLng);
+
+	map.fitBounds(bounds);
+}
+
+/**
+ *	Storing the last time user queried a route
+ */
+function storeFriendlyQueryTime(year, month, day, hour, minutes) {
 	var y = year;
 	var m = month;
 	var d = day;
