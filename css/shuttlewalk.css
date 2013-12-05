@@ -436,6 +436,10 @@ button:active {
 	width: 17%;
 }
 
+#lastQuery {
+	border-bottom: 1px solid gray;
+}
+
 #uiInner {
 	height: calc(100% - 44px);
 	left: 0px;
@@ -455,7 +459,7 @@ button:active {
 	width: 280px;
 }
 
-#uiView0 p {
+#uiInner p {
 	padding-bottom: 0px;
 	padding-top: 0px;
 }

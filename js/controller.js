@@ -348,6 +348,9 @@ function tripInfoLoaded() {
 	// TODO: show the user some walking info
 	console.log("tripInfoLoaded");
 
+	var lastQuery = document.getElementById("lastQuery");
+	lastQuery.innerHTML = lastTimeQueried;
+
 	var p = document.getElementById("walking");
 	p.innerHTML = "Walking would take you <b>" +
 					trip.distanceMatrix.rows[0].elements[0].duration.text + 
@@ -363,7 +366,8 @@ function shuttleInfoLoaded() {
 	var p = document.getElementById("shuttle");
 	p.innerHTML = "The closest stop is " +
 				shuttletrip.origSortedStops[shuttletrip.origProximity].stop +
-				". The shuttle will arrive in " + shuttletrip.waitTime +
+				" on the " + shuttletrip.routeResponse[0].key + " route. " +
+				"The shuttle will arrive in " + shuttletrip.waitTime +
 				" minutes and will take " +
 				shuttletrip.shuttleTravelTime + " minutes to transport you to " +
 				shuttletrip.destSortedStops[shuttletrip.destProximity].stop+ ". Overall travel time is <b>" + 
