@@ -17,7 +17,7 @@ button {
 }
 
 p {
-	padding: 10px 15px;
+	padding: 8px 15px;
 }
 
 #map-canvas {
@@ -447,6 +447,8 @@ button:active {
 
 #lastQuery {
 	border-bottom: 1px solid gray;
+	border-top: 1px solid gray;
+	margin-top: 7px;
 }
 
 #uiInner {
@@ -485,10 +487,9 @@ button:active {
 }
 
 #search {
-	margin: 12px 10px;
 	outline: none;
-	border: 1px dotted #ddd;
-	height: 20px;
-	width: 160px;
+	border: none;
+	height: 25px;
+	width: 240px;
 }
 
