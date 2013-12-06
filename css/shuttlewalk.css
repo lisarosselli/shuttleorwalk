@@ -485,8 +485,7 @@ button:active {
 }
 
 #search {
-	margin-top: 12px;
-	margin-left: 10px;
+	margin: 12px 10px;
 	outline: none;
 	border: 1px dotted #ddd;
 	height: 20px;
