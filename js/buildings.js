@@ -4243,5 +4243,103 @@ var BUILDINGS = [
         address: "17 Oxford St.",
         lat: 42.377917,
         lng: -71.117123
+    },
+    {
+        root: "00000",
+        name: "Sanders Theater",
+        address: "45 Quincy St.",
+        lat: 42.375983,
+        lng: -71.11446
+    },
+    {
+        root: "00000",
+        name: "Department of Architecture",
+        address: "Cambridge and Quincy St.",
+        lat: 42.375688,
+        lng: -71.113867
+    },
+    {
+        root: "00000",
+        name: "Department of English",
+        address: "12 Quincy St.",
+        lat: 42.372567,
+        lng: -71.114535
+    },
+    {
+        root: "00000",
+        name: "Harvard Magazine",
+        address: "7 Ware St.",
+        lat: 42.372365,
+        lng: -71.113371
+    },
+    {
+        root: "00000",
+        name: "Eliot House Library",
+        address: "101 Dunster St.",
+        lat: 42.369963,
+        lng: -71.121874
+    },
+    {
+        root: "00000",
+        name: "John F. Kennedy School of Government",
+        address: "79 John F. Kennedy St.",
+        lat: 42.371426,
+        lng: -71.122061
+    },
+    {
+        root: "00000",
+        name: "Harvard College Alumni Programs Office",
+        address: "124 Mount Auburn St.",
+        lat: 42.373197,
+        lng: -71.123472
+    },
+    {
+        root: "00000",
+        name: "Harvard University Student Employment",
+        address: "86 Brattle St.",
+        lat: 42.375694,
+        lng: -71.124368
+    },
+    {
+        root: "00000",
+        name: "Harvard Yenching Library",
+        address: "2 Divinity Avenue",
+        lat: 42.377628,
+        lng: -71.113746
+    },
+    {
+        root: "00000",
+        name: "Dept. of Molecular and Cellular Biology",
+        address: "16 Divinity Avenue",
+        lat: 42.378733,
+        lng: -71.11343
+    },
+    {
+        root: "00000",
+        name: "The Laboratory at Harvard",
+        address: "52 Oxford Street",
+        lat: 42.38012,
+        lng: -71.11564
+    },
+    {
+        root: "00000",
+        name: "Dept. of Bioengineering",
+        address: "50 Oxford Street",
+        lat: 42.379997,
+        lng: -71.116187
+    },
+    {
+        root: "00000",
+        name: "Harvard University Laboratory for Particle Physics and Cosmology",
+        address: "18 Hammond Street",
+        lat: 42.380723,
+        lng: -71.115704
+    },
+    {
+        root: "00000",
+        name: "Harvard Yenching Institute",
+        address: "25 Francis Avenue",
+        lat: 42.379086,
+        lng: -71.113103
     }
 ];
