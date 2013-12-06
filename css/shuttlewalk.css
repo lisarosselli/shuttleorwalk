@@ -407,7 +407,6 @@ button:active {
 	background-size: 244px 75px;
 	float: right;
 	height: 34px;
-	margin-top: 5px;
 	width: 34px;
 }
 
@@ -451,7 +450,7 @@ button:active {
 
 #uiInner {
 	height: calc(100% - 44px);
-	left: 0px;
+	left: 0px; /* gets 'reset' initially in controller.js */
 	top: 44px;
 	position: relative;
 	width: 840px;
@@ -489,5 +488,31 @@ button:active {
 	border: none;
 	height: 25px;
 	width: 240px;
+}
+
+#navDots {
+	float: left;
+	height: 20px;
+	margin-left: 87px;
+	margin-top: 10px;
+	width: 110px;
+}
+
+.cBtn {
+	background-color: #bbb;
+  	outline: none;
+  	border: none;
+	height: 15px;
+	width: 15px;
+	border-radius: 50%;
+	margin: 0px 8px;
+	padding: 0;
+}
+
+.cBtn_active {
+	background-color: #333;
+}
+.cBtn_inactive {
+   	background-color: #bbb;
 }
 

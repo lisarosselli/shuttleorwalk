@@ -37,26 +37,55 @@ function initialize()
   	});
 
   	document.getElementById("calcRouteBtn").onclick = calculateRoute;
-  	//document.getElementById("newDestBtn").onclick = chooseNewDestination;
   	document.getElementById("placeMyselfBtn").onclick = userPlaceSelfOrigin;
-  	//document.getElementById("hideWalkingBtn").onclick = hideWalkingDisplay;
-  	//document.getElementById("hideShuttleBtn").onclick = hideShuttleDisplay;
   	document.getElementById("closeX").onclick = closeUI;
-  	//document.getElementById("UIContainer").onclick = closeUI;
   	document.getElementById("greenUIArrow").onclick = openUI;
-  	document.getElementById("infoBtn").onclick = infoClick;
 
   	document.getElementById("iOk").onclick = iOkClick;
-  	document.getElementById("forwardBtn").onclick = forwardClick;
   	document.getElementById("dialog").onclick = hideDialog;
 
   	document.getElementById("search").onkeyup = searchBuildings;
+
+  	document.getElementById("nd0").onclick = setPage;
+  	document.getElementById("nd1").onclick = setPage;
+  	document.getElementById("nd2").onclick = setPage;
+
+  	document.getElementById("uiInner").style.left = 0;
+}
+
+function setPage(event) {
+ 	event = event;
+    var target = event.target;
+    var id = target.id;
+    var index = id[2];
+ 	updateUI(index);
+}
+
+function updateUI(index) {
+	var uiWidth = -280;
+	var uiInner = document.getElementById("uiInner");
+	var spot = index * uiWidth;
+
+	for (var i = 0; i < 3; i++) {
+ 		var idName = "nd" + i;
+ 		var e = document.getElementById(idName);
+ 		if (i == index) {
+ 			e.className = "cBtn cBtn_active";
+ 		} else {
+ 			e.className = "cBtn cBtn_inactive";
+ 		}
+ 	}
+
+	spot = spot.toString() + "px";
+	TweenLite.to(uiInner, 0.3, {left:spot});
+	clearSearch();
+
+ 	uiPageIndex = index;
 }
 
 /**
  *	Get user's current location, if possible
  */
-
 var options = {
 	enableHighAccuracy: true,
   	timeout: 10000,
@@ -91,8 +120,7 @@ function geoerror(err) {
   			break;
   	}
 
-  	// TODO reinstate
-  	//alertUser(err.message + extraMessage);
+  	alertUser(err.message + extraMessage);
 
   	if (err.code > 0) {
   		handleNoGeolocation();
@@ -164,53 +192,26 @@ function alertUser( message )
 
 	window.setTimeout(function() {
 		dialog.className = "hide";
-	}, 3000);
-}
-
-function infoClick()
-{
-	console.log("infoClick");
-	showInfo();
+	}, 8000);
 }
 
 function iOkClick() {
-	console.log("iOkClick");
-	moveInnerLeft();
-}
-
-function forwardClick()
-{
-	console.log("forwardClick");
-	moveInnerLeft();
+	updateUI(1);
 }
 
 function closeUI()
 {
-	console.log("closeUI");
 	document.getElementById("UIContainer").className = "show uiContainerFadeOut";
 	document.getElementById("greenUIArrow").className = "show greenArrowFadeIn";
 }
 
 function openUI() {
-	console.log("openUI");
 	document.getElementById("greenUIArrow").className = "show greenArrowFadeOut";
 	document.getElementById("UIContainer").className = "show uiContainerFadeIn";
 }
 
 function hideDialog() {
 	document.getElementById("dialog").className = "hide";
-}
-
-function moveInnerLeft() {
-	var uiInner = document.getElementById("uiInner");
-	TweenLite.to(uiInner, 0.2, {left:"-=280px"});
-	clearSearch();
-}
-
-function moveInnerRight() {
-	var uiInner = document.getElementById("uiInner");
-	TweenLite.to(uiInner, 0.2, {left:"+=280px"});
-	clearSearch();
 }
 
 function showInfo() {
@@ -222,14 +223,6 @@ function showInfo() {
 function clearSearch() {
 	document.getElementById("search").value = "";
 }
-
-
-/*
-function testCallback()
-{
-	console.log("testCallback");
-	stops.displayMarkers();
-}*/
 
 function calculateRoute()
 {
@@ -255,7 +248,7 @@ function calculateRoute()
 	shuttletrip = new ShuttleTrip();
 	shuttletrip.getShuttleTrip(user);
 
-	moveInnerLeft();
+	updateUI(2);
 }
 
 function userPlaceSelfOrigin()
@@ -352,9 +345,12 @@ function tripInfoLoaded() {
 	lastQuery.innerHTML = lastTimeQueried;
 
 	var p = document.getElementById("walking");
-	p.innerHTML = "Walking would take you <b>" +
+	p.innerHTML = "<span style='color:#0033FF'>Walking:</span> <b>" +
 					trip.distanceMatrix.rows[0].elements[0].duration.text + 
-					"</b> for a " + trip.distanceMatrix.rows[0].elements[0].distance.text + " distance.";
+					"</b> for " + trip.distanceMatrix.rows[0].elements[0].distance.text + ".";
+
+	var s = document.getElementById("shuttle");
+	s.innerHTML = "<span style='color:#00DD33'>Shuttle:</span> ...";
 
 	document.getElementById("closeX").className = "show";
 }
@@ -364,6 +360,7 @@ function tripInfoLoaded() {
  */
 function shuttleInfoLoaded() {
 	var p = document.getElementById("shuttle");
+	/*
 	p.innerHTML = "The closest stop is " +
 				shuttletrip.origSortedStops[shuttletrip.origProximity].stop +
 				" on the " + shuttletrip.routeResponse[0].key + " route. " +
@@ -372,6 +369,12 @@ function shuttleInfoLoaded() {
 				shuttletrip.shuttleTravelTime + " minutes to transport you to " +
 				shuttletrip.destSortedStops[shuttletrip.destProximity].stop+ ". Overall travel time is <b>" + 
 				shuttletrip.totalTravelTime + " minutes.</b>";
+				*/
+
+	p.innerHTML = "<span style='color:#00DD33'>Shuttle:</span> <b>" + shuttletrip.totalTravelTime + " minutes</b> in total.<br/>" +
+				"The " + shuttletrip.routeResponse[0].key + " will arrive at the " + shuttletrip.origSortedStops[shuttletrip.origProximity].stop +
+				" stop in " + shuttletrip.waitTime + " minutes, and will take " + shuttletrip.shuttleTravelTime + " minutes to get to the " +
+				shuttletrip.destSortedStops[shuttletrip.destProximity].stop + " stop.";
 }
 
 /**
@@ -391,6 +394,12 @@ function adjustMapBounds() {
 function searchBuildings() {
 	var value = document.getElementById("search").value;
 	var regExp = new RegExp(value, "i", "y");
+	var searchDest = document.getElementById("searchDest");
+	searchDest.innerHTML = "";
+
+	if (value === "") {
+		return;
+	}
 
 	buildingMatches = [];
 
@@ -400,9 +409,6 @@ function searchBuildings() {
 			buildingMatches.push(BUILDINGS[i]);
 		}
 	}
-
-	var searchDest = document.getElementById("searchDest");
-	searchDest.innerHTML = "";
 
 	for (var i = 0; i < 3; i++) {
 		if (buildingMatches[i] != null) {

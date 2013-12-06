@@ -10,8 +10,11 @@
     <div id="dialog">Testing dialog.</div>
     <div id="greenUIArrow"></div>
     <div id="UIContainer">
-      <button id="infoBtn"></button>
-      
+      <div id="navDots">
+        <button id="nd0" class="cBtn cBtn_active"></button>
+        <button id="nd1" class="cBtn"></button>
+        <button id="nd2" class="cBtn"></button>
+      </div>
       <button id="closeX"></button>
       <div id="uiInner">
         <div id="uiView0" class="uiView">
@@ -24,9 +27,7 @@
           <button><input id="search" type="text" placeholder="Browse buildings" list="buildings" autocomplete="no"/></button>
           <div id="searchDest"></div>
           <button id="calcRouteBtn">Calculate route</button><br/>
-          <button id="placeMyselfBtn">Your geolocation is wrong. I'll place myself on the map, kthxbai.</button>
-          
-          <button id="forwardBtn">--></button>
+          <button id="placeMyselfBtn">My geolocation is wrong. I'll place myself on the map, kthxbai.</button>
         </div>
         <div id="uiView2" class="uiView">
           <p id="lastQuery">Timestamp</p>
