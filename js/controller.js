@@ -120,7 +120,7 @@ function geoerror(err) {
   			break;
   	}
 
-  	alertUser(err.message + extraMessage);
+  	//alertUser(err.message + extraMessage);
 
   	if (err.code > 0) {
   		handleNoGeolocation();
