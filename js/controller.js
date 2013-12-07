@@ -360,17 +360,6 @@ function tripInfoLoaded() {
  */
 function shuttleInfoLoaded() {
 	var p = document.getElementById("shuttle");
-	/*
-	p.innerHTML = "The closest stop is " +
-				shuttletrip.origSortedStops[shuttletrip.origProximity].stop +
-				" on the " + shuttletrip.routeResponse[0].key + " route. " +
-				"The shuttle will arrive in " + shuttletrip.waitTime +
-				" minutes and will take " +
-				shuttletrip.shuttleTravelTime + " minutes to transport you to " +
-				shuttletrip.destSortedStops[shuttletrip.destProximity].stop+ ". Overall travel time is <b>" + 
-				shuttletrip.totalTravelTime + " minutes.</b>";
-				*/
-
 	p.innerHTML = "<span style='color:#00DD33'>Shuttle:</span> <b>" + shuttletrip.totalTravelTime + " minutes</b> in total.<br/>" +
 				"The " + shuttletrip.routeResponse[0].key + " will arrive at the " + shuttletrip.origSortedStops[shuttletrip.origProximity].stop +
 				" stop in " + shuttletrip.waitTime + " minutes, and will take " + shuttletrip.shuttleTravelTime + " minutes to get to the " +
@@ -397,7 +386,7 @@ function searchBuildings() {
 	var searchDest = document.getElementById("searchDest");
 	searchDest.innerHTML = "";
 
-	if (value === "") {
+	if (value == "") {
 		return;
 	}
 
@@ -435,9 +424,16 @@ function searchBuildings() {
 function setMapTo() {
 	console.log("setMapTo "+this.id);
 	user.setDestination(buildingMatches[this.id].lat, buildingMatches[this.id].lng);
-	trip.deleteRouteLine();
-	shuttletrip.deleteRouteLines();
-	shuttletrip.deleteMarkers();
+	
+	if (trip) {
+		trip.deleteRouteLine();
+	}
+
+	if (shuttletrip) {
+		shuttletrip.deleteRouteLines();
+		shuttletrip.deleteMarkers();
+	}
+
 	document.getElementById("searchDest").innerHTML = "";
 }
 
