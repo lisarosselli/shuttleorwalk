@@ -26,7 +26,7 @@ var errorCode = {
 	noGeolocation: "Not able to geolocate you.",
 	noBrowserGeo: "Your browser does not support geolocation.",
 	notOnCampus: "Can't find you on campus.",
-	defaultPlacement: "Placing you near Harvard Square",
+	defaultPlacement: "Placing you near Harvard Coop.",
 	somethingWrong: "Woah. Something went way wrong.",
 	missingInfo: "Info missing. Where are you starting from? Do you have a destination?",
 	noShuttles: "There are no appropriate routes running."
