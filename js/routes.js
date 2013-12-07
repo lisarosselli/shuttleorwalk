@@ -2,6 +2,10 @@
  *	routes.js
  *	
  *	Encapsulating routes here
+ *	Was going to overlay each shuttle routes on map based on
+ *	user location and destination, but had no definitive/complete
+ *	route information. So this implementation remains 'TODO'
+ *	should better data become available.
  */
 
 function Routes()

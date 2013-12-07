@@ -1,7 +1,12 @@
 /**
  *	shuttletrip.js
+ *
+ *	Encapsulates Shuttleboy API and related data
  */
 
+/**
+ *	Shuttletrip constructor
+ */
 function ShuttleTrip()
 {
 	console.log("new ShuttleTrip");
@@ -50,10 +55,12 @@ ShuttleTrip.prototype.getShuttleTrip = function( userObject )
 	}
 }
 
+/**
+ *	Understand the stop closest to the user, and the stop
+ *	closest to their destination. Sort stops by proximity.
+ */
 ShuttleTrip.prototype.defineAndSortStops = function()
 {
-	//console.log("ShuttleTrip.prototype.defineAndSortStops");
-	
 	this.defineStopsClosestToOrig();
 	this.defineStopsClosestToDest();
 	this.sortStopsClosestToOrig();
@@ -66,8 +73,6 @@ ShuttleTrip.prototype.defineStopsClosestToOrig = function()
 	{
 		return ;
 	}
-
-	//console.log("ShuttleTrip.prototype.defineStopsClosestToOrig");
 
 	var origLatLng = new google.maps.LatLng(user.currentLocation.lat, user.currentLocation.lng);
 	for (var i = 0; i < stops.stopList.length; i++)
@@ -85,8 +90,6 @@ ShuttleTrip.prototype.defineStopsClosestToDest = function()
 		return;
 	}
 
-	//console.log("ShuttleTrip.prototype.defineStopsClosestToDest");
-
 	var destLatLng = new google.maps.LatLng(user.destination.lat, user.destination.lng);
 	for (var i = 0; i < stops.stopList.length; i++)
 	{
@@ -98,8 +101,6 @@ ShuttleTrip.prototype.defineStopsClosestToDest = function()
 
 ShuttleTrip.prototype.sortStopsClosestToOrig = function()
 {
-	//console.log("ShuttleTrip.prototype.sortStopsClosestToOrig");
-
 	this.origSortedStops = stops.stopList.slice(0);
 
 	var direction = 'ASC';
@@ -187,6 +188,9 @@ ShuttleTrip.prototype.beginQueryApiForRoute = function()
 	this.queryApiWithStops(this.origSortedStops[0], this.destSortedStops[0]);
 }
 
+/**
+ *	Queries the Shuttleboy API with origin and destination data
+ */
 ShuttleTrip.prototype.queryApiWithStops = function( orig, dest)
 {
 	console.log("ShuttleTrip.prototype.queryApiWithStops");
@@ -247,7 +251,6 @@ ShuttleTrip.prototype.queryApiWithStops = function( orig, dest)
 			} else
 			{
 				receivedRouteJSON();
-				// TODO: mark the stops on the map
 			}
 		}
 	}
@@ -290,6 +293,11 @@ ShuttleTrip.prototype.incrementStops = function()
 	this.queryApiWithStops(this.origSortedStops[this.origProximity], this.destSortedStops[this.destProximity]);
 }
 
+/**
+ *	This displays the two walking routes the user will take
+ *	in getting to the origination stop and walking from the
+ *	destination stop. Not the shuttle route per se.
+ */
 ShuttleTrip.prototype.displayShuttleRoute = function()
 {
 	console.log("ShuttleTrip.prototype.displayShuttleRoute");
@@ -349,6 +357,12 @@ ShuttleTrip.prototype.displayShuttleRoute = function()
 	});
 }
 
+/**
+ *	Parses through the received JSON route data and
+ *	parses travel time
+ *	this.acuteTravelTime: walking to/from stops to/from buildings, 
+ *	shuttle time, and distance walked.
+ */	
 ShuttleTrip.prototype.parseRouteTimes = function()
 {
 	if (this.routeResponse == null)
@@ -388,6 +402,9 @@ ShuttleTrip.prototype.parseRouteTimes = function()
 	shuttleInfoLoaded();
 }
 
+/**
+ *	Gets Google distances and time to/from stops
+ */
 ShuttleTrip.prototype.getGoogleDistanceMatrix = function()
 {
 	console.log("ShuttleTrip.prototype.getGoogleDistanceMatrix");
@@ -416,6 +433,9 @@ ShuttleTrip.prototype.getGoogleDistanceMatrix = function()
 	});
 }
 
+/**
+ *	Display Google walking directions to/from stops
+ */
 ShuttleTrip.prototype.displayWalkingRoutes = function()
 {
 	console.log("ShuttleTrip.prototype.displayWalkingRoutes");

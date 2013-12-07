@@ -4,6 +4,9 @@
  *	http://shuttleboy.cs50.net/api/1.2/stops?output=jsonp&callback=parseResponse
  */
 
+/**
+ *	constructor
+ */
 function Stops()
 {
 	this.apiurl = "http://shuttleboy.cs50.net/api/"+ apiVersion +"/stops?output=json";

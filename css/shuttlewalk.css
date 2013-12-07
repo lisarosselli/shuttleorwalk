@@ -1,6 +1,7 @@
 /**
- * L.Rosselli
- * lisarosselli@g.harvard.edu
+ *	shuttlewalk.css
+ * 	
+ * 	lisarosselli@g.harvard.edu
  */
 
 html {
@@ -105,6 +106,20 @@ p {
 {
 	100% {
 		-webkit-transform: translate(0px, -25px);
+	}
+}
+
+@-moz-keyframes imgMoveUp
+{
+	100% {
+		-moz-transform: translate(0px, -25px);
+	}
+}
+
+@-o-keyframes imgMoveUp
+{
+	100% {
+		-o-transform: translate(0px, -25px);
 	}
 }
 
@@ -287,6 +302,17 @@ p {
 	}
 }
 
+@-moz-keyframes gaFadeIn {
+	0% {
+		opacity: 0;
+		-moz-transform: translateX(-70px);
+	}
+	100% {
+		opacity: 1;
+		-moz-transform: translateX(0);
+	}
+}
+
 @keyframes gaFadeIn {
 	0% {
 		opacity: 0;
@@ -336,6 +362,28 @@ p {
 	}
 }
 
+@-moz-keyframes uicFadeIn {
+	0% {
+		opacity: 0;
+		-moz-transform: translateX(+20px);
+	}
+	100% {
+		opacity: 1;
+		-moz-transform: translateX(0);
+	}
+}
+
+@-o-keyframes uicFadeIn {
+	0% {
+		opacity: 0;
+		-o-transform: translateX(+20px);
+	}
+	100% {
+		opacity: 1;
+		-o-transform: translateX(0);
+	}
+}
+
 @keyframes uicFadeIn {
 	0% {
 		opacity: 0;
@@ -369,6 +417,30 @@ p {
 	}
 }
 
+@-moz-keyframes uicFadeOut {
+	0% {
+		opacity: 1;
+		-moz-transform: translateX(0);
+	}
+	100% {
+		opacity: 0;
+		visibility: hidden;
+		-moz-transform: translateX(+20px);
+	}
+}
+
+@-o-keyframes uicFadeOut {
+	0% {
+		opacity: 1;
+		-o-transform: translateX(0);
+	}
+	100% {
+		opacity: 0;
+		visibility: hidden;
+		-o-transform: translateX(+20px);
+	}
+}
+
 @keyframes uicFadeOut {
 	0% {
 		opacity: 1;
@@ -382,6 +454,9 @@ p {
 }
 /* end UIContainer */
 
+/**
+ *	UI styling
+ */
 button {
 	background: none;
 	background: #dfdfdf;

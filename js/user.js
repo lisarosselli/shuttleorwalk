@@ -4,6 +4,9 @@
  *	User functionality
  */
 
+/**
+ *	Constructor
+ */
 function User()
 {
 	this.currentLocation = {
@@ -21,6 +24,10 @@ function User()
 	};
 }
 
+/**
+ *	Algorithm to deduce if use is actually in Cambridge, MA
+ *	on Harvard campus or not
+ */
 User.prototype.isOnCampus = function()
 {
 	var defaultBuilding = BUILDINGS[0];
@@ -43,6 +50,10 @@ User.prototype.isOnCampus = function()
 	}
 }
 
+/**
+ *	Sets user current location for a latitutde an longitude 
+ *	floating point value
+ */
 User.prototype.setCurrentLocation = function(latitude, longitude)
 {
 	console.log("User.prototype.setCurrentLocation for lat=" + latitude + " lng=" + longitude);
@@ -56,8 +67,6 @@ User.prototype.setCurrentLocation = function(latitude, longitude)
 
 	this.currentLocation.lat = latitude;
 	this.currentLocation.lng = longitude;
-
-	//http://mt.google.com/vt/icon?psize=27&font=fonts/Roboto-Bold.ttf&color=ff135C13&name=icons/spotlight/spotlight-waypoint-a.png&ax=43&ay=50&text=%E2%80%A2
 
 	img = { url: "http://mt.google.com/vt/icon?psize=27&font=fonts/Roboto-Bold.ttf&color=ff133C00&name=icons/spotlight/spotlight-waypoint-a.png&ax=43&ay=50&text=%E2%80%A2",
 					size: new google.maps.Size(22, 40),
@@ -98,6 +107,10 @@ User.prototype.setCurrentLocation = function(latitude, longitude)
 	}
 }
 
+/**
+ *	Sets user destination for a latitutde an longitude 
+ *	floating point value
+ */
 User.prototype.setDestination = function(latitude, longitude)
 {
 	console.log("User.prototype.setDestination for lat=" + latitude + " lng=" + longitude);
@@ -141,6 +154,12 @@ User.prototype.setDestination = function(latitude, longitude)
 	this.queryDestination();
 }
 
+/**
+ *	Based on user destination, queries the buildings.js to see
+ *	if there is a match, show building name and Harvard logo
+ *	in the infoWindow, otherwise, let Google Maps take over and
+ *	reverse geolocate.
+ */
 User.prototype.queryDestination = function()
 {
 	console.log("User.prototype.queryDestination");
@@ -178,14 +197,15 @@ User.prototype.queryDestination = function()
 	}
 }
 
+/**
+ *	Update infoWindow when user taps map for destination
+ */
 User.prototype.updateDestinationInfoWindow = function(gmLatLng, buildingStringInfo, isHarvardBuilding)
 {
 	console.log("User.prototype.updateDestinationInfoWindow");
 
 	if (isHarvardBuilding)
 	{
-		/*this.destination.infoWindow.setContent("<div><img class='harvardH' src='img/harvard_H.png'/>&nbsp;"+
-			buildingStringInfo+"</div>");*/
 		this.destination.infoWindow.setContent("<div id='hMarker'><p>"+buildingStringInfo+"</p></div>");
 	} else
 	{
@@ -247,7 +267,6 @@ User.prototype.hideOriginMarker = function()
 
 User.prototype.removeDestinationMarker = function()
 {
-	console.log("HEYY! removeDestinationMarker");
 	if (this.destination.marker)
 	{
 		this.hideDestinationMarker();

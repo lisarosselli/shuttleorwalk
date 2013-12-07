@@ -3,6 +3,9 @@
  *
  */
 
+/**
+ *	Constructor
+ */
 function Trip()
 {
 	console.log("new Trip!");
@@ -17,6 +20,9 @@ function Trip()
 	this.distanceMatrix = null;
 }
 
+/**
+ *	Initial entry point to creating a trip
+ */
 Trip.prototype.getTrip = function( userObject )
 {
 	if (userObject == null)
@@ -45,6 +51,9 @@ Trip.prototype.getTrip = function( userObject )
 
 }
 
+/**
+ *	Gets Google walking directions and displays walking route
+ */
 Trip.prototype.getGoogleDirections = function()
 {
 	console.log("Trip.prototype.getGoogleDirections");
@@ -109,6 +118,9 @@ Trip.prototype.getGoogleDirections = function()
   	});
 }
 
+/**
+ *	Gets Google distance/time for the walking route
+ */
 Trip.prototype.getGoogleDistanceMatrix = function()
 {
 	console.log("Trip.prototype.getGoogleDistanceMatrix");
@@ -135,6 +147,9 @@ Trip.prototype.getGoogleDistanceMatrix = function()
 	});
 }
 
+/**
+ *	Still in development: show user a step-by-step dialog
+ */
 Trip.prototype.showGoogleSteps = function(directionResult)
 {
 	console.log("Trip.prototype.showGoogleSteps");
@@ -158,6 +173,9 @@ Trip.prototype.showGoogleSteps = function(directionResult)
 	}
 }
 
+/**
+ *	Still in development: show user a step-by-step dialog
+ */
 Trip.prototype.attachGoogleInstructions = function(marker, text)
 {
 	console.log("Trip.prototype.attachGoogleInstructions");

@@ -9,7 +9,10 @@
 var map = null;
 var mapOptions = null;
 
+// Shuttleboy API version
 var apiVersion = 1.3;
+
+// App data objects
 var user = null;
 var stops = null;
 var trip = null;
@@ -42,7 +45,7 @@ var MAX_MILE_RADIUS = 5;
 var METERS_IN_MILE = 1609.34;
 
 /**
- *	How close user must be to be deemed "at" a building.
+ *	How close user must be to be deemed "at" a building, in meters.
  *	@const
  */
 var ORIGIN_BUILDING_PROXIMITY = 60;
