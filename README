@@ -9,38 +9,19 @@ Objective:
 Understand if walking or waiting/taking the shuttle is faster.
 
 How it's built:
-Shuttlewalk is built by leveraging Google Maps and Harvard's Shuttleboy API (https://manual.cs50.net/api/shuttleboy/).
-This is built to be a web app so that it can be used on numerous devices. Simple HTML, Javascript and CSS are utilized.
-One must have a connection to the internet either via 3G/LTE or wifi.
+Shuttlewalk is built by leveraging Google Maps and Harvard's Shuttleboy API (https://manual.cs50.net/api/shuttleboy/). This is built to be a web app so that it can be used on numerous devices. Simple HTML, Javascript and CSS are utilized. One must have a connection to the internet either via 3G/LTE or wifi.
 
-The app first makes an attempt to geolocate the user. Some browsers seem to be better than others at this task, 
-ie. Chrome on desktop refuses to geolocate while Safari on desktop will successfully geolocate me in Chicago-Loop. 
-Because of this, if the browser does not successfully geolocate the user, that user will be by default placed right
-outside the Harvard Coop. If the user is successfully geolocated, the app then moves on to understanding whether or
-not that user is indeed 'on campus.' On campus is deemed as being within a 3-mile radius of the default location,
-the Harvard Coop. If this is the case, the user is alerted that they are not on campus and have in fact been plotted
-at the Harvard Coop, in case they are wondering what happened.
+The app first makes an attempt to geolocate the user. Some browsers seem to be better than others at this task, ie. Chrome on desktop refuses to geolocate while Safari on desktop will successfully geolocate me in Chicago-Loop. Because of this, if the browser does not successfully geolocate the user, that user will be by default placed right outside the Harvard Coop. If the user is successfully geolocated, the app then moves on to understanding whether or not that user is indeed 'on campus.' On campus is deemed as being within a 3-mile radius of the default location, the Harvard Coop. If this is the case, the user is alerted that they are not on campus and have in fact been plotted at the Harvard Coop, in case they are wondering what happened.
 
 User Interface (UI):
-The user may select a destination simply by tapping/clicking the map. The user can then tap/click on the white circle
-button with the green arrow, found on the right-hand side of the screen, about halfway down. This opens up the UI.
-There is a view which explains a bit about what the user will see, when the click to move on, they are presented with
-a screen that has a "Calculate Route" button, reset their location button, and a search bar. 
+The user may select a destination simply by tapping/clicking the map. The user can then tap/click on the white circle button with the green arrow, found on the right-hand side of the screen, about halfway down. This opens up the UI. There is a view which explains a bit about what the user will see, when the click to move on, they are presented with a screen that has a "Calculate Route" button, reset their location button, and a search bar. 
 
-'Calculate Route' will do just that. It will begin the route calculation while forwarding the user to a view that will
-display all the pertinent information.
+'Calculate Route' will do just that. It will begin the route calculation while forwarding the user to a view that will display all the pertinent information.
 
-If the user feels their initial geolocation is off, they can click the button that says "My geolocation is wrong,
-I'll place myself..." When the user next taps/clicks the map, their current location/origin is set. Any tap after
-that then defines a destination. Any tap after that even will redefine the destination.
+If the user feels their initial geolocation is off, they can click the button that says "My geolocation is wrong, I'll place myself..." When the user next taps/clicks the map, their current location/origin is set. Any tap after that then defines a destination. Any tap after that even will redefine the destination.
 
-Let's say a user knows the name of a building but not where it is located. The user can type into the search bar to 
-search through the known list of Harvard buildings (buildings.js). A short list will appear under the search bar.
-The user can select one of those buildings as their destination by tapping/clicking on one of those buildings (button).
-The list will then disappear and the user may then tap/click on 'Calculate Route.'
+Let's say a user knows the name of a building but not where it is located. The user can type into the search bar to search through the known list of Harvard buildings (buildings.js). A short list will appear under the search bar. The user can select one of those buildings as their destination by tapping/clicking on one of those buildings (button). The list will then disappear and the user may then tap/click on 'Calculate Route.'
 
-There are 3 gray circle/dot buttons that run along the top of the user interface window. The user can tap/click on
-those buttons to easily navigate among the 3 UI views.
+There are 3 gray circle/dot buttons that run along the top of the user interface window. The user can tap/click on those buttons to easily navigate among the 3 UI views.
 
-Tapping/clicking the red X in the top-right of the user interface window will hide that window. Tapping/clicking on
-the white right-hand circle with the green arrow will make that user interface window appear again.
+Tapping/clicking the red X in the top-right of the user interface window will hide that window. Tapping/clicking on the white right-hand circle with the green arrow will make that user interface window appear again.
