@@ -1,5 +1,6 @@
 /**
  *	functions.js
+ *  Accessory functions
  */
 
 /**
@@ -87,6 +88,9 @@ function createInfoWindow(windowTitle, windowText)
   	return infowindow;
 }
 
+/**
+ *  Understand local hour based on data
+ */
 function getLocalDateHours(dateJSON)
 {
 	var d = new Date(dateJSON);
@@ -94,6 +98,9 @@ function getLocalDateHours(dateJSON)
 	return d.getHours() + tzo;
 }
 
+/**
+ *  Get difference in minutes between two dates
+ */
 function getMinuteDifference( dateA, dateB )
 {
 	var a = new Date(dateA);
@@ -117,11 +124,17 @@ function getMinuteDifference( dateA, dateB )
 	return shuttleMins;
 }
 
+/**
+ *  Returns minutes based on seconds argument
+ */
 function secondsRoundToMinute( seconds )
 {
 	return Math.round(seconds / 60);
 }
 
+/**
+ *  Rounds a number n to 1 decimal spot
+ */
 function roundToOneDecimal(n)
 {
 	var num = n / METERS_IN_MILE;
