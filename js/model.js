@@ -36,7 +36,7 @@ var errorCode = {
  *	Maximum radius before you are deemed off-campus.
  *	@const
  */
-var MAX_MILE_RADIUS = 5;
+var MAX_MILE_RADIUS = 3;
 
 /**
  *	Number of meters in a mile.

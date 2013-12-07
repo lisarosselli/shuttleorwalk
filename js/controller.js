@@ -401,6 +401,15 @@ function receivedShuttleDistanceMatrix()
 }
 
 /**
+ *	Found no appropriate routes.
+ *	Tell user.
+ */
+function foundNoAppropriateRoutes() {
+	var p = document.getElementById("shuttle");
+	p.innerHTML = "<span style='color:#00DD33'>Shuttle:</span> Found no appropriate routes.";
+}
+
+/**
  *	Present user with Google Maps walking info.
  */
 function tripInfoLoaded() {

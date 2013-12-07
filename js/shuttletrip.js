@@ -207,7 +207,7 @@ ShuttleTrip.prototype.queryApiWithStops = function( orig, dest)
 	minutes = (minutes < 10) ? "0"+minutes : minutes;
 
 	// Test only values below
-	//day = 25;
+	//day = 28;
 	//month = 11;
 	//year = 2013;
 
@@ -287,6 +287,7 @@ ShuttleTrip.prototype.incrementStops = function()
 	{
 		// TODO: alert the user there is no appropriate running route at this time
 		console.log("ShuttleTrip.prototype.incrementStops :: No appropriate route running right now.")
+		foundNoAppropriateRoutes();
 		return;
 	}
 
@@ -484,7 +485,7 @@ ShuttleTrip.prototype.displayWalkingLegA = function()
 	    		path: polyLineArray,
 	    		geodesic: false,
 	    		strokeColor: '#00DD33',
-	    		strokeOpacity: 0.8,
+	    		strokeOpacity: 1,
 	    		strokeWeight: 4
 	    	});
 

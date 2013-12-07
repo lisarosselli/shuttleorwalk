@@ -106,7 +106,7 @@ Trip.prototype.getGoogleDirections = function()
 	    		path: polyLineArray,
 	    		geodesic: false,
 	    		strokeColor: '#0033FF',
-	    		strokeOpacity: 0.8,
+	    		strokeOpacity: 0.6,
 	    		strokeWeight: 4
 	    	});
 

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Design : Shuttlewalk</title>
+		<style>
+			body {
+				font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+   				font-weight: 100;
+   				font-size: 0.9em;
+   				padding: 5% 15%;
+			}
+			h3 {
+				border-bottom: 1px solid #ccc;
+			}
+			.footnote {
+				font-size: 0.6em;
+				font-weight: normal;
+			}
+		</style>
+	</head>
+	
+	<body>
+		<h1>Design : Shuttlewalk <br/><span class="footnote">Lisa Rosselli (lisarosselli@g.harvard.edu)</span</h1>
+		<h3>Where it Lives</h3>
+			<p>The web app is hosted at <a href="http://shuttle.runninlatte.com">http://shuttle.runninlatte.com</a></p>
+			<p>Code is at <a href="http://github.com/lisarosselli/shuttleorwalk">http://github.com/lisarosselli/shuttleorwalk</a></p>
+		<h3>Objective</h3>
+			<p>Understand if walking or waiting/taking the shuttle is faster. This app is not intended to display Harvard Shuttle routes themselves.</p>
+		<h3>How it is Built</h3>
+			<p>Shuttlewalk is built by leveraging Google Maps and Harvard's Shuttleboy API (https://manual.cs50.net/api/shuttleboy/). This is built to be a web app so that it can be used on numerous devices. Simple HTML, Javascript and CSS are utilized. One must have a connection to the internet either via 3G/LTE or wifi.</p>
+
+			<p>The app first makes an attempt to geolocate the user. Some browsers seem to be better than others at this task, e.g. Chrome on desktop refuses to geolocate while Safari on desktop will successfully geolocate me in Chicago-Loop. Because of this, if the browser does not successfully geolocate the user, that user will be by default placed right outside the Harvard Coop. If the user is successfully geolocated, the app then moves on to understanding whether or not that user is indeed 'on campus.' On campus is deemed as being within a 3-mile radius of the default location, the Harvard Coop. If this is the case, the user is alerted that they are not on campus and have in fact been plotted at the Harvard Coop, in case they are wondering what happened.</p>
+		<h3>Design</h3>
+			I really wanted to create order in this app. By segmenting out user.js, trip.js, and shuttletrip.js I was able to encapsulate the functionality therein. This allowed for easy access to the information contained within each object, making data access easy e.g. user.currentLocation or shuttletrip.totalTravelTime. This also allowed for functionality to be encapsulated as well e.g. trip.getGoogleDirections(). The controller.js is the cerebellum of the app. This separates out business logic from the data and is able to choreograph the order in which events happen and divvy out directives to the main objects.
+		<h3>User Interface (UI)</h3>
+			<p>The user may select a destination simply by touchping/clicking the map. The user can then touch/click on the white circle button with the green arrow, found on the right-hand side of the screen, about halfway down. This opens up the UI. There is a view which explains a bit about what the user will see, when they touch/click to move on, they are presented with a screen that has a 'Calculate Route' button, reset their location button, and a search bar.</p>
+
+			<p>'Calculate Route' will do just that. It will begin the route calculation while forwarding the user to a view that will display all the pertinent information.</p>
+
+			<p>If the user feels their initial geolocation is off, they can click the button that says "My geolocation is wrong, I'll place myself..." When the user next touchs/clicks the map, their current location/origin is set. Any touch after that then defines a destination. Any touch after that even will redefine the destination.</p>
+
+			<p>Let's say a user knows the name of a building but not where it is located. The user can type into the search bar to search through the known list of Harvard buildings (buildings.js). A short list will appear under the search bar. The user can select one of those buildings as their destination by touchping/clicking on one of those buildings (button). The list will then disappear and the user may then touch/click on 'Calculate Route.'</p>
+
+			<p>There are 3 gray circle/dot buttons that run along the top of the user interface window. The user can touch/click on those buttons to easily navigate among the 3 UI views.</p>
+
+			<p>Touching/clicking the red X in the top-right of the user interface window will hide that window. touchping/clicking on the white right-hand circle with the green arrow will make that user interface window appear again.</p>
+	</body>
+</html>

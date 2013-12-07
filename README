@@ -6,7 +6,7 @@ It is built with Javascript, HTML, and CSS.
 Is is hosted at http://shuttle.runninlatte.com
 
 Objective:
-Understand if walking or waiting/taking the shuttle is faster.
+Understand if walking or waiting/taking the shuttle is faster. This app is not intended to display Harvard Shuttle routes themselves.
 
 How it's built:
 Shuttlewalk is built by leveraging Google Maps and Harvard's Shuttleboy API (https://manual.cs50.net/api/shuttleboy/). This is built to be a web app so that it can be used on numerous devices. Simple HTML, Javascript and CSS are utilized. One must have a connection to the internet either via 3G/LTE or wifi.
@@ -17,15 +17,15 @@ Design:
 I really wanted to create order in this app. By segmenting out user.js, trip.js, and shuttletrip.js I was able to encapsulate the functionality therein. This allowed for easy access to the information contained within each object, making data access easy e.g. user.currentLocation or shuttletrip.totalTravelTime. This also allowed for functionality to be encapsulated as well e.g. trip.getGoogleDirections(). The controller.js is the cerebellum of the app. This separates out business logic from the data and is able to choreograph the order in which events happen and divvy out directives to the main objects.
 
 User Interface (UI):
-The user may select a destination simply by tapping/clicking the map. The user can then tap/click on the white circle button with the green arrow, found on the right-hand side of the screen, about halfway down. This opens up the UI. There is a view which explains a bit about what the user will see, when they click to move on, they are presented with a screen that has a 'Calculate Route' button, reset their location button, and a search bar. 
+The user may select a destination simply by touchping/clicking the map. The user can then touch/click on the white circle button with the green arrow, found on the right-hand side of the screen, about halfway down. This opens up the UI. There is a view which explains a bit about what the user will see, when they touch/click to move on, they are presented with a screen that has a 'Calculate Route' button, reset their location button, and a search bar. 
 
 'Calculate Route' will do just that. It will begin the route calculation while forwarding the user to a view that will display all the pertinent information.
 
-If the user feels their initial geolocation is off, they can click the button that says "My geolocation is wrong, I'll place myself..." When the user next taps/clicks the map, their current location/origin is set. Any tap after that then defines a destination. Any tap after that even will redefine the destination.
+If the user feels their initial geolocation is off, they can click the button that says "My geolocation is wrong, I'll place myself..." When the user next touchs/clicks the map, their current location/origin is set. Any touch after that then defines a destination. Any touch after that even will redefine the destination.
 
-Let's say a user knows the name of a building but not where it is located. The user can type into the search bar to search through the known list of Harvard buildings (buildings.js). A short list will appear under the search bar. The user can select one of those buildings as their destination by tapping/clicking on one of those buildings (button). The list will then disappear and the user may then tap/click on 'Calculate Route.'
+Let's say a user knows the name of a building but not where it is located. The user can type into the search bar to search through the known list of Harvard buildings (buildings.js). A short list will appear under the search bar. The user can select one of those buildings as their destination by touchping/clicking on one of those buildings (button). The list will then disappear and the user may then touch/click on 'Calculate Route.'
 
-There are 3 gray circle/dot buttons that run along the top of the user interface window. The user can tap/click on those buttons to easily navigate among the 3 UI views.
+There are 3 gray circle/dot buttons that run along the top of the user interface window. The user can touch/click on those buttons to easily navigate among the 3 UI views.
 
-Tapping/clicking the red X in the top-right of the user interface window will hide that window. Tapping/clicking on the white right-hand circle with the green arrow will make that user interface window appear again.
+touchping/clicking the red X in the top-right of the user interface window will hide that window. touchping/clicking on the white right-hand circle with the green arrow will make that user interface window appear again.
 
