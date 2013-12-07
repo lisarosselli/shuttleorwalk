@@ -13,8 +13,11 @@ Shuttlewalk is built by leveraging Google Maps and Harvard's Shuttleboy API (htt
 
 The app first makes an attempt to geolocate the user. Some browsers seem to be better than others at this task, ie. Chrome on desktop refuses to geolocate while Safari on desktop will successfully geolocate me in Chicago-Loop. Because of this, if the browser does not successfully geolocate the user, that user will be by default placed right outside the Harvard Coop. If the user is successfully geolocated, the app then moves on to understanding whether or not that user is indeed 'on campus.' On campus is deemed as being within a 3-mile radius of the default location, the Harvard Coop. If this is the case, the user is alerted that they are not on campus and have in fact been plotted at the Harvard Coop, in case they are wondering what happened.
 
+Design:
+I really wanted to create order in this app. By segmenting out user.js, trip.js, and shuttletrip.js I was able to encapsulate the functionality therein. This allowed for easy access to the information contained within each object, making data access easy e.g. user.currentLocation or shuttletrip.totalTravelTime. This also allowed for functionality to be encapsulated as well e.g. trip.getGoogleDirections(). The controller.js is the cerebellum of the app. This separates out business logic from the data and is able to choreograph the order in which events happen and divvy out directives to the main objects.
+
 User Interface (UI):
-The user may select a destination simply by tapping/clicking the map. The user can then tap/click on the white circle button with the green arrow, found on the right-hand side of the screen, about halfway down. This opens up the UI. There is a view which explains a bit about what the user will see, when the click to move on, they are presented with a screen that has a "Calculate Route" button, reset their location button, and a search bar. 
+The user may select a destination simply by tapping/clicking the map. The user can then tap/click on the white circle button with the green arrow, found on the right-hand side of the screen, about halfway down. This opens up the UI. There is a view which explains a bit about what the user will see, when they click to move on, they are presented with a screen that has a 'Calculate Route' button, reset their location button, and a search bar. 
 
 'Calculate Route' will do just that. It will begin the route calculation while forwarding the user to a view that will display all the pertinent information.
 
@@ -25,3 +28,4 @@ Let's say a user knows the name of a building but not where it is located. The u
 There are 3 gray circle/dot buttons that run along the top of the user interface window. The user can tap/click on those buttons to easily navigate among the 3 UI views.
 
 Tapping/clicking the red X in the top-right of the user interface window will hide that window. Tapping/clicking on the white right-hand circle with the green arrow will make that user interface window appear again.
+
