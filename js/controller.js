@@ -1,15 +1,20 @@
 /**
- * Some info here
+ *	controller.js
+ *
+ *	lisarosselli@g.harvard.edu
+ *	Main controller of functionality for the app.
  */
 
-// Initialize Google Map!
+/**
+ *	Initialize Google Maps and the app itself.
+ */
 function initialize() 
 {
 	console.log("initialize");
 
 	user = new User();
 
-	// get a suitable building/location to be the default
+	// Select a suitable building/location to be the default
 	var defaultBuilding = BUILDINGS[0];
 
 	mapOptions = { 
@@ -23,6 +28,8 @@ function initialize()
 
 	findLocation();
 
+	// Adding event listeners here for user taps/clicks on the map
+	// Ability to set either destination or origin
 	google.maps.event.addListener(map, 'click', function(e) {
     	console.log("map clicked! at "+e.latLng.lat());
 
@@ -40,19 +47,18 @@ function initialize()
   	document.getElementById("placeMyselfBtn").onclick = userPlaceSelfOrigin;
   	document.getElementById("closeX").onclick = closeUI;
   	document.getElementById("greenUIArrow").onclick = openUI;
-
   	document.getElementById("iOk").onclick = iOkClick;
   	document.getElementById("dialog").onclick = hideDialog;
-
   	document.getElementById("search").onkeyup = searchBuildings;
-
   	document.getElementById("nd0").onclick = setPage;
   	document.getElementById("nd1").onclick = setPage;
   	document.getElementById("nd2").onclick = setPage;
-
   	document.getElementById("uiInner").style.left = 0;
 }
 
+/**
+ *	Called from circular UI buttons to change uiView
+ */
 function setPage(event) {
  	event = event;
     var target = event.target;
@@ -61,6 +67,10 @@ function setPage(event) {
  	updateUI(index);
 }
 
+/**
+ *	Change which UI view is displayed
+ *	Update the circular button UI
+ */
 function updateUI(index) {
 	var uiWidth = -280;
 	var uiInner = document.getElementById("uiInner");
@@ -92,6 +102,9 @@ var options = {
   	maximumAge: 0
 };
 
+/**
+ *	Upon geolocation success
+ */
 function geosuccess(pos) {
   	var crd = pos.coords;
  	console.log('Your current position is:');
@@ -100,6 +113,10 @@ function geosuccess(pos) {
   	console.log('More or less ' + crd.accuracy + ' meters.');
 };
 
+/**
+ *	Upon geolocation error, either browser does not acknowledge
+ *	geolocation, user opts no, or other error.
+ */
 function geoerror(err) {
   	console.warn('ERROR(' + err.code + '): ' + err.message);
 
@@ -120,6 +137,7 @@ function geoerror(err) {
   			break;
   	}
 
+  	// Opted not to implement the below, may change mind again
   	//alertUser(err.message + extraMessage);
 
   	if (err.code > 0) {
@@ -127,6 +145,9 @@ function geoerror(err) {
   	}
 };
 
+/**
+ *	Initially sparking location search
+ */
 function findLocation() 
 {
 	console.log("findLocation");
@@ -134,7 +155,6 @@ function findLocation()
  	if (navigator.geolocation)
  	{
  		console.log("browser does have geo!");
- 		//navigator.geolocation.getCurrentPosition(foundLocation, handleNoGeolocation);
  		navigator.geolocation.getCurrentPosition(foundLocation, geoerror, options);
  	} else
  	{
@@ -195,6 +215,9 @@ function alertUser( message )
 	}, 8000);
 }
 
+/**
+ *	UI functionality below
+ */
 function iOkClick() {
 	updateUI(1);
 }
@@ -224,6 +247,9 @@ function clearSearch() {
 	document.getElementById("search").value = "";
 }
 
+/**
+ *	Begin route calculations
+ */
 function calculateRoute()
 {
 	console.log("calculateRoute");
@@ -251,6 +277,9 @@ function calculateRoute()
 	updateUI(2);
 }
 
+/**
+ *	User opts to place their origin on the map
+ */
 function userPlaceSelfOrigin()
 {
 	console.log("userPlaceSelfOrigin");
@@ -262,6 +291,9 @@ function userPlaceSelfOrigin()
 	closeUI();
 }
 
+/**
+ *	Clear map
+ */
 function clearMap()
 {
 	hideWalkingDisplay();
@@ -272,6 +304,9 @@ function clearMap()
 	delete shuttletrip;
 }
 
+/**
+ *	Choosing a new destination
+ */
 function chooseNewDestination()
 {
 	hideWalkingDisplay();
@@ -283,6 +318,9 @@ function chooseNewDestination()
 	user.removeDestinationMarker();
 }
 
+/**
+ *	Hides walking route/line
+ */
 function hideWalkingDisplay()
 {
 	if (trip) {
@@ -290,6 +328,9 @@ function hideWalkingDisplay()
 	}
 }
 
+/**
+ *	Hides shuttle markers, walking lines
+ */
 function hideShuttleDisplay()
 {
 	if (shuttletrip)
@@ -299,30 +340,48 @@ function hideShuttleDisplay()
 	}
 }
 
+/**
+ *	Callback for Google Directions 
+ */ 
 function googleDirectionsComplete()
 {
 	console.log("googleDirectionsComplete");
 	trip.getGoogleDistanceMatrix();
 }
 
+/**
+ *	Callback for Shuttleboy API stops
+ */
 function stopsAreLoadedCallback()
 {
 	console.log("stopsAreLoadedCallback");
 	shuttletrip.defineAndSortStops();
 }
 
+/**
+ *	Callback for stops being sorted by proximity
+ *	to origin and proximity to destination
+ */
 function stopsAreSortedCallback()
 {
 	console.log("stopsAreSortedCallback");
 	shuttletrip.beginQueryApiForRoute();
 }
 
+/**
+ *	Callback in case there are no routes returned
+ *	from Shuttleboy API
+ */
 function noRouteForStopsCallback()
 {
 	console.log("noRouteForStopsCallback");
 	shuttletrip.incrementStops();
 }
 
+/**
+ *	Callback once Shuttleboy API returns
+ *	route data
+ */
 function receivedRouteJSON()
 {
 	console.log("receivedRouteJSON");
@@ -330,6 +389,10 @@ function receivedRouteJSON()
 	shuttletrip.getGoogleDistanceMatrix();
 }
 
+/**
+ *	Callback when Google Maps returns data
+ *	for distance/time to/from shuttle stops
+ */
 function receivedShuttleDistanceMatrix()
 {
 	console.log("receivedShuttleDistanceMatrix");
@@ -380,6 +443,10 @@ function adjustMapBounds() {
 	map.fitBounds(bounds);
 }
 
+/**
+ *	Search through buildings.js when user enters text
+ *	into search box. Display appropriate matches as buttons.
+ */
 function searchBuildings() {
 	var value = document.getElementById("search").value;
 	var regExp = new RegExp(value, "i", "y");
@@ -421,18 +488,15 @@ function searchBuildings() {
 	}
 }
 
+/**
+ *	Button ability to set map to certain lat/lng
+ */
 function setMapTo() {
 	console.log("setMapTo "+this.id);
 	user.setDestination(buildingMatches[this.id].lat, buildingMatches[this.id].lng);
-	
-	if (trip) {
-		trip.deleteRouteLine();
-	}
 
-	if (shuttletrip) {
-		shuttletrip.deleteRouteLines();
-		shuttletrip.deleteMarkers();
-	}
+	hideWalkingDisplay();
+	hideShuttleDisplay();
 
 	document.getElementById("searchDest").innerHTML = "";
 }
