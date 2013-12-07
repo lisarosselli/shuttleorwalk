@@ -435,6 +435,9 @@ function searchBuildings() {
 function setMapTo() {
 	console.log("setMapTo "+this.id);
 	user.setDestination(buildingMatches[this.id].lat, buildingMatches[this.id].lng);
+	trip.deleteRouteLine();
+	shuttletrip.deleteRouteLines();
+	shuttletrip.deleteMarkers();
 	document.getElementById("searchDest").innerHTML = "";
 }
 
