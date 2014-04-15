@@ -205,20 +205,16 @@ ShuttleTrip.prototype.queryApiWithStops = function( orig, dest)
 	day = (day < 10) ? "0"+day : day;
 	hour = (hour < 10) ? "0"+hour : hour;
 	minutes = (minutes < 10) ? "0"+minutes : minutes;
-
-	// Test only values below
-	//day = 28;
-	//month = 11;
-	//year = 2013;
-
+	
 	//2013-11-25T16:50:00
 	var timeString = year + "-" + month + "-" + day + "T" + hour + ":" + minutes + ":00";
 
 	// Ask controller to store a friendly version of timestamp:
 	storeFriendlyQueryTime(year, month-1, day, hour, minutes);
 
+	// new shuttleboy api call, sans time stamp
 	shuttletrip.JSONCall = "http://shuttleboy.cs50.net/api/" + apiVersion + "/trips?a=" +
-		orig.stop + "&b=" + dest.stop + "&sdt=" + timeString + "&output=json";
+		orig.stop + "&b=" + dest.stop + "&output=json";
 
 	console.log(shuttletrip.JSONCall);
 
